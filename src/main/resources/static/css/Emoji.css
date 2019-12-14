@@ -1,0 +1,95 @@
+.buildingName-boxmax {
+    width: 200px;
+    height: 200px;
+    background: #2d3035;
+    border-radius: 5px;
+    float: left;
+    margin: 10px;
+ position: relative;
+    overflow: hidden;
+}
+.buildingName-boxmax:hover .bqb-hover{
+    top: 0;
+}
+
+.classmyModals{
+    background: #dfbc7a;color: black
+}
+
+.qc-button-a{
+    width: 70px;height: 35px;margin: 15px;text-align: center;line-height: 35px;background: rgb(0,0,0)
+}
+.qc-button-a:hover{
+    background: rgba(56, 56, 56, 0.79);
+    cursor: pointer;
+}
+.bqb-hover {
+    width: 200px;
+    height: 200px;
+    background: rgba(21, 21, 21, 0.41);
+    border-radius: 5px;
+    float: left;
+    position: absolute;
+    top: -260px;
+    transition: all 1s;
+
+}
+.bqb-hover-center{
+    width: 150px;
+    height: 50px;
+    margin: 50px auto;
+
+}
+.bqb-hover-center>li{
+    width: 50px;
+    height: 50px;
+    float: left;
+
+}
+
+.bqb-image {
+    width: 200px;
+    height: 200px;
+    float: left;
+    overflow: hidden;
+}
+
+.bqb-button {
+    width: 200px;
+    height: 60px;
+    float: left;
+}
+
+.bqb-button-div {
+    height: 30px;
+    width: 200px;
+}
+
+.bqb-button-h3 {
+    width: 200px;
+    height: 20px;
+    display: block;
+    text-align: center;
+    margin: 10px 0 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: #9e9e9e;
+    font-size: 15px
+}
+
+.bqb-button-a {
+    padding: 3px 5px;
+    background: chocolate;
+    border-radius: 3px;
+    margin: 0 5px;
+    font-size: 13px;
+
+}
+.bqb-paging{height: 50px;width: 100%;}
+
+.qc-title-header{
+    width: 100%;
+    padding: 20px;
+    float: left;
+}
