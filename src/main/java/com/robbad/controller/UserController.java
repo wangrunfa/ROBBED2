@@ -35,7 +35,11 @@ public class UserController {
         HttpSession session = request.getSession();
         try {
             String sex= (String) session.getAttribute("sex");
-            return userService.buildingTableList(sex);
+            Object results=userService.buildingTableList(sex);
+            if(results==null){
+                return WebTools.returnData("链接失败",1);
+            }
+            return  WebTools.returnData(results,0) ;
         }catch (NullPointerException e){
             return "错误";
         }

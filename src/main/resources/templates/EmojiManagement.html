@@ -68,7 +68,7 @@
         <!-- Breadcrumb-->
         <div class="container-fluid">
             <ul class="breadcrumb">
-                <li class="breadcrumb-item"><a href="index.html">
+                <li class="breadcrumb-item"><a onclick="SetRemainTimess()">
                     高校床位
                 </a></li>
                 <li class="breadcrumb-item active">Tables</li>
@@ -76,34 +76,85 @@
         </div>
         <section class="no-padding-top">
             <div class="container-fluid">
-                <div class="row">
-                    <div th:each="buil:${buildingTableList}" style="width: 99%" class="qubuildingName">
-                        <div class="qc-title-header">
-                            <h2 th:text="${buil.buildingName}"></h2>
-                        </div>
-                        <span th:each="floor:${buil.floorInfoList}" style="width: 100%">
-                            <h3 th:text="'第-'+${floor.floorName}+'-层'" style="padding: 20px 30px"></h3>
-                            <span th:each="roomNumber:${floor.roomNumberList}" class="buildingName-boxmax">
-                             <h3 style="text-align: center;padding:15px"
-                                 th:text="'房间号：'+${roomNumber.roomNumberName}"></h3>
-                             <span th:each="bedss2:${roomNumber.bedsInfoList}">
-                                 <span th:if="${bedss2.status}==0">
-                                <button class="btn btn-primary btn-lg" data-toggle="modal"
-                                        style="background: #dfbc7a;color: black"
-                                        data-target="#myModal"
-                                        th:onclick="'javascript:occupation('+${bedss2.floor}+','+${bedss2.roomNumber}+','+${bedss2.id}+');'"
-                                        th:text="${bedss2.beds}+'号'"></button>
-                                </span>
-                                  <span th:if="${bedss2.status}==1">
-                                <button class="btn btn-primary btn-lg"
-                                        style="background: #ccc;color: black"
-                                        th:text="${bedss2.beds}+'号'"></button>
-                                </span>
-                             </span>
-                              </span>
-                            <br/>
-                        </span>
-                    </div>
+                <div class="row" id="refreshthml">
+
+                    <script>
+                        var curCount=60;
+                        var InterValObj; //timer变量，控制时间
+                        window.onload = function(){
+                            console.log("------------+");
+                            this.refresh();
+                           InterValObj = window.setInterval(SetRemainTime, 2500);
+                        };
+                        function SetRemainTime() {
+                            if (curCount == 0) {//超时重新获取验证码
+                                window.clearInterval(InterValObj);// 停止计时器
+
+                            }else {
+                                curCount--;
+                                this.refresh();
+                        }
+                        }
+                        function refresh() {
+
+                            console.log("进入----");
+                            $.ajax({
+                                url: "/EmojiManagementAjax",
+                                type: "get",
+                                dataType: "json",
+                                success: function (result) {
+                                    var thmladd = "";
+                                    if (result.code == 0) {
+                                        for (i = 0; i < result.data.length; i++) {
+                                            thmladd += " <div style=\"width: 99%\" class=\"qubuildingName\">\n" +
+                                                "                        <div class=\"qc-title-header\">\n" +
+                                                "                            <h2>" + result.data[i].buildingName + "</h2>\n" +
+                                                "                        </div>\n"
+                                            for (f = 0; f < result.data[i].floorInfoList.length; f++) {
+                                                thmladd += "                        <span style=\"width: 100%\">\n" +
+                                                    "                            <h3 style=\"padding: 20px 30px\">"+result.data[i].floorInfoList[f].floorName+" 层</h3>\n"
+                                                for (r = 0; r < result.data[i].floorInfoList[f].roomNumberList.length; r++) {
+                                                    thmladd += "                            <span  class=\"buildingName-boxmax\">\n" +
+                                                        "                             <h3 style=\"text-align: center;padding:15px\"\n" +
+                                                        ">"+result.data[i].floorInfoList[f].roomNumberList[r].roomNumberName+"号房间</h3>\n"
+                                                    for (b = 0; b < result.data[i].floorInfoList[f].roomNumberList[r].bedsInfoList.length; b++) {
+                                                        thmladd += " <span>\n"
+                                                        if (result.data[i].floorInfoList[f].roomNumberList[r].bedsInfoList[b].status==0) {
+                                                            thmladd +="<button class=\"btn btn-primary btn-lg\" data-toggle=\"modal\"\n" +
+                                                            "                                        style=\"background: #dfbc7a;color: black\"\n" +
+                                                            "                                        data-target=\"#myModal\"\n" +
+                                                            "                                        onclick=\"javascript:occupation("+result.data[i].floorInfoList[f].roomNumberList[r].bedsInfoList[b].floor+","+result.data[i].floorInfoList[f].roomNumberList[r].bedsInfoList[b].roomNumber+","+result.data[i].floorInfoList[f].roomNumberList[r].bedsInfoList[b].id+");\">"+result.data[i].floorInfoList[f].roomNumberList[r].bedsInfoList[b].beds+"</button>"
+
+                                                        }
+                                                        if (result.data[i].floorInfoList[f].roomNumberList[r].bedsInfoList[b].status==1) {
+                                                            thmladd += "                                <button class=\"btn btn-primary btn-lg\"\n" +
+                                                                "                                        style=\"background: #ccc;color: black\"\n" +
+                                                                "                                        >"+result.data[i].floorInfoList[f].roomNumberList[r].bedsInfoList[b].beds+"</button>\n"
+                                                        }
+
+                                                        thmladd += "</span>\n"
+                                                    }
+                                                    thmladd += " </span>\n"
+                                                }
+                                                thmladd += "</span>\n"
+                                            }
+                                            thmladd += "</div>"
+                                        }
+
+                                    } else if (result.code == 1) {
+                                        console.log(result.message);
+                                    }
+
+                                    $("#refreshthml").html(thmladd);
+
+                                },
+                                error: function (result) {
+                                    console.log("error----");
+                                }
+                            })
+                        }
+
+                    </script>
                 </div>
             </div>
             <div class="bqb-paging"></div>

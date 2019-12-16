@@ -70,7 +70,6 @@ public class UserServiceImpl implements UserService {
     public Map<String, Object> authcode(String phone) {
 
         if( redisUtil.isPhoneExist(phone)){
-            System.out.println("true");
             return  WebTools.returnData("在想啥呢，小老弟！",1);
         } else {
         Map<String, Object> returnmap = SUBMAILUtil.verificationCodeSMS(phone);
@@ -97,8 +96,6 @@ public class UserServiceImpl implements UserService {
         for (BuildingName buildingNameTableLists:userDao.buildingNameTableList(rensex)) {
             //判断男女楼
 
-
-
             List<Object> floorInfoList=new ArrayList<>();
             //查询楼层
             List<Building> floorInfoList2=userDao.floorTableLists(buildingNameTableLists.getId());
@@ -117,7 +114,7 @@ public class UserServiceImpl implements UserService {
                 }
                 roomNumberInfoMap.put("roomNumberList",roomNumber);
                 roomNumberInfoMap.put("floorName",floorInfo.getFloor());
-                System.out.println(floorInfo.getFloor()+"---");
+
                 floorInfoList.add(roomNumberInfoMap);
             }
 //            floorInfoMap.put("roomNumberInfoList",roomNumberInfoList);
@@ -126,14 +123,13 @@ public class UserServiceImpl implements UserService {
             map.put("floorInfoList",floorInfoList);
             list.add(map);
         }
-        System.out.println(list.toString());
         return list;
     }
 
     @Override
     public Object occupied(int id, String studentNumber) {
         Building studentNumberStatus=userDao.CheckingStudentNumber(studentNumber);
-        System.out.println(studentNumberStatus);
+
         if(!(studentNumberStatus ==null)){
 
             return WebTools.returnData("此学号已有床位! <br/> "+userDao.findbuil(studentNumberStatus.getBuildingId())+"-楼层数:"+studentNumberStatus.getFloor()+"-房间号:"+studentNumberStatus.getRoomNumber()+"-床位号:"+studentNumberStatus.getBeds(),1);
