@@ -32,7 +32,7 @@ public class RedisUtil {
 
     }
     /**
-     * 检查验证码是否存在
+     * 检查Phone是否存在
      */
 
     public boolean isPhoneExist(String phone){
@@ -45,6 +45,7 @@ public class RedisUtil {
         }
 
     }
+
 //    /**
 //     * 验证抢占
 //     */
