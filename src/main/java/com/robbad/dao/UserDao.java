@@ -12,14 +12,14 @@ import java.util.List;
 
 public interface UserDao {
 
-   @Select("SELECT user_id,username,sex,studentNumber from t_user where studentNumber=#{user.studentNumber} and password=#{user.password} LIMIT 1")
+   @Select("SELECT id,lg_username,lg_sex,lg_balance from qd_user where lg_phone=#{user.lgPhone} and lg_password=#{user.lgPassword} LIMIT 1")
    User qclogin(@Param("user") User user);
 
-   @Insert("INSERT INTO t_user(username,password,studentNumber,phone,sex,time) values(#{user.username},#{user.password},#{user.studentNumber},#{user.phone},#{user.sex},NOW());")
+   @Insert("INSERT INTO qd_user(lg_username,lg_sex,lg_password,lg_phone) values(#{user.lgUsername},#{user.lgSex},#{user.lgPassword},#{user.lgPhone});")
    int userRegister(@Param("user") User user);
 
-   @Select("SELECT count(*) from t_user where studentNumber=#{studentNumber} or phone=#{phone}")
-   int duplicateChecking( @Param("phone")  String phone, @Param("studentNumber") String studentNumber);
+   @Select("SELECT count(*) from qd_user where lg_phone=#{phone}")
+   int duplicateChecking( @Param("phone")  String phone);
 
    @Select("SELECT id,building from t_building_name where sex_building=#{rensex}")
    List<BuildingName> buildingNameTableList(@Param("rensex") int rensex);
@@ -45,9 +45,9 @@ public interface UserDao {
     @Select("SELECT building from t_building_name where id=#{buildingId}  limit 1")
     String findbuil(@Param("buildingId") Integer buildingId);
 
-    @Select("SELECT count(*) from t_user where phone=#{phone} and studentNumber=#{studentNumber}  limit 1")
-    int associatedChecking(@Param("phone") String phone,@Param("studentNumber") String studentNumber);
+    @Select("SELECT count(*) from qd_user where lg_phone=#{phone}  limit 1")
+    int associatedChecking(@Param("phone") String phone);
 
-    @Update("update t_user set password=#{user.password} where studentNumber=#{user.studentNumber} and phone=#{user.phone} limit 1")
+    @Update("update qd_user set lg_password=#{user.lgPassword} where lg_phone=#{user.lgPhone} limit 1")
     int updatePassword(@Param("user") User user);
 }

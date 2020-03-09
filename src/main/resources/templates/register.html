@@ -26,49 +26,69 @@
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
   </head>
   <body>
+  <style>
+
+      /*验证码*/
+
+      .upload-awrp {
+          overflow: hidden;
+          margin: 120px 0;
+      }
+
+      .code {
+          font-family: Arial;
+          font-style: italic;
+          font-size: 30px;
+          border: 0;
+          padding: 2px 3px;
+          letter-spacing: 3px;
+          font-weight: bolder;
+          float: left;
+          cursor: pointer;
+          width: 150px;
+          height: 60px;
+          line-height: 60px;
+          text-align: center;
+          vertical-align: middle;
+          border: 1px solid #6D6D72;
+      }
+
+  </style>
     <div class="login-page">
       <div class="container d-flex align-items-center">
         <div class="form-holder has-shadow">
           <div class="row">
             <!-- Logo & Information Panel-->
             <div class="col-lg-6">
-              <div class="info d-flex align-items-center">
-                <div class="content">
-                  <div class="logo">
-                    <h1>WWW.CEDAR8.CN</h1>
-                  </div>
-                  <p>注意事项：用户名请随意，学号用于兑换床位且唯一，学号一旦注册，将不在注册可第二次,一人一账号！</p>
-                </div>
-              </div>
+
             </div>
             <!-- Form Panel    -->
             <div class="col-lg-6 bg-white">
               <div class="form d-flex align-items-center">
                 <div class="content">
                   <form class="text-left form-validate">
-                    <div class="form-group-material">
-                      <input id="register-username" type="text" name="username" minlength="2" required data-msg="请输入用户名" class="input-material">
-                      <label for="register-username" class="label-material">用户名</label>
-                    </div>
-                    <div class="form-group-material">
-                      <input id="register-studentNumber" type="text" name="studentNumber" minlength="2"  required data-msg="请输入学号" class="input-material">
-                      <label for="register-studentNumber" class="label-material">学号</label>
-                    </div>
+                      <div class="form-group-material">
+                          <input id="register-username" type="text" name="username" minlength="2" required data-msg="请输入用户名" class="input-material">
+                          <label for="register-username" class="label-material">用户名</label>
+                      </div>
+
+                      <div class="form-group-material" style="height: 30px">
+                          <input type="radio" value="男" name="sex" class="input-radios" style="background: cornflowerblue">
+                          <div style="width: 30px;height: 25px;float: left">男</div>
+                          <input type="radio" value="女" name="sex"  class="input-radios" style="background: #ed4ac5">
+                          <div style="width: 30px;height: 25px;float: left">女</div>
+                      </div>
+                      <div class="form-group-material">
+                          <input id="register-phone" type="text" name="phone" minlength="11"  required data-msg="请输入手机号" class="input-material">
+                          <label for="register-phone" class="label-material">手机号</label>
+                      </div>
                     <div class="form-group-material">
                       <input id="register-password" type="password" name="password" minlength="6"  required data-msg="请输入密码" class="input-material">
                       <label for="register-password" class="label-material">密码</label>
                     </div>
 
-                    <div class="form-group-material" style="height: 30px">
-                      <input type="radio" value="男" name="sex" class="input-radios" style="background: cornflowerblue">
-                      <div style="width: 30px;height: 25px;float: left">男</div>
-                      <input type="radio" value="女" name="sex"  class="input-radios" style="background: #ed4ac5">
-                      <div style="width: 30px;height: 25px;float: left">女</div>
-                    </div>
-                    <div class="form-group-material">
-                      <input id="register-phone" type="text" name="phone" minlength="11"  required data-msg="请输入手机号" class="input-material">
-                      <label for="register-phone" class="label-material">手机号</label>
-                    </div>
+
+
                     <div class="form-group-material" >
                       <input id="register-code"style="width: 70%" type="text" minlength="4"  name="authcode" required data-msg="请输入验证码" class="input-material">
                       <label for="register-code"style="width: 70%" class="label-material" required >手机号验证</label>
@@ -87,7 +107,7 @@ function registerjq() {
 
     $.ajax({
         //请求方式
-        type : "POST",
+        type : "post",
         //请求的媒体类型
         // contentType: "application/json;charset=UTF-8",
         //请求地址
@@ -95,8 +115,12 @@ function registerjq() {
         //数据，json字符串
         // data : {"username":$("#register-username").val(),"studentNumber":$("#register-studentNumber").val(),
         //     "password":$("#register-password").val(),"sex":$('input[name="sex"]:checked').val(),"phone":$("#register-phone").val,"authcode":$("#register-code").val()},
-        data:{"username":$("#register-username").val(),"studentNumber":$("#register-studentNumber").val(),"password":$("#register-password").val()
-            ,"sex":$('input[name="sex"]:checked').val(),"phone":$("#register-phone").val(),"authcode":$("#register-code").val()},
+        data:{"lgPassword":$("#register-password").val(),
+            "lgPhone":$("#register-phone").val(),
+            "lgAuthcode":$("#register-code").val(),
+            "lgSex":$('input[name="sex"]:checked').val(),
+            "lgUsername":$("#register-username").val(),
+        },
         //请求成功
         success : function(result) {
             console.log(result)
@@ -173,8 +197,57 @@ function registerjq() {
     }
   }
 </script>
+                      <script type="text/javascript">
+                          /**
+                           * 验证码
+                           * @param {Object} o 验证码长度
+                           */
+                          $.fn.code_Obj = function(o) {
+                              var _this = $(this);
+                              var options = {
+                                  code_l: o.codeLength,//验证码长度
+                                  codeChars: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9,
+                                      'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
+                                      'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'
+                                  ],
+                                  codeColors: ['#f44336', '#009688', '#cddc39', '#03a9f4', '#9c27b0', '#5e4444', '#9ebf9f', '#ffc8c4', '#2b4754', '#b4ced9', '#835f53', '#aa677e'],
+                                  code_Init: function() {
+                                      var code = "";
+                                      var codeColor = "";
+                                      var checkCode = _this.find("#data_code");
+                                      for(var i = 0; i < this.code_l; i++) {
+                                          var charNum = Math.floor(Math.random() * 52);
+                                          code += this.codeChars[charNum];
+                                      }
+                                      for(var i = 0; i < this.codeColors.length; i++) {
+                                          var charNum = Math.floor(Math.random() * 12);
+                                          codeColor = this.codeColors[charNum];
+                                      }
+                                      console.log(code);
+                                      if(checkCode) {
+                                          checkCode.css('color', codeColor);
+                                          checkCode.className = "code";
+                                          checkCode.text(code);
+                                          checkCode.attr('data-value', code);
+                                      }
+                                  }
+                              };
 
-
+                              options.code_Init();//初始化验证码
+                              _this.find("#data_code").bind('click', function() {
+                                  options.code_Init();
+                              });
+                          };
+                      </script>
+                      <script type="text/javascript">
+                          /**
+                           * 验证码
+                           * codeLength:验证码长度
+                           */
+                          $('#check-code').code_Obj({
+                              codeLength: 5
+                          });
+                      </script>
                     <div class="form-group text-center">
                       <input id="register" type="button" value="注册账户" onclick="registerjq();" class="btn btn-primary">
                     </div>

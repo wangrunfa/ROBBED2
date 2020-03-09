@@ -1579,7 +1579,7 @@ nav#sidebar.shrinked a[aria-expanded="true"]::after {
   height: 100%;
   display: block;
   z-index: -1;
-  background: url(../img/11.jpeg);
+  background: url(../img/bg.jpeg);
   background-size: cover;
   position: absolute;
   top: 0;
@@ -1625,7 +1625,7 @@ nav#sidebar.shrinked a[aria-expanded="true"]::after {
 }
 
 .login-page .form-holder .form {
-  background: #2d3035;
+  background: rgba(255, 255, 255, 1);
 }
 
 .login-page .form-holder .form .form-group {
@@ -1639,7 +1639,7 @@ nav#sidebar.shrinked a[aria-expanded="true"]::after {
 
 .login-page .form-holder .form form {
   width: 100%;
-  max-width: 400px;
+
 }
 
 .login-page .form-holder .form #login,
@@ -1652,7 +1652,7 @@ nav#sidebar.shrinked a[aria-expanded="true"]::after {
 .login-page .form-holder .form a.forgot-pass,
 .login-page .form-holder .form a.signup {
   font-size: 0.9rem;
-  color: #DB6574;
+  color: #000000;
 }
 
 .login-page .form-holder .form small {
@@ -1976,7 +1976,7 @@ input.input-material:focus {
 }
 
 input.input-material ~ label {
-  color: #aaa;
+  color: #000000;
   position: absolute;
   top: 14px;
   left: 0;
@@ -1989,7 +1989,7 @@ input.input-material ~ label {
 input.input-material ~ label.active {
   font-size: 0.85rem;
   top: -10px;
-  color: #DB6574;
+  color: #000000;
 }
 
 input.input-material ~ label.is-invalid ~ label {
@@ -2004,7 +2004,7 @@ input.input-material ~ label.is-invalid ~ label {
   width: 30%;
   float: right;
   height: 47px;
-  background: #DB6574;
+  background: #2cdbbf;
   color: white;
   text-align: center;
   border-radius: 4px;
@@ -2265,8 +2265,8 @@ STYLE SWITCHER FOR DEMO
 
 .btn-primary {
   color: color-yiq(#DB6574);
-  background-color: #DB6574;
-  border-color: #DB6574;
+  background-color: #0190db;
+  border-color: #0077db;
 }
 
 .btn-primary:hover {

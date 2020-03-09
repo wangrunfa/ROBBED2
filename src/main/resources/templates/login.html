@@ -32,26 +32,20 @@
           <div class="row">
             <!-- Logo & Information Panel-->
             <div class="col-lg-6">
-              <div class="info d-flex align-items-center">
-                <div class="content">
-                  <div class="logo">
-                    <h1>CEDAR8.CN <a th:text="${message}"></a></h1>
-                  </div>
-                  <p>登录 如有问题，请联系管理员 邮箱   cedar6@qq.com</p>
-                </div>
-              </div>
+
             </div>
             <!-- Form Panel    -->
             <div class="col-lg-6">
               <div class="form d-flex align-items-center">
                 <div class="content">
                   <form action="/loginUser" method="post"  class="form-validate mb-4">
+                    <h3 th:text="${message}"></h3>
                     <div class="form-group">
-                      <input id="login-username" type="text" name="studentNumber" value="1234567891011" required data-msg="Please enter your username" class="input-material">
-                      <label for="login-username" class="label-material">学号</label>
+                      <input id="login-username" type="text" name="lgPhone" value="18385295580" required data-msg="Please enter your username" class="input-material">
+                      <label for="login-username" class="label-material">手机号</label>
                     </div>
                     <div class="form-group">
-                      <input id="login-password" type="password" name="password" value="123456"  required data-msg="Please enter your password" class="input-material">
+                      <input id="login-password" type="password" name="lgPassword" value="123456"  required data-msg="Please enter your password" class="input-material">
                       <label for="login-password" class="label-material">密码</label>
                     </div>
                     <button type="submit" class="btn btn-primary" >登录账户</button>

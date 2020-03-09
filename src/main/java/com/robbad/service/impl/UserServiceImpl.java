@@ -9,10 +9,7 @@ import com.robbad.model.BuildingName;
 import com.robbad.model.User;
 
 import com.robbad.service.UserService;
-import com.robbad.util.MD5;
-import com.robbad.util.RedisUtil;
-import com.robbad.util.SUBMAILUtil;
-import com.robbad.util.WebTools;
+import com.robbad.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.util.ListUtils;
@@ -34,13 +31,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Object userRegister(User user) {
-        int reint=userDao.duplicateChecking(user.getPhone(),user.getStudentNumber());
+        int reint=userDao.duplicateChecking(user.getLgPhone());
         if(reint>0){
-            return WebTools.returnData("此学号或手机号已被注册！",1);
+            return WebTools.returnData("此手机号已被注册！",1);
         }
-        Map<String,Object> maps=getMD5(user.getPassword());
+        Map<String,Object> maps=getMD5(user.getLgPassword());
         if((int)maps.get("code")==0){
-            user.setPassword((String)maps.get("data"));
+            user.setLgPassword((String)maps.get("data"));
         }else {
             System.out.println("密码加密失败!");
         }
@@ -54,10 +51,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User qclogin(User user) {
-        Map<String,Object> maps=getMD5(user.getPassword());
+        Map<String,Object> maps=getMD5(user.getLgPassword());
         if((int)maps.get("code")==0){
-            user.setPassword((String)maps.get("data"));
-
+            user.setLgPassword((String)maps.get("data"));
         }else {
             System.out.println("密码加密失败!");
         }
@@ -70,9 +66,9 @@ public class UserServiceImpl implements UserService {
     public Map<String, Object> authcode(String phone) {
 
         if( redisUtil.isPhoneExist(phone)){
-            return  WebTools.returnData("在想啥呢，小老弟！",1);
+            return  WebTools.returnData("信息请求频繁，请稍后再试",1);
         } else {
-        Map<String, Object> returnmap = SUBMAILUtil.verificationCodeSMS(phone);
+        Map<String, Object> returnmap = SmsSampleUtil.smsSample(phone);
         if ((int) returnmap.get("code") == 0) {
             redisUtil.setCode(phone, (String) returnmap.get("data"));
 
@@ -149,14 +145,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Object changePassword(User user) {
-        int reint=userDao.associatedChecking(user.getPhone(),user.getStudentNumber());
+        int reint=userDao.associatedChecking(user.getLgPhone());
 
         if(reint==0){
-            return WebTools.returnData("此学号和手机号没关联！",1);
+            return WebTools.returnData("此手机号没注册！",1);
         }
-        Map<String,Object> maps=getMD5(user.getPassword());
+        Map<String,Object> maps=getMD5(user.getLgPassword());
         if((int)maps.get("code")==0){
-            user.setPassword((String)maps.get("data"));
+            user.setLgPassword((String)maps.get("data"));
         }else {
             System.out.println("密码加密失败!");
         }
