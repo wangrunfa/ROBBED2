@@ -15,7 +15,7 @@ public class PageController {
         return "register";
     }
 
-    @RequestMapping("/loginym")
+    @RequestMapping("/login")
     public String loginym1() {
         return "login";
     }
@@ -29,9 +29,5 @@ public class PageController {
         return "changePassword";
     }
 
-    @RequestMapping("/EmojiManagement")
-    public String EmojiManagement(){
 
-        return "EmojiManagement";
-    }
 }

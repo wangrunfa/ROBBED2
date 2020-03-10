@@ -40,22 +40,22 @@
 				</div>
 				<div class="aside-nav" style="z-index: 999999;">
 					<div class="avatar-box"><img src="http://api.jbd.melonmobile.cn/cdn/resource/usr_ico_default.png" alt="">
-						<div class="username text-overflow" th:text="${lgusername}"></div>
-						<div class="user-id text-overflow">Tel：<p th:text="${lgphone}"></p></div>
+						<div class="username text-overflow" th:text="${lgUsername}"></div>
+						<div class="user-id text-overflow">Tel：<p th:text="${lgPhone}"></p></div>
 					</div>
-					<div class="nav"><a href="#/" class="fore1 router-link-exact-active router-link-active">
+					<div class="nav"><a href="/grondstoffenlijst" class="fore1 router-link-exact-active router-link-active">
 							<div class="line"></div>
 							抢单列表
 						</a>
 						<!---->
-						<!----> <a href="#/push/open" class="fore2">
+						<!----> <a href="/DirectDrive" class="fore2">
 							<div class="line"></div>
 							优米借直推
 						</a>
-						<!----> <a href="#/purchased" class="fore3">
+						<!----> <a href="/purchase" class="fore3">
 							<div class="line"></div>
 							已购的客户
-						</a> <a href="#/buy" class="fore4">
+						</a> <a href="" class="fore4">
 							<div class="line"></div>
 							购买生财币
 						</a></div>
@@ -64,9 +64,9 @@
 					<div class="select-item-wrapper">
 						<div class="pull-left read-wrapper">
 							<ul>
-								<li read="2" class="active">全部</li>
-								<li read="0" class="">未读</li>
-								<li read="1" class="">已读</li>
+								<li value="2" class="active">全部</li>
+								<li value="0" class="">未读</li>
+								<li value="1" class="">已读</li>
 							</ul>
 						</div>
 						<div class="pull-left date-wrapper"><button style="background: rgb(202, 202, 198) none repeat scroll 0% 0%; border: 1px solid rgb(202, 202, 198); margin-left: 6px; height: 30px;">重置</button></div>
@@ -77,17 +77,17 @@
 									<p>城市</p> <img src="data:image/jpeg;base64,/9j/4QAYRXhpZgAASUkqAAgAAAAAAAAAAAAAAP/sABFEdWNreQABAAQAAABQAAD/4QMsaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLwA8P3hwYWNrZXQgYmVnaW49Iu+7vyIgaWQ9Ilc1TTBNcENlaGlIenJlU3pOVGN6a2M5ZCI/PiA8eDp4bXBtZXRhIHhtbG5zOng9ImFkb2JlOm5zOm1ldGEvIiB4OnhtcHRrPSJBZG9iZSBYTVAgQ29yZSA1LjYtYzE0MCA3OS4xNjA0NTEsIDIwMTcvMDUvMDYtMDE6MDg6MjEgICAgICAgICI+IDxyZGY6UkRGIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyI+IDxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PSIiIHhtbG5zOnhtcD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLyIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bXA6Q3JlYXRvclRvb2w9IkFkb2JlIFBob3Rvc2hvcCBDQyAoTWFjaW50b3NoKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDpGM0QyQTFEMzNFNjMxMUU4QjQ2NkIwNTlGQ0ZCNUYwRSIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDpGM0QyQTFENDNFNjMxMUU4QjQ2NkIwNTlGQ0ZCNUYwRSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkYzRDJBMUQxM0U2MzExRThCNDY2QjA1OUZDRkI1RjBFIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOkYzRDJBMUQyM0U2MzExRThCNDY2QjA1OUZDRkI1RjBFIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+/+4ADkFkb2JlAGTAAAAAAf/bAIQAAgICAgICAgICAgMCAgIDBAMCAgMEBQQEBAQEBQYFBQUFBQUGBgcHCAcHBgkJCgoJCQwMDAwMDAwMDAwMDAwMDAEDAwMFBAUJBgYJDQsJCw0PDg4ODg8PDAwMDAwPDwwMDAwMDA8MDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwM/8AAEQgABgAKAwERAAIRAQMRAf/EAGAAAQEAAAAAAAAAAAAAAAAAAAgJAQEAAAAAAAAAAAAAAAAAAAAAEAAABAMECwAAAAAAAAAAAAACAwUGAQQHESESNAAxUSIyU6QVRRY2EQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCh1TWesKlUClFDq5VlstUcwZ7k30tLeUyWAwuELe0nSsmZLxAdG7dFgBxF4rgQBWYUHmOz5ezzuQ26s/1mgf/Z"
 									 alt="">
 								</li>
-								<li class="fore2">排序
+								<li class="fore2 select-itemann">排序
 									<img src="data:image/jpeg;base64,/9j/4QAYRXhpZgAASUkqAAgAAAAAAAAAAAAAAP/sABFEdWNreQABAAQAAABQAAD/4QMsaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLwA8P3hwYWNrZXQgYmVnaW49Iu+7vyIgaWQ9Ilc1TTBNcENlaGlIenJlU3pOVGN6a2M5ZCI/PiA8eDp4bXBtZXRhIHhtbG5zOng9ImFkb2JlOm5zOm1ldGEvIiB4OnhtcHRrPSJBZG9iZSBYTVAgQ29yZSA1LjYtYzE0MCA3OS4xNjA0NTEsIDIwMTcvMDUvMDYtMDE6MDg6MjEgICAgICAgICI+IDxyZGY6UkRGIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyI+IDxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PSIiIHhtbG5zOnhtcD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLyIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bXA6Q3JlYXRvclRvb2w9IkFkb2JlIFBob3Rvc2hvcCBDQyAoTWFjaW50b3NoKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDpGM0QyQTFEMzNFNjMxMUU4QjQ2NkIwNTlGQ0ZCNUYwRSIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDpGM0QyQTFENDNFNjMxMUU4QjQ2NkIwNTlGQ0ZCNUYwRSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkYzRDJBMUQxM0U2MzExRThCNDY2QjA1OUZDRkI1RjBFIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOkYzRDJBMUQyM0U2MzExRThCNDY2QjA1OUZDRkI1RjBFIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+/+4ADkFkb2JlAGTAAAAAAf/bAIQAAgICAgICAgICAgMCAgIDBAMCAgMEBQQEBAQEBQYFBQUFBQUGBgcHCAcHBgkJCgoJCQwMDAwMDAwMDAwMDAwMDAEDAwMFBAUJBgYJDQsJCw0PDg4ODg8PDAwMDAwPDwwMDAwMDA8MDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwM/8AAEQgABgAKAwERAAIRAQMRAf/EAGAAAQEAAAAAAAAAAAAAAAAAAAgJAQEAAAAAAAAAAAAAAAAAAAAAEAAABAMECwAAAAAAAAAAAAACAwUGAQQHESESNAAxUSIyU6QVRRY2EQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCh1TWesKlUClFDq5VlstUcwZ7k30tLeUyWAwuELe0nSsmZLxAdG7dFgBxF4rgQBWYUHmOz5ezzuQ26s/1mgf/Z"
 									 class="fore1"> <img src="data:image/jpeg;base64,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DGNyb3BSZWN0TGVmdGxvbmcAAAAAAAAADWNyb3BSZWN0UmlnaHRsb25nAAAAAAAAAAtjcm9wUmVjdFRvcGxvbmcAAAAAADhCSU0D7QAAAAAAEABIAAAAAQACAEgAAAABAAI4QklNBCYAAAAAAA4AAAAAAAAAAAAAP4AAADhCSU0EDQAAAAAABP///2o4QklNBBkAAAAAAAQAAAAeOEJJTQPzAAAAAAAJAAAAAAAAAAABADhCSU0nEAAAAAAACgABAAAAAAAAAAI4QklNA/UAAAAAAEgAL2ZmAAEAbGZmAAYAAAAAAAEAL2ZmAAEAoZmaAAYAAAAAAAEAMgAAAAEAWgAAAAYAAAAAAAEANQAAAAEALQAAAAYAAAAAAAE4QklNA/gAAAAAAHAAAP////////////////////////////8D6AAAAAD/////////////////////////////A+gAAAAA/////////////////////////////wPoAAAAAP////////////////////////////8D6AAAOEJJTQQIAAAAAAAQAAAAAQAAAkAAAAJAAAAAADhCSU0EHgAAAAAABAAAAAA4QklNBBoAAAAAA0MAAAAGAAAAAAAAAAAAAAAGAAAACgAAAAcAaQBfADAAMQBfAHUAcAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAACgAAAAYAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAQAAAAAAAG51bGwAAAACAAAABmJvdW5kc09iamMAAAABAAAAAAAAUmN0MQAAAAQAAAAAVG9wIGxvbmcAAAAAAAAAAExlZnRsb25nAAAAAAAAAABCdG9tbG9uZwAAAAYAAAAAUmdodGxvbmcAAAAKAAAABnNsaWNlc1ZsTHMAAAABT2JqYwAAAAEAAAAAAAVzbGljZQAAABIAAAAHc2xpY2VJRGxvbmcAAAAAAAAAB2dyb3VwSURsb25nAAAAAAAAAAZvcmlnaW5lbnVtAAAADEVTbGljZU9yaWdpbgAAAA1hdXRvR2VuZXJhdGVkAAAAAFR5cGVlbnVtAAAACkVTbGljZVR5cGUAAAAASW1nIAAAAAZib3VuZHNPYmpjAAAAAQAAAAAAAFJjdDEAAAAEAAAAAFRvcCBsb25nAAAA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IHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIChNYWNpbnRvc2gpIiB4bXA6Q3JlYXRlRGF0ZT0iMjAxOC0wNC0yMlQyMzoxMjo0NSswODowMCIgeG1wOk1vZGlmeURhdGU9IjIwMTgtMDQtMjVUMDg6Mzc6NDArMDg6MDAiIHhtcDpNZXRhZGF0YURhdGU9IjIwMTgtMDQtMjVUMDg6Mzc6NDArMDg6MDAiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6NDJmYjQxOTAtZjBiNS00YTQ3LWFkZmQtNmFkZGVlMzI0NzkwIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOkYzRDJBMUQ0M0U2MzExRThCNDY2QjA1OUZDRkI1RjBFIiB4bXBNTTpPcmlnaW5hbERvY3VtZW50SUQ9InhtcC5kaWQ6RjNEMkExRDQzRTYzMTFFOEI0NjZCMDU5RkNGQjVGMEUiIGRjOmZvcm1hdD0iaW1hZ2UvanBlZyIgcGhvdG9zaG9wOkNvbG9yTW9kZT0iMyIgcGhvdG9zaG9wOklDQ1Byb2ZpbGU9IiI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkYzRDJBMUQxM0U2MzExRThCNDY2QjA1OUZDRkI1RjBFIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOkYzRDJBMUQyM0U2MzExRThCNDY2QjA1OUZDRkI1RjBFIi8+IDx4bXBNTTpIaXN0b3J5PiA8cmRmOlNlcT4gPHJkZjpsaSBzdEV2dDphY3Rpb249InNhdmVkIiBzdEV2dDppbnN0YW5jZUlEPSJ4bXAuaWlkOjQyZmI0MTkwLWYwYjUtNGE0Ny1hZGZkLTZhZGRlZTMyNDc5MCIgc3RFdnQ6d2hlbj0iMjAxOC0wNC0yNVQwODozNzo0MCswODowMCIgc3RFdnQ6c29mdHdhcmVBZ2VudD0iQWRvYmUgUGhvdG9zaG9wIENDIChNYWNpbnRvc2gpIiBzdEV2dDpjaGFuZ2VkPSIvIi8+IDwvcmRmOlNlcT4gPC94bXBNTTpIaXN0b3J5PiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA8P3hwYWNrZXQgZW5kPSJ3Ij8+/+4ADkFkb2JlAGRAAAAAAf/bAIQAAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQICAgICAgICAgICAwMDAwMDAwMDAwEBAQEBAQEBAQEBAgIBAgIDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMD/8AAEQgABgAKAwERAAIRAQMRAf/dAAQAAv/EAFsAAQEAAAAAAAAAAAAAAAAAAAkKAQEAAAAAAAAAAAAAAAAAAAAAEAAABQIGAwEAAAAAAAAAAAADBAUGBwECFGU2VjcIABI0CREBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEQMRAD8Ap/7HM79O17tEwHNDUowixoyRVJesY0cDCzest55pRAiXGXzU7Lbbg9VaKIquEnW8NOAPqIVieLT1SRjByhge4Eqx0r7XYGjcfrt28l7V464/z/68n8D/2Q=="
 									 class="fore2">
 									<div class="select-item">
 										<ul>
 											<li type="1">默认排序</li>
-											<li type="3">额度最大</li>
-											<li type="4">周期最短</li>
-											<li type="5">额度最小</li>
-											<li type="6">芝麻分最高</li>
+											<li type="2">额度最大</li>
+											<li type="3">周期最短</li>
+											<li type="4">额度最小</li>
+											<li type="5">芝麻分最高</li>
 										</ul>
 									</div>
 								</li>
@@ -109,11 +109,32 @@
 		</div>
 
 		<script>
+
+			var number=0;  // 开始加载条数
+			var orderColumn=2; //  已读未读
+			var region="重庆";   // 地区
+			var selectItemSort="1";//排序
+			var thmladd = "";
 			window.onload = function(){
 				console.log("------------+");
 				this.refresh();
 
 			};
+			$(".read-wrapper li").click(function () {
+				$(".read-wrapper li").removeClass("active");
+				 orderColumn = $(this).attr("value");
+				$(this).addClass("active");
+				thmladd = "";
+				$("#refreshthml").html(thmladd);
+				refresh();
+			})
+			$(".select-item li").click(function () {
+				 selectItemSort = $(this).attr("type");
+				thmladd = "";
+				$("#refreshthml").html(thmladd);
+				refresh();
+			})
+
 			$("#refreshthml").on("scroll",function(){
 				var scrollHeight = this.scrollHeight;
 				var scrollTop = this.scrollTop;
@@ -135,56 +156,52 @@
 			function refresh() {
 
 				 console.log("进入----");
-				// $.ajax({
-				// 	url: "/EmojiManagementAjax",
-				// 	type: "get",
-				// 	dataType: "json",
-				// 	success: function (result) {
-						var thmladd = "";
+				$.ajax({
+					url: "/GrabASingleList",
+					data:{"haveReadUnread":orderColumn,"number":number,"city":region,"rank":selectItemSort},
+					type: "get",
+					dataType: "json",
+					success: function (result) {
 
-							for (i = 0; i < 10; i++) {
+
+							for (i = 0; i < result.length; i++) {
+								var qbtime=result[i].qd_fb_time.split("T");//以空格分割为数组
+
 								thmladd += "<div class=\"w100 user-list\">\n" +
 										"\t\t\t\t\t\t\t<!---->\n" +
 										"\t\t\t\t\t\t\t<div class=\"user-item\">\n" +
-										"\t\t\t\t\t\t\t\t<div class=\"d-relative pull-left user-avatar\"><a href=\"#/index/detail?userId=471368&amp;headUrls=http%3A%2F%2Fapi.jbd.melonmobile.cn%2Fcdn%2Fresource%2Fusr_ico_default.png&amp;nickName=%E5%90%95%E5%85%88%E7%94%9F&amp;score=752&amp;age=28&amp;occupation=%E4%B8%8A%E7%8F%AD%E6%97%8F&amp;borrowAmount=%EF%BF%A520000&amp;borrowPeriod=14%E5%A4%A9&amp;cityName=%E4%B8%B9%E4%B8%9C&amp;createTime=7%E4%B8%AA%E5%B0%8F%E6%97%B6%E4%B9%8B%E5%89%8D&amp;coinNumContact=28&amp;borrowId=199860&amp;type=1\"\n" +
+										"\t\t\t\t\t\t\t\t<div class=\"d-relative pull-left user-avatar\"><a href=\"/particularsRequest?particularsId="+result[i].lg_shop_uid+"\" "+
 										"\t\t\t\t\t\t\t\t\t class=\"full-cover-link\"></a> <img src=\"http://api.jbd.melonmobile.cn/cdn/resource/usr_ico_default.png\" alt=\"\"></div>\n" +
-										"\t\t\t\t\t\t\t\t<div class=\"d-relative pull-left user-data user-data1\"><a href=\"#/index/detail?userId=471368&amp;headUrls=http%3A%2F%2Fapi.jbd.melonmobile.cn%2Fcdn%2Fresource%2Fusr_ico_default.png&amp;nickName=%E5%90%95%E5%85%88%E7%94%9F&amp;score=752&amp;age=28&amp;occupation=%E4%B8%8A%E7%8F%AD%E6%97%8F&amp;borrowAmount=%EF%BF%A520000&amp;borrowPeriod=14%E5%A4%A9&amp;cityName=%E4%B8%B9%E4%B8%9C&amp;createTime=7%E4%B8%AA%E5%B0%8F%E6%97%B6%E4%B9%8B%E5%89%8D&amp;coinNumContact=28&amp;borrowId=199860&amp;type=1\"\n" +
+										"\t\t\t\t\t\t\t\t<div class=\"d-relative pull-left user-data user-data1\"\n" +
 										"\t\t\t\t\t\t\t\t\t class=\"full-cover-link\"></a>\n" +
 										"\t\t\t\t\t\t\t\t\t<div class=\"user-name-wrapper\">\n" +
-										"\t\t\t\t\t\t\t\t\t\t<div class=\"pull-left username\">吕先生</div>\n" +
+										"\t\t\t\t\t\t\t\t\t\t<div class=\"pull-left username\">"+result[i].qd_username+"</div>\n" +
 										"\t\t\t\t\t\t\t\t\t\t<div class=\"pull-left tag tag1\"><img src=\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAABQElEQVQ4T3XSv6uOYRgH8M+XzqB0LEdOYjiTwUAGOfIHSFInzJLFolhMRCHJYGGTgdVmQCIGWQxSymJmUUqZDpfut+fW6+l97/F6rs9z/7i+MVpVtYAbOI11vMalJF+mWzMDXsWVUf0n1pK87PX/YFVtxTPsG/8Qv7Ca5GP79g9W1VlswgkcnAFb6T0OJPk9gVW1E5/xBq9wew5s5VNJHnZ4B+fxB0dxE3vm4OdJDnfYdts1NF7HPTzF3hn4e5KlDtuzb8TdJOeG4y/iBfaP8HqShQ7bi23AcpIfvbGq2nE/jODXJNs7fIeVJMvTTVW1Dd9G8EmSYx1exC0cSvJ2asczuD+CJ5M87nAz2mC34PJwvFVcG2bbbQvHkSQ1HYDdQ2p2zBlDy2yL3eQNxpFbwgUcb3dGy+gnPMCjJG3Ok/UXLXtrD5W+ae4AAAAASUVORK5CYII=\"\n" +
-										"\t\t\t\t\t\t\t\t\t\t\t alt=\"\">\n" +
-										"\t\t\t\t\t\t\t\t\t\t\t752\n" +
-										"\t\t\t\t\t\t\t\t\t\t</div>\n" +
-										"\t\t\t\t\t\t\t\t\t\t<div class=\"pull-left tag man\">\n" +
-										"\t\t\t\t\t\t\t\t\t\t\t28\n" +
-										"\t\t\t\t\t\t\t\t\t\t</div>\n" +
-										"\t\t\t\t\t\t\t\t\t\t<div class=\"pull-left tag tag3\">\n" +
-										"\t\t\t\t\t\t\t\t\t\t\t上班族\n" +
-										"\t\t\t\t\t\t\t\t\t\t</div>\n" +
+										"\t\t\t\t\t\t\t\t\t\t\t alt=\"\">"+result[i].qd_sesame+"</div><div class=\"pull-left tag man\">"+result[i].qd_age+"</div>\n" +
+										"\t\t\t\t\t\t\t\t\t\t<div class=\"pull-left tag tag3\">"+result[i].qd_professional+"</div>\n" +
 										"\t\t\t\t\t\t\t\t\t</div>\n" +
 										"\t\t\t\t\t\t\t\t\t<div class=\"user-salary-wrapper\">\n" +
-										"\t\t\t\t\t\t\t\t\t\t<div class=\"pull-left salary\"><strong>￥20000</strong><span>14天</span></div>\n" +
+										"\t\t\t\t\t\t\t\t\t\t<div class=\"pull-left salary\"><strong>￥"+result[i].qd_loanpay+"</strong><span>"+result[i].qd_time+"</span></div>\n" +
 										"\t\t\t\t\t\t\t\t\t\t<div class=\"pull-right location\"><img src=\"data:image/jpeg;base64,/9j/4QAYRXhpZgAASUkqAAgAAAAAAAAAAAAAAP/sABFEdWNreQABAAQAAABQAAD/4QMsaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLwA8P3hwYWNrZXQgYmVnaW49Iu+7vyIgaWQ9Ilc1TTBNcENlaGlIenJlU3pOVGN6a2M5ZCI/PiA8eDp4bXBtZXRhIHhtbG5zOng9ImFkb2JlOm5zOm1ldGEvIiB4OnhtcHRrPSJBZG9iZSBYTVAgQ29yZSA1LjYtYzE0MCA3OS4xNjA0NTEsIDIwMTcvMDUvMDYtMDE6MDg6MjEgICAgICAgICI+IDxyZGY6UkRGIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyI+IDxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PSIiIHhtbG5zOnhtcD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLyIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bXA6Q3JlYXRvclRvb2w9IkFkb2JlIFBob3Rvc2hvcCBDQyAoTWFjaW50b3NoKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDpBNkU0RDlGRjNFNUExMUU4QjQ2NkIwNTlGQ0ZCNUYwRSIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDpBNkU0REEwMDNFNUExMUU4QjQ2NkIwNTlGQ0ZCNUYwRSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkE2REU3RkZBM0U1QTExRThCNDY2QjA1OUZDRkI1RjBFIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOkE2RTREOUZFM0U1QTExRThCNDY2QjA1OUZDRkI1RjBFIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+/+4ADkFkb2JlAGTAAAAAAf/bAIQAAgICAgICAgICAgMCAgIDBAMCAgMEBQQEBAQEBQYFBQUFBQUGBgcHCAcHBgkJCgoJCQwMDAwMDAwMDAwMDAwMDAEDAwMFBAUJBgYJDQsJCw0PDg4ODg8PDAwMDAwPDwwMDAwMDA8MDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwM/8AAEQgAEgAPAwERAAIRAQMRAf/EAGUAAQADAAAAAAAAAAAAAAAAAAQFBwkBAQAAAAAAAAAAAAAAAAAAAAAQAAEEAAMGBAcAAAAAAAAAAAIBAwQFABE0ITFBEjIGUWETNYFCUmIzFTYRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/ANq7i4kzZNiRWUuspKuWlcDdeOcyXMVEVQAuCDgBtXMiCwBjZWdlSWavV7jbwp+zhzBBcgEtmZrwz44BV3Wx62wkhY+qPbt7KCUM5kuRyDPzy9Tm+VDz3rsTADiVkC1VxuM+9H7VpCekyLgzydlTSBeaQLq70bTbzJgLC7i9ittPpj1XRuXq8/DzwEfF/jD0Xtjv4tJ0Fv8At+r44D//2Q==\"\n" +
 										"\t\t\t\t\t\t\t\t\t\t\t alt=\"\">\n" +
-										"\t\t\t\t\t\t\t\t\t\t\t<p>丹东</p>\n" +
+										"\t\t\t\t\t\t\t\t\t\t\t<p>"+result[i].qd_region+"</p>\n" +
 										"\t\t\t\t\t\t\t\t\t\t</div>\n" +
 										"\t\t\t\t\t\t\t\t\t</div>\n" +
 										"\t\t\t\t\t\t\t\t</div>\n" +
-										"\t\t\t\t\t\t\t\t<div class=\"pull-left d-relative user-data user-data2\"><a href=\"#/index/detail?userId=471368&amp;headUrls=http%3A%2F%2Fapi.jbd.melonmobile.cn%2Fcdn%2Fresource%2Fusr_ico_default.png&amp;nickName=%E5%90%95%E5%85%88%E7%94%9F&amp;score=752&amp;age=28&amp;occupation=%E4%B8%8A%E7%8F%AD%E6%97%8F&amp;borrowAmount=%EF%BF%A520000&amp;borrowPeriod=14%E5%A4%A9&amp;cityName=%E4%B8%B9%E4%B8%9C&amp;createTime=7%E4%B8%AA%E5%B0%8F%E6%97%B6%E4%B9%8B%E5%89%8D&amp;coinNumContact=28&amp;borrowId=199860&amp;type=1\"\n" +
+										"\t\t\t\t\t\t\t\t<div class=\"pull-left d-relative user-data user-data2\"><a href=\"\"\n" +
 										"\t\t\t\t\t\t\t\t\t class=\"full-cover-link\"></a>\n" +
 										"\t\t\t\t\t\t\t\t\t<ul class=\"fore1\">\n" +
-										"\t\t\t\t\t\t\t\t\t\t<li>工作单位：<span>浪潮创新科技有限公司</span></li>\n" +
-										"\t\t\t\t\t\t\t\t\t\t<li>月收入：<span>6000以上</span></li>\n" +
-										"\t\t\t\t\t\t\t\t\t\t<li>资产情况：<span>有房无车</span></li>\n" +
+										"\t\t\t\t\t\t\t\t\t\t<li>工作单位：<span>"+result[i].qd_units+"</span></li>\n" +
+										"\t\t\t\t\t\t\t\t\t\t<li>月收入：<span>"+result[i].qd_income+"以上</span></li>\n" +
+										"\t\t\t\t\t\t\t\t\t\t<li>资产情况：<span>"+result[i].qd_plicy+"</span></li>\n" +
 										"\t\t\t\t\t\t\t\t\t</ul>\n" +
 										"\t\t\t\t\t\t\t\t\t<ul class=\"fore2 last\">\n" +
-										"\t\t\t\t\t\t\t\t\t\t<li>学历状况：<span>高中</span></li>\n" +
-										"\t\t\t\t\t\t\t\t\t\t<li>社保：<span>有，连续缴纳半年及以上</span></li>\n" +
-										"\t\t\t\t\t\t\t\t\t\t<li>公积金：<span>无</span></li>\n" +
+										"\t\t\t\t\t\t\t\t\t\t<li>学历状况：<span>"+result[i].qd_often+"</span></li>\n" +
+										"\t\t\t\t\t\t\t\t\t\t<li>社保：<span>"+result[i].qd_often+"</span></li>\n" +
+										"\t\t\t\t\t\t\t\t\t\t<li>公积金：<span>"+result[i].qd_fund+"</span></li>\n" +
 										"\t\t\t\t\t\t\t\t\t</ul>\n" +
 										"\t\t\t\t\t\t\t\t</div>\n" +
-										"\t\t\t\t\t\t\t\t<div class=\"pull-left d-relative user-data user-data3 last\"><a href=\"#/index/detail?userId=471368&amp;headUrls=http%3A%2F%2Fapi.jbd.melonmobile.cn%2Fcdn%2Fresource%2Fusr_ico_default.png&amp;nickName=%E5%90%95%E5%85%88%E7%94%9F&amp;score=752&amp;age=28&amp;occupation=%E4%B8%8A%E7%8F%AD%E6%97%8F&amp;borrowAmount=%EF%BF%A520000&amp;borrowPeriod=14%E5%A4%A9&amp;cityName=%E4%B8%B9%E4%B8%9C&amp;createTime=7%E4%B8%AA%E5%B0%8F%E6%97%B6%E4%B9%8B%E5%89%8D&amp;coinNumContact=28&amp;borrowId=199860&amp;type=1\"\n" +
+										"\t\t\t\t\t\t\t\t<div class=\"pull-left d-relative user-data user-data3 last\"><a href=\"\"\n" +
 										"\t\t\t\t\t\t\t\t\t class=\"full-cover-link\"></a>\n" +
 										"\t\t\t\t\t\t\t\t\t<ul class=\"fore1 last\">\n" +
 										"\t\t\t\t\t\t\t\t\t\t<li>电话：\n" +
@@ -199,8 +216,8 @@
 										"\t\t\t\t\t\t\t\t\t</ul>\n" +
 										"\t\t\t\t\t\t\t\t</div>\n" +
 										"\t\t\t\t\t\t\t\t<div class=\"pull-right buy-wrapper\">\n" +
-										"\t\t\t\t\t\t\t\t\t<div class=\"time\">7个小时之前</div>\n" +
-										"\t\t\t\t\t\t\t\t\t<div class=\"buy\">28币购买</div>\n" +
+										"\t\t\t\t\t\t\t\t\t<div class=\"time\">"+qbtime[0]+"</div>\n" +
+										"\t\t\t\t\t\t\t\t\t<div class=\"buy\">"+result[i].qd_gm_pay+"币购买</div>\n" +
 										"\t\t\t\t\t\t\t\t\t<!---->\n" +
 										"\t\t\t\t\t\t\t\t</div>\n" +
 										"\t\t\t\t\t\t\t</div>\n" +
@@ -214,11 +231,11 @@
 
 						$("#refreshthml").html(thmladd);
 
-					// },
-					// error: function (result) {
-					// 	console.log("error----");
-					// }
-				// })
+					},
+					error: function (result) {
+						console.log("error----");
+					}
+				})
 			}
 
 		</script>

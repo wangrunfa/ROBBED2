@@ -1,8 +1,6 @@
 package com.robbad.dao;
 
-import com.robbad.model.Building;
-import com.robbad.model.BuildingName;
-import com.robbad.model.User;
+import com.robbad.model.*;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -50,4 +48,11 @@ public interface UserDao {
 
     @Update("update qd_user set lg_password=#{user.lgPassword} where lg_phone=#{user.lgPhone} limit 1")
     int updatePassword(@Param("user") User user);
+
+    List<SearchCondition> GrabASingleListImpl(@Param("searchConditions") SearchCondition searchCondition);
+//    @Select(" select lg_shop_uid,qd_gm_pay,qd_fb_time,qd_sesame,qd_loanpay,qd_username,qd_region,qd_age,qd_professional,\n" +
+//            "                qd_often,qd_social,qd_plicy,qd_assets,qd_income,qd_units,qd_fund,qd_time from\n" +
+//            "                qd_basicmanager where lg_shop_uid=#{particularsId} limit 1")
+@Select(" select * from  qd_basicmanager where lg_shop_uid=#{particularsId} limit 1")
+Basicmanager particularsMessage(@Param("particularsId")Integer particularsId);
 }

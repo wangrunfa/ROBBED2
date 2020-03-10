@@ -33,9 +33,13 @@ public class WxWebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
        registry.addInterceptor(tokenInterceptor)
-       .addPathPatterns("/EmojiManagement")
+       .addPathPatterns("/GrabASingleList")
        .addPathPatterns("/occupied")
-       .excludePathPatterns("/**");
+       .addPathPatterns("/purchase")
+       .addPathPatterns("/DirectDrive")
+       .addPathPatterns("/grondstoffenlijst")
+       .addPathPatterns("/particularsRequest")
+       .excludePathPatterns("/login");
 
 
     }

@@ -172,7 +172,7 @@ function registerjq() {
               document.getElementById("btnSendCode").value=curCount + "秒后重获";//更改按钮文字
               InterValObj = window.setInterval(SetRemainTime, 1000); // 启动计时器timer处理函数，1秒执行一次
               }else{
-                  write("验证码发送失败")
+                  alert("操作频繁，请稍候再试")
               }
           },
           //请求失败，包含具体的错误信息

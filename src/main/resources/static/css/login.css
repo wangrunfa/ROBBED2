@@ -4182,6 +4182,7 @@ img.block-img {
           border-radius: 2px;
           -webkit-box-shadow: 0px 0px 6px rgba(177, 177, 177, 0.25);
                   box-shadow: 0px 0px 6px rgba(177, 177, 177, 0.25);
+          z-index:10000;
           position: absolute;
           top: 30px;
           left: 0;
@@ -4193,8 +4194,10 @@ img.block-img {
             color: #666; }
 .content-box .select-item-wrapper .filter-wrapper li.fore2 .select-item li:hover {
             background: #f4f4f4; }
-.content-box .select-item-wrapper .filter-wrapper li.fore2:hover .select-item {
+.content-box .select-item-wrapper .filter-wrapper li .select-item:hover {
         display: block; }
+.content-box .select-item-wrapper .filter-wrapper li.fore2:hover .select-item {
+    display: block; }
 .content-box .select-item-wrapper .filter-wrapper li.fore2:hover img.fore1 {
         display: none; }
 .content-box .select-item-wrapper .filter-wrapper li.fore2:hover img.fore2 {

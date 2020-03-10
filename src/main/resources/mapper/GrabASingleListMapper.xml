@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+        <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.robbad.dao.UserDao">
+
+        <select id="GrabASingleListImpl" parameterType="com.robbad.model.SearchCondition" resultType="java.util.Map">
+                select kh.lg_shop_uid,kh.qd_gm_pay,kh.qd_fb_time,kh.qd_sesame,kh.qd_loanpay,kh.qd_username,kh.qd_region,kh.qd_age,kh.qd_professional,
+                kh.qd_often,kh.qd_social,kh.qd_plicy,kh.qd_assets,kh.qd_income,kh.qd_units,kh.qd_fund,kh.qd_time from
+                qd_basicmanager as kh,qd_lg_power as jl
+                        where
+                        kh.qd_region like #{searchConditions.city}
+            group by kh.lg_shop_uid
+                <if test="searchConditions.haveReadUnread==0">
+                       and jl.lg_phone=#{searchConditions.phone} and jl.lg_read != kh.lg_shop_uid
+                </if>
+                <if test="searchConditions.haveReadUnread==1">
+                       and jl.lg_phone=#{searchConditions.phone} and jl.lg_read = kh.lg_shop_uid
+                </if>
+
+                <if test="searchConditions.rank == 2">
+                         ORDER BY   kh.qd_loanpay desc
+                </if>
+                <if test="searchConditions.rank == 3">
+                         ORDER BY  kh.qd_time  asc
+                </if>
+                <if test="searchConditions.rank == 4">
+                          ORDER BY kh.qd_loanpay asc
+                </if>
+                <if test="searchConditions.rank == 5">
+                         ORDER BY  kh.qd_sesame desc
+                </if>
+
+                limit #{searchConditions.number},8;
+        </select>
+
+</mapper>

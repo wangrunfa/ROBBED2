@@ -1,5 +1,6 @@
 package com.robbad.service;
 
+import com.robbad.model.SearchCondition;
 import com.robbad.model.User;
 
 import java.util.Map;
@@ -12,9 +13,13 @@ public interface UserService {
 
     Map<String,Object> authcode(String phone);
 
-    Object buildingTableList(String sex);
 
-    Object occupied(int id, String studentNumber);
+
+
 
     Object changePassword(User user);
+
+    Object GrabASingleList(SearchCondition searchCondition);
+
+    Object particularsMessage(Integer particularsId);
 }

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<link rel="stylesheet" href="css/login.css" />
+	</head>
+	<body>
+		<div id="app">
+			<div class="af-page">
+				<div class="page-header"><a href="#/" class="pull-left logo router-link-exact-active router-link-active"><img src="img/haoduoyu.png"
+						 alt=""></a>
+					<div class="pull-right header-nav">
+						<ul>
+							<li class="d-relative fore1"><a href="#/subscribe" class="full-cover-link"></a>
+								个人订阅设置
+							</li>
+							<li class="fore3">
+								微信客服
+								<div class="qrcode-box"><img src="img/haoduoyu.png" alt="">
+									<p>客服二维码</p>
+								</div>
+							</li>
+							<li class="d-relative fore1">
+								修改密码
+							</li>
+							<li class="fore4">
+								退出
+							</li>
+						</ul>
+					</div>
+					<!---->
+					<!---->
+					<!---->
+					<!---->
+				</div>
+				<div class="aside-nav" style="z-index: 999999;">
+					<div class="avatar-box"><img src="http://api.jbd.melonmobile.cn/cdn/resource/usr_ico_default.png" alt="">
+						<div class="username text-overflow" th:text="${lgUsername}"></div>
+						<div class="user-id text-overflow">Tel：<p th:text="${lgPhone}"></p></div>
+					</div>
+					<div class="nav"><a href="/grondstoffenlijst" class="fore1 router-link-exact-active router-link-activ">
+						<div class="line"></div>
+						抢单列表
+					</a>
+						<!---->
+						<!----> <a href="/DirectDrive" class="fore2">
+							<div class="line"></div>
+							优米借直推
+						</a>
+						<!----> <a href="/purchase" class="fore3">
+							<div class="line"></div>
+							已购的客户
+						</a> <a href="" class="fore4">
+							<div class="line"></div>
+							购买生财币
+						</a></div>
+				</div>
+				<div class="content-box">
+					<div class="w100 select-item-wrapper"><a href="/grondstoffenlijst" class="go-back">返回上一级</a></div>
+					<div class="w100 user-list-box">
+						<!---->
+						<div class="w100 user-list user-detail-box">
+							<div class="user-item">
+								<div class="d-relative pull-left user-avatar"><a href="#/index/detail" class="full-cover-link router-link-active"></a>
+									<img src="http://api.jbd.melonmobile.cn/cdn/resource/usr_ico_default.png" alt=""></div>
+								<div class="d-relative pull-left user-data user-data1"><a href="#/index/detail" class="full-cover-link router-link-active"></a>
+									<div class="user-name-wrapper">
+										<div class="pull-left username" th:text="${particularsMessages.qdUsername}">王先生</div>
+										<div class="pull-left tag tag1"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAABQElEQVQ4T3XSv6uOYRgH8M+XzqB0LEdOYjiTwUAGOfIHSFInzJLFolhMRCHJYGGTgdVmQCIGWQxSymJmUUqZDpfut+fW6+l97/F6rs9z/7i+MVpVtYAbOI11vMalJF+mWzMDXsWVUf0n1pK87PX/YFVtxTPsG/8Qv7Ca5GP79g9W1VlswgkcnAFb6T0OJPk9gVW1E5/xBq9wew5s5VNJHnZ4B+fxB0dxE3vm4OdJDnfYdts1NF7HPTzF3hn4e5KlDtuzb8TdJOeG4y/iBfaP8HqShQ7bi23AcpIfvbGq2nE/jODXJNs7fIeVJMvTTVW1Dd9G8EmSYx1exC0cSvJ2asczuD+CJ5M87nAz2mC34PJwvFVcG2bbbQvHkSQ1HYDdQ2p2zBlDy2yL3eQNxpFbwgUcb3dGy+gnPMCjJG3Ok/UXLXtrD5W+ae4AAAAASUVORK5CYII="
+											 alt="" th:text="${particularsMessages.qdSesame}">
+											665
+										</div>
+										<div class="pull-left tag man" th:text="${particularsMessages.qdAge}">
+											31
+										</div>
+										<div class="pull-left tag tag3" th:text="${particularsMessages.qdProfessional}">
+											上班族
+										</div>
+									</div>
+									<div class="user-salary-wrapper">
+										<div class="pull-left salary"><strong th:text="${particularsMessages.qdLoanpay}">￥5000</strong><span th:text="${particularsMessages.qdTime}">14天</span></div>
+										<div class="pull-right location"><img src="data:image/jpeg;base64,/9j/4QAYRXhpZgAASUkqAAgAAAAAAAAAAAAAAP/sABFEdWNreQABAAQAAABQAAD/4QMsaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLwA8P3hwYWNrZXQgYmVnaW49Iu+7vyIgaWQ9Ilc1TTBNcENlaGlIenJlU3pOVGN6a2M5ZCI/PiA8eDp4bXBtZXRhIHhtbG5zOng9ImFkb2JlOm5zOm1ldGEvIiB4OnhtcHRrPSJBZG9iZSBYTVAgQ29yZSA1LjYtYzE0MCA3OS4xNjA0NTEsIDIwMTcvMDUvMDYtMDE6MDg6MjEgICAgICAgICI+IDxyZGY6UkRGIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyI+IDxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PSIiIHhtbG5zOnhtcD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLyIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bXA6Q3JlYXRvclRvb2w9IkFkb2JlIFBob3Rvc2hvcCBDQyAoTWFjaW50b3NoKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDpBNkU0RDlGRjNFNUExMUU4QjQ2NkIwNTlGQ0ZCNUYwRSIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDpBNkU0REEwMDNFNUExMUU4QjQ2NkIwNTlGQ0ZCNUYwRSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkE2REU3RkZBM0U1QTExRThCNDY2QjA1OUZDRkI1RjBFIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOkE2RTREOUZFM0U1QTExRThCNDY2QjA1OUZDRkI1RjBFIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+/+4ADkFkb2JlAGTAAAAAAf/bAIQAAgICAgICAgICAgMCAgIDBAMCAgMEBQQEBAQEBQYFBQUFBQUGBgcHCAcHBgkJCgoJCQwMDAwMDAwMDAwMDAwMDAEDAwMFBAUJBgYJDQsJCw0PDg4ODg8PDAwMDAwPDwwMDAwMDA8MDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwM/8AAEQgAEgAPAwERAAIRAQMRAf/EAGUAAQADAAAAAAAAAAAAAAAAAAQFBwkBAQAAAAAAAAAAAAAAAAAAAAAQAAEEAAMGBAcAAAAAAAAAAAIBAwQFABE0ITFBEjIGUWETNYFCUmIzFTYRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/ANq7i4kzZNiRWUuspKuWlcDdeOcyXMVEVQAuCDgBtXMiCwBjZWdlSWavV7jbwp+zhzBBcgEtmZrwz44BV3Wx62wkhY+qPbt7KCUM5kuRyDPzy9Tm+VDz3rsTADiVkC1VxuM+9H7VpCekyLgzydlTSBeaQLq70bTbzJgLC7i9ittPpj1XRuXq8/DzwEfF/jD0Xtjv4tJ0Fv8At+r44D//2Q=="
+											 alt="" th:text="${particularsMessages.qdRegion}">
+											大庆
+										</div>
+									</div>
+								</div>
+								<div class="pull-left user-data user-data4 last">
+									<ul class="last">
+										<li>电话：
+											<span>购买后显示</span>
+											<!---->
+										</li>
+										<li>微信：
+											<span>购买后显示</span>
+											<!---->
+										</li>
+										<li>QQ：
+											<span>购买后显示</span>
+											<!---->
+										</li>
+									</ul>
+								</div>
+								<div class="pull-right buy-wrapper">
+									<div class="time" th:text="${particularsMessages.qdFbTime}">7个小时之前</div>
+									<div class="buy"><p th:text="${particularsMessages.qdGmPay}">26</p>币购买</div>
+									<!---->
+									<!---->
+									<!---->
+									<!---->
+									<!---->
+									<!---->
+									<!---->
+								</div>
+							</div>
+							<div class="ud-item">
+								<div class="ud-item-title">基础信息</div>
+								<div class="ud-item-content">
+									<ul>
+										<li>姓名：<span th:text="${particularsMessages.qdUsername}">王*祥</span></li>
+										<li>年龄：<span th:text="${particularsMessages.qdSex}">31岁</span></li>
+										<li>学历：<span th:text="${particularsMessages.qdOften}">本科</span></li>
+										<li>有无本地社保：<span th:text="${particularsMessages.qdSocial}">有，连续缴纳半年及以上</span></li>
+										<li>有无保单：<span th:text="${particularsMessages.qdPlicy}">无</span></li>
+										<li>资产情况：<span th:text="${particularsMessages.qdAssets}">有车有房</span></li>
+										<li>身份证号：<span th:text="${particularsMessages.qdCard}">**************3575</span></li>
+										<li>婚姻状况：<span th:text="${particularsMessages.qdMarriage}">已婚未育</span></li>
+										<li>现居地：<span th:text="${particularsMessages.qdDress}">黑龙江大庆*************</span></li>
+										<li>有无本地公积金：<span th:text="${particularsMessages.qdFund}">有，连续缴纳半年及以上</span></li>
+										<li>有无信用卡：<span th:text="${particularsMessages.qdCredit}">有，半年无逾期</span></li>
+										<li>用户来源渠道：<span th:text="${particularsMessages.qdSource}" style="color: rgb(245, 106, 3);">001</span></li>
+									</ul>
+								</div>
+							</div>
+							<div class="ud-item">
+								<div class="ud-item-title">工作信息</div>
+								<div class="ud-item-content">
+									<ul>
+										<li>职业：<span th:text="${particularsMessages.qdProfessional}">上班族</span></li>
+										<li>工作单位：<span th:text="${particularsMessages.qdUnits}">黑龙江***********</span></li>
+										<li>单位地址：<span th:text="${particularsMessages.qdDress}">黑龙江哈尔滨**************</span></li>
+										<li>月收入：<span th:text="${particularsMessages.qdIncome}">6000以上</span></li>
+										<li>发薪日：<span th:text="${particularsMessages.qdSalary}">每月15号</span></li>
+									</ul>
+								</div>
+							</div>
+							<div class="ud-item">
+								<div class="ud-item-title">信用报告</div>
+								<div class="ud-item-content">
+									<ul>
+										<li>用户姓名与身份证是否匹配：<span th:text="${particularsMessages.qdUserMatching}">是</span></li>
+										<li>居住时长：<span th:text="${particularsMessages.qdLiveltervals}">3年以上</span></li>
+										<li>手机号在网时长：<span th:text="${particularsMessages.qdPhoneLive}">未认证</span></li>
+										<li>手机号当前状态：<span th:text="${particularsMessages.qdPhoneStaus}">未认证</span></li>
+										<li>是否在法院失信名单中：<span th:text="${particularsMessages.qdCourtOrdered}">未认证</span></li>
+										<li>户籍地：<span th:text="${particularsMessages.qdDomicile}"></span></li>
+										<li>现居地是否定位城市：<span th:text="${particularsMessages.qdUndercity}">是</span></li>
+										<li>主要通话区域：<span th:text="${particularsMessages.qdPhoneCity}">未认证</span></li>
+										<li>身份证是否在信贷行业逾期名单：<span th:text="${particularsMessages.qdCardList}">未认证</span></li>
+										<li>贷款类号码通话情况：<span th:text="${particularsMessages.qdLoanPhone}">未认证</span></li>
+										<li>现居地：<span th:text="${particularsMessages.qdNewAddress}">黑龙江大庆*************</span></li>
+										<li>用户姓名与运营数据是否匹配：<span th:text="${particularsMessages.qdUserMatching}">未认证</span></li>
+										<li>互通号码个数：<span th:text="${particularsMessages.qdHtPhone}">未认证</span></li>
+										<li>手机号是否在信贷行业逾期名单中：<span th:text="${particularsMessages.qdPhoneLoanList}">未认证</span></li>
+										<li>催收类号码通话情况：<span th:text="${particularsMessages.qdCsPhone}">未认证</span></li>
+									</ul>
+								</div>
+							</div>
+							<!---->
+							<!---->
+						</div>
+					</div>
+				</div>
+				<!---->
+				<!---->
+			</div>
+		</div>
+
+
+	</body>
+</html>

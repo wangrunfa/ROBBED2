@@ -1,14 +1,20 @@
 package com.robbad.model;
 
-import java.util.Date;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
+import java.util.Date;
+@ToString
+@Getter
+@Setter
 public class Basicmanager {
     private Integer lgShopUid; //用户表购买id
-    private Integer qdGmPay;//
-    private Date qdFbTime;//
+    private Integer qdGmPay;//购买价格
+    private Date qdFbTime;//添加时间
     private Integer qdSesame;//芝麻分
-    private String qdWechat;//
-    private String qdQq;//
+    private String qdWechat;//抢单列表中微信号
+    private String qdQq;//抢单列表中qq
     private Integer qdPhone;//抢单列表中用户手机号
     private String qdUsername;//渠道用户名称
     private Integer qdLoanpay;//渠道贷款金额
@@ -27,8 +33,8 @@ public class Basicmanager {
     private String qdFund;//渠道用户公积金
     private String qdCredit;//渠道信用卡
     private String qdSource;//渠道用户来源
-    private String qdDepartment;//
-    private String qdLiveltervals;//
+    private String qdDepartment;//姓名与身份证是否匹配
+    private String qdLiveltervals;//居住时长
     private String qdPhoneLive;//手机号在网时长
     private String qdPhoneStaus;//手机号当前状态
     private String qdCourtOrdered;//是否在法院失信名单
@@ -46,4 +52,6 @@ public class Basicmanager {
     private String qdUnits;//渠道工作单位
     private String qdUnitsDress;//渠道工作单位地址
     private String qdIncome;//渠道用户月收入
+    private String qdSalary;//渠道用户发放薪水日期
+
 }
