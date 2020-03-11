@@ -125,7 +125,7 @@ function registerjq() {
         success : function(result) {
             console.log(result)
             if(result.code==0){
-                $(location).prop('href', '/loginym')
+                $(location).prop('href', '/login')
             }
             if(result.code==1){
                 alert(result.message)

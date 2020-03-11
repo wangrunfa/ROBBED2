@@ -36,7 +36,12 @@ public class UserController {
     public String qdLogin() {
         return "qdlogin";
     }
-
+    /**
+     * 登录
+     * @param model
+     * @param request
+     * @return
+     */
     @RequestMapping("/loginUser")
     public String qclogin(Model model, User user, HttpServletRequest request) {
         model.addAttribute("message","用户名密码错误");
@@ -56,9 +61,11 @@ public class UserController {
                 System.out.println(returnz.toString());
                 session.setAttribute("lgPhone", user.getLgPhone());
                 session.setAttribute("lgUsername", returnz.getLgUsername());
+                session.setAttribute("lgBalance", returnz.getLgBalance());
                 session.setAttribute("status", true);
                 model.addAttribute("lgUsername", returnz.getLgUsername());
-                model.addAttribute("lgP hone", user.getLgPhone());
+                model.addAttribute("lgPhone", user.getLgPhone());
+                model.addAttribute("lgBalance", returnz.getLgBalance());
             } else {
                 return "login";
             }
@@ -87,6 +94,56 @@ public class UserController {
             }
             searchCondition.setPhone(phone);
             return userService.GrabASingleList(searchCondition);
+        }catch (Exception e){
+            return WebTools.returnData("异常",1);
+        }
+
+
+
+    }
+
+    /**
+     * 直推
+     *
+     * @param
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/DicectDriveList")
+    public Object DicectDriveList(SearchCondition searchCondition, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        try{
+            String phone=(String)session.getAttribute("lgPhone");
+            if(phone==null){
+                return WebTools.returnData("session未保持",1);
+            }
+            searchCondition.setPhone(phone);
+            return userService.DicectDriveList(searchCondition);
+        }catch (Exception e){
+            return WebTools.returnData("异常",1);
+        }
+
+
+
+    }
+
+    /**
+     * 已购客户
+     *
+     * @param
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/purchaseList")
+    public Object purchaseList(SearchCondition searchCondition, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        try{
+            String phone=(String)session.getAttribute("lgPhone");
+            if(phone==null){
+                return WebTools.returnData("session未保持",1);
+            }
+            searchCondition.setPhone(phone);
+            return userService.purchaseList(searchCondition);
         }catch (Exception e){
             return WebTools.returnData("异常",1);
         }
@@ -143,9 +200,9 @@ public class UserController {
         return "login";
     }
     /**
-     * 退出登录
-     *
-     * @param
+     * 详情页面
+     * @param model
+     * @param request
      * @return
      */
     @RequestMapping("/particularsRequest")
@@ -155,51 +212,59 @@ public class UserController {
 
         model.addAttribute("lgUsername", session.getAttribute("lgUsername"));
         model.addAttribute("lgPhone", session.getAttribute("lgPhone"));
-        model.addAttribute("particularsMessages",userService.particularsMessage(particularsId));
+        model.addAttribute("lgBalance", session.getAttribute("lgBalance"));
+        model.addAttribute("particularsMessages",userService.particularsMessage(particularsId,(String)session.getAttribute("lgPhone")));
         return "particulars";
     }
-
+    /**
+     * 抢单页面
+     * @param model
+     * @param request
+     * @return
+     */
     @RequestMapping("/grondstoffenlijst")
     public String grondstoffenlijst(Model model, HttpServletRequest request ){
         HttpSession session = request.getSession();
         model.addAttribute("lgUsername", session.getAttribute("lgUsername"));
         model.addAttribute("lgPhone", session.getAttribute("lgPhone"));
+        model.addAttribute("lgBalance", session.getAttribute("lgBalance"));
         return "grondstoffenlijst";
     }
+    /**
+     * 直推 页面
+     * @param model
+     * @param request
+     * @return
+     */
     @RequestMapping("/DirectDrive")
     public String DirectDrive(Model model, HttpServletRequest request ){
         HttpSession session = request.getSession();
         model.addAttribute("lgUsername", session.getAttribute("lgUsername"));
         model.addAttribute("lgPhone", session.getAttribute("lgPhone"));
+        model.addAttribute("lgBalance", session.getAttribute("lgBalance"));
         return "DirectDrive";
     }
 
-
+    /**
+     * 已购信息页面
+     * @param model
+     * @param request
+     * @return
+     */
     @RequestMapping("/purchase")
     public String purchase(Model model, HttpServletRequest request ){
         HttpSession session = request.getSession();
         model.addAttribute("lgUsername", session.getAttribute("lgUsername"));
         model.addAttribute("lgPhone", session.getAttribute("lgPhone"));
+        model.addAttribute("lgBalance", session.getAttribute("lgBalance"));
         return "purchase";
     }
-    @ResponseBody
-    @RequestMapping("/purchaseList")
-    public Object purchaseList(SearchCondition searchCondition, HttpServletRequest request) {
-        HttpSession session = request.getSession();
-        try{
-            String phone=(String)session.getAttribute("lgPhone");
-            if(phone==null){
-                return WebTools.returnData("session未保持",1);
-            }
-            searchCondition.setPhone(phone);
-            return userService.GrabASingleList(searchCondition);
-        }catch (Exception e){
-            return WebTools.returnData("异常",1);
-        }
 
-
-
-    }
+    /**
+     * 修改密码
+     * @param user
+     * @return
+     */
     @ResponseBody
     @RequestMapping("/changePassword")
     public Object changePassword(User user) {
@@ -211,4 +276,27 @@ public class UserController {
         return userService.changePassword(user);
     }
 
+    /**
+     * 已购信息数据
+     * @param gmid
+     * @param request
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/purchaseInformation")
+    public Object purchaseInformation(Integer gmid, HttpServletRequest request ) {
+        HttpSession session = request.getSession();
+        return userService.purchaseInformation(gmid,(String)session.getAttribute("lgPhone"));
+    }
+    /**
+     * 已购信息数据
+     * @param gmid
+     * @param request
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/cityInfo")
+    public Object cityInfo() {
+        return userService.cityInfo();
+    }
 }

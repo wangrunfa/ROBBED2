@@ -37,7 +37,8 @@
 				<div class="aside-nav" style="z-index: 999999;">
 					<div class="avatar-box"><img src="http://api.jbd.melonmobile.cn/cdn/resource/usr_ico_default.png" alt="">
 						<div class="username text-overflow" th:text="${lgUsername}"></div>
-						<div class="user-id text-overflow">Tel：<p th:text="${lgPhone}"></p></div>
+						<div class="user-id text-overflow"><p th:text="'Tel：'+${lgPhone}"></p></div>
+						<div class="user-id text-overflow"><p th:text="'余额：'+${lgBalance}"></p></div>
 					</div>
 					<div class="nav"><a href="/grondstoffenlijst" class="fore1 router-link-exact-active router-link-activ">
 						<div class="line"></div>

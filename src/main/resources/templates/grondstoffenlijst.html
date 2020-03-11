@@ -41,7 +41,8 @@
 				<div class="aside-nav" style="z-index: 999999;">
 					<div class="avatar-box"><img src="http://api.jbd.melonmobile.cn/cdn/resource/usr_ico_default.png" alt="">
 						<div class="username text-overflow" th:text="${lgUsername}"></div>
-						<div class="user-id text-overflow">Tel：<p th:text="${lgPhone}"></p></div>
+						<div class="user-id text-overflow"><p th:text="'Tel：'+${lgPhone}"></p></div>
+						<div class="user-id text-overflow"><p th:text="'余额：'+${lgBalance}"></p></div>
 					</div>
 					<div class="nav"><a href="/grondstoffenlijst" class="fore1 router-link-exact-active router-link-active">
 							<div class="line"></div>
@@ -72,9 +73,9 @@
 						<div class="pull-left date-wrapper"><button style="background: rgb(202, 202, 198) none repeat scroll 0% 0%; border: 1px solid rgb(202, 202, 198); margin-left: 6px; height: 30px;">重置</button></div>
 						<div class="pull-right filter-wrapper">
 							<ul>
-								<li class="fore1"><img src="data:image/jpeg;base64,/9j/4QAYRXhpZgAASUkqAAgAAAAAAAAAAAAAAP/sABFEdWNreQABAAQAAABQAAD/4QMsaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLwA8P3hwYWNrZXQgYmVnaW49Iu+7vyIgaWQ9Ilc1TTBNcENlaGlIenJlU3pOVGN6a2M5ZCI/PiA8eDp4bXBtZXRhIHhtbG5zOng9ImFkb2JlOm5zOm1ldGEvIiB4OnhtcHRrPSJBZG9iZSBYTVAgQ29yZSA1LjYtYzE0MCA3OS4xNjA0NTEsIDIwMTcvMDUvMDYtMDE6MDg6MjEgICAgICAgICI+IDxyZGY6UkRGIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyI+IDxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PSIiIHhtbG5zOnhtcD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLyIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bXA6Q3JlYXRvclRvb2w9IkFkb2JlIFBob3Rvc2hvcCBDQyAoTWFjaW50b3NoKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDpBNkU0RDlGRjNFNUExMUU4QjQ2NkIwNTlGQ0ZCNUYwRSIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDpBNkU0REEwMDNFNUExMUU4QjQ2NkIwNTlGQ0ZCNUYwRSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkE2REU3RkZBM0U1QTExRThCNDY2QjA1OUZDRkI1RjBFIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOkE2RTREOUZFM0U1QTExRThCNDY2QjA1OUZDRkI1RjBFIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+/+4ADkFkb2JlAGTAAAAAAf/bAIQAAgICAgICAgICAgMCAgIDBAMCAgMEBQQEBAQEBQYFBQUFBQUGBgcHCAcHBgkJCgoJCQwMDAwMDAwMDAwMDAwMDAEDAwMFBAUJBgYJDQsJCw0PDg4ODg8PDAwMDAwPDwwMDAwMDA8MDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwM/8AAEQgAEgAPAwERAAIRAQMRAf/EAGUAAQADAAAAAAAAAAAAAAAAAAQFBwkBAQAAAAAAAAAAAAAAAAAAAAAQAAEEAAMGBAcAAAAAAAAAAAIBAwQFABE0ITFBEjIGUWETNYFCUmIzFTYRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/ANq7i4kzZNiRWUuspKuWlcDdeOcyXMVEVQAuCDgBtXMiCwBjZWdlSWavV7jbwp+zhzBBcgEtmZrwz44BV3Wx62wkhY+qPbt7KCUM5kuRyDPzy9Tm+VDz3rsTADiVkC1VxuM+9H7VpCekyLgzydlTSBeaQLq70bTbzJgLC7i9ittPpj1XRuXq8/DzwEfF/jD0Xtjv4tJ0Fv8At+r44D//2Q=="
+								<li  onclick="cityAnn()" class="fore1"><img src="data:image/jpeg;base64,/9j/4QAYRXhpZgAASUkqAAgAAAAAAAAAAAAAAP/sABFEdWNreQABAAQAAABQAAD/4QMsaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLwA8P3hwYWNrZXQgYmVnaW49Iu+7vyIgaWQ9Ilc1TTBNcENlaGlIenJlU3pOVGN6a2M5ZCI/PiA8eDp4bXBtZXRhIHhtbG5zOng9ImFkb2JlOm5zOm1ldGEvIiB4OnhtcHRrPSJBZG9iZSBYTVAgQ29yZSA1LjYtYzE0MCA3OS4xNjA0NTEsIDIwMTcvMDUvMDYtMDE6MDg6MjEgICAgICAgICI+IDxyZGY6UkRGIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyI+IDxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PSIiIHhtbG5zOnhtcD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLyIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bXA6Q3JlYXRvclRvb2w9IkFkb2JlIFBob3Rvc2hvcCBDQyAoTWFjaW50b3NoKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDpBNkU0RDlGRjNFNUExMUU4QjQ2NkIwNTlGQ0ZCNUYwRSIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDpBNkU0REEwMDNFNUExMUU4QjQ2NkIwNTlGQ0ZCNUYwRSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkE2REU3RkZBM0U1QTExRThCNDY2QjA1OUZDRkI1RjBFIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOkE2RTREOUZFM0U1QTExRThCNDY2QjA1OUZDRkI1RjBFIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+/+4ADkFkb2JlAGTAAAAAAf/bAIQAAgICAgICAgICAgMCAgIDBAMCAgMEBQQEBAQEBQYFBQUFBQUGBgcHCAcHBgkJCgoJCQwMDAwMDAwMDAwMDAwMDAEDAwMFBAUJBgYJDQsJCw0PDg4ODg8PDAwMDAwPDwwMDAwMDA8MDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwM/8AAEQgAEgAPAwERAAIRAQMRAf/EAGUAAQADAAAAAAAAAAAAAAAAAAQFBwkBAQAAAAAAAAAAAAAAAAAAAAAQAAEEAAMGBAcAAAAAAAAAAAIBAwQFABE0ITFBEjIGUWETNYFCUmIzFTYRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/ANq7i4kzZNiRWUuspKuWlcDdeOcyXMVEVQAuCDgBtXMiCwBjZWdlSWavV7jbwp+zhzBBcgEtmZrwz44BV3Wx62wkhY+qPbt7KCUM5kuRyDPzy9Tm+VDz3rsTADiVkC1VxuM+9H7VpCekyLgzydlTSBeaQLq70bTbzJgLC7i9ittPpj1XRuXq8/DzwEfF/jD0Xtjv4tJ0Fv8At+r44D//2Q=="
 									 alt="">
-									<p>城市</p> <img src="data:image/jpeg;base64,/9j/4QAYRXhpZgAASUkqAAgAAAAAAAAAAAAAAP/sABFEdWNreQABAAQAAABQAAD/4QMsaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLwA8P3hwYWNrZXQgYmVnaW49Iu+7vyIgaWQ9Ilc1TTBNcENlaGlIenJlU3pOVGN6a2M5ZCI/PiA8eDp4bXBtZXRhIHhtbG5zOng9ImFkb2JlOm5zOm1ldGEvIiB4OnhtcHRrPSJBZG9iZSBYTVAgQ29yZSA1LjYtYzE0MCA3OS4xNjA0NTEsIDIwMTcvMDUvMDYtMDE6MDg6MjEgICAgICAgICI+IDxyZGY6UkRGIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyI+IDxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PSIiIHhtbG5zOnhtcD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLyIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bXA6Q3JlYXRvclRvb2w9IkFkb2JlIFBob3Rvc2hvcCBDQyAoTWFjaW50b3NoKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDpGM0QyQTFEMzNFNjMxMUU4QjQ2NkIwNTlGQ0ZCNUYwRSIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDpGM0QyQTFENDNFNjMxMUU4QjQ2NkIwNTlGQ0ZCNUYwRSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkYzRDJBMUQxM0U2MzExRThCNDY2QjA1OUZDRkI1RjBFIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOkYzRDJBMUQyM0U2MzExRThCNDY2QjA1OUZDRkI1RjBFIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+/+4ADkFkb2JlAGTAAAAAAf/bAIQAAgICAgICAgICAgMCAgIDBAMCAgMEBQQEBAQEBQYFBQUFBQUGBgcHCAcHBgkJCgoJCQwMDAwMDAwMDAwMDAwMDAEDAwMFBAUJBgYJDQsJCw0PDg4ODg8PDAwMDAwPDwwMDAwMDA8MDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwM/8AAEQgABgAKAwERAAIRAQMRAf/EAGAAAQEAAAAAAAAAAAAAAAAAAAgJAQEAAAAAAAAAAAAAAAAAAAAAEAAABAMECwAAAAAAAAAAAAACAwUGAQQHESESNAAxUSIyU6QVRRY2EQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCh1TWesKlUClFDq5VlstUcwZ7k30tLeUyWAwuELe0nSsmZLxAdG7dFgBxF4rgQBWYUHmOz5ezzuQ26s/1mgf/Z"
+									<p id="cityname">城市</p> <img src="data:image/jpeg;base64,/9j/4QAYRXhpZgAASUkqAAgAAAAAAAAAAAAAAP/sABFEdWNreQABAAQAAABQAAD/4QMsaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLwA8P3hwYWNrZXQgYmVnaW49Iu+7vyIgaWQ9Ilc1TTBNcENlaGlIenJlU3pOVGN6a2M5ZCI/PiA8eDp4bXBtZXRhIHhtbG5zOng9ImFkb2JlOm5zOm1ldGEvIiB4OnhtcHRrPSJBZG9iZSBYTVAgQ29yZSA1LjYtYzE0MCA3OS4xNjA0NTEsIDIwMTcvMDUvMDYtMDE6MDg6MjEgICAgICAgICI+IDxyZGY6UkRGIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyI+IDxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PSIiIHhtbG5zOnhtcD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLyIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bXA6Q3JlYXRvclRvb2w9IkFkb2JlIFBob3Rvc2hvcCBDQyAoTWFjaW50b3NoKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDpGM0QyQTFEMzNFNjMxMUU4QjQ2NkIwNTlGQ0ZCNUYwRSIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDpGM0QyQTFENDNFNjMxMUU4QjQ2NkIwNTlGQ0ZCNUYwRSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkYzRDJBMUQxM0U2MzExRThCNDY2QjA1OUZDRkI1RjBFIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOkYzRDJBMUQyM0U2MzExRThCNDY2QjA1OUZDRkI1RjBFIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+/+4ADkFkb2JlAGTAAAAAAf/bAIQAAgICAgICAgICAgMCAgIDBAMCAgMEBQQEBAQEBQYFBQUFBQUGBgcHCAcHBgkJCgoJCQwMDAwMDAwMDAwMDAwMDAEDAwMFBAUJBgYJDQsJCw0PDg4ODg8PDAwMDAwPDwwMDAwMDA8MDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwM/8AAEQgABgAKAwERAAIRAQMRAf/EAGAAAQEAAAAAAAAAAAAAAAAAAAgJAQEAAAAAAAAAAAAAAAAAAAAAEAAABAMECwAAAAAAAAAAAAACAwUGAQQHESESNAAxUSIyU6QVRRY2EQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCh1TWesKlUClFDq5VlstUcwZ7k30tLeUyWAwuELe0nSsmZLxAdG7dFgBxF4rgQBWYUHmOz5ezzuQ26s/1mgf/Z"
 									 alt="">
 								</li>
 								<li class="fore2 select-itemann">排序
@@ -118,6 +119,7 @@
 			window.onload = function(){
 				console.log("------------+");
 				this.refresh();
+				this.cityInitialMessage();
 
 			};
 			$(".read-wrapper li").click(function () {
@@ -134,6 +136,8 @@
 				$("#refreshthml").html(thmladd);
 				refresh();
 			})
+
+
 
 			$("#refreshthml").on("scroll",function(){
 				var scrollHeight = this.scrollHeight;
@@ -152,10 +156,86 @@
 					alert('下拉到底了');
 				}
 			})
+			var goumaiid;
 
+			function purchaseInformation() {
+				$.ajax({
+					url: "/purchaseInformation",
+					data:{"gmid":goumaiid},
+					type: "get",
+					dataType: "json",
+					success: function (result) {
+                       if (result.code==0){
+						   $(location).prop('href', '/particularsRequest?particularsId='+goumaiid)
+					   }
+						   var message=result.message
+						   $(".tanchuminboxtop").html(message)
+
+					},
+					error: function (result) {
+						console.log("error----");
+					}
+				})
+			}
+			function closeInformation(){
+				$(".tanchumaxbox").hide()
+				$(".tanchubox").hide()
+			}
+
+
+			function purchasess(id,money) {
+				$(".tanchumaxbox").show()
+				$(".tanchubox").show()
+				var message="是否花费"+money+"购买币 购买此条信息！ "
+				$(".tanchuminboxtop").html(message)
+				goumaiid=id;
+			}
+
+			function cityGuanbi(){
+				$(".citymaxbox").hide()
+				$(".citybox").hide()
+			}
+
+			function cityQueding(){
+				$(".citymaxbox").hide()
+				$(".citybox").hide()
+				thmladd=""
+				refresh()
+			}
+
+
+			function cityAnn() {
+				$(".citymaxbox").show()
+				$(".citybox").show()
+				var message="是否花费"+money+"购买币 购买此条信息！ "
+				$(".cityminboxtop").html(message)
+				goumaiid=id;
+			}
+
+			function cityInitialMessage() {
+                var cityhtml="";
+				console.log("进入----");
+				$.ajax({
+					url: "/cityInfo",
+					type: "get",
+					dataType: "json",
+					success: function (result) {
+						for (i = 0; i < result.length; i++) {
+							cityhtml += "<li onclick=\"citySelect('"+result[i].sfCity+"')\">"+result[i].sfCity+"</li>"
+						}
+						$("#cityminboxtops").html(cityhtml);
+					},
+					error: function (result) {
+						console.log("error----");
+					}
+				})
+			}
+			function citySelect(value) {
+				region=value;
+			}
 			function refresh() {
-
-				 console.log("进入----");
+					console.log("进入----");
+					$("#cityname").html(region)
 				$.ajax({
 					url: "/GrabASingleList",
 					data:{"haveReadUnread":orderColumn,"number":number,"city":region,"rank":selectItemSort},
@@ -163,42 +243,41 @@
 					dataType: "json",
 					success: function (result) {
 
-
 							for (i = 0; i < result.length; i++) {
-								var qbtime=result[i].qd_fb_time.split("T");//以空格分割为数组
+								var qbtime=result[i].qdFbTime.split("T");//以空格分割为数组
 
 								thmladd += "<div class=\"w100 user-list\">\n" +
 										"\t\t\t\t\t\t\t<!---->\n" +
 										"\t\t\t\t\t\t\t<div class=\"user-item\">\n" +
-										"\t\t\t\t\t\t\t\t<div class=\"d-relative pull-left user-avatar\"><a href=\"/particularsRequest?particularsId="+result[i].lg_shop_uid+"\" "+
+										"\t\t\t\t\t\t\t\t<div class=\"d-relative pull-left user-avatar\"><a href=\"/particularsRequest?particularsId="+result[i].lgShopUid+"\" "+
 										"\t\t\t\t\t\t\t\t\t class=\"full-cover-link\"></a> <img src=\"http://api.jbd.melonmobile.cn/cdn/resource/usr_ico_default.png\" alt=\"\"></div>\n" +
 										"\t\t\t\t\t\t\t\t<div class=\"d-relative pull-left user-data user-data1\"\n" +
 										"\t\t\t\t\t\t\t\t\t class=\"full-cover-link\"></a>\n" +
 										"\t\t\t\t\t\t\t\t\t<div class=\"user-name-wrapper\">\n" +
-										"\t\t\t\t\t\t\t\t\t\t<div class=\"pull-left username\">"+result[i].qd_username+"</div>\n" +
+										"\t\t\t\t\t\t\t\t\t\t<div class=\"pull-left username\">"+result[i].qdUsername+"</div>\n" +
 										"\t\t\t\t\t\t\t\t\t\t<div class=\"pull-left tag tag1\"><img src=\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAABQElEQVQ4T3XSv6uOYRgH8M+XzqB0LEdOYjiTwUAGOfIHSFInzJLFolhMRCHJYGGTgdVmQCIGWQxSymJmUUqZDpfut+fW6+l97/F6rs9z/7i+MVpVtYAbOI11vMalJF+mWzMDXsWVUf0n1pK87PX/YFVtxTPsG/8Qv7Ca5GP79g9W1VlswgkcnAFb6T0OJPk9gVW1E5/xBq9wew5s5VNJHnZ4B+fxB0dxE3vm4OdJDnfYdts1NF7HPTzF3hn4e5KlDtuzb8TdJOeG4y/iBfaP8HqShQ7bi23AcpIfvbGq2nE/jODXJNs7fIeVJMvTTVW1Dd9G8EmSYx1exC0cSvJ2asczuD+CJ5M87nAz2mC34PJwvFVcG2bbbQvHkSQ1HYDdQ2p2zBlDy2yL3eQNxpFbwgUcb3dGy+gnPMCjJG3Ok/UXLXtrD5W+ae4AAAAASUVORK5CYII=\"\n" +
-										"\t\t\t\t\t\t\t\t\t\t\t alt=\"\">"+result[i].qd_sesame+"</div><div class=\"pull-left tag man\">"+result[i].qd_age+"</div>\n" +
-										"\t\t\t\t\t\t\t\t\t\t<div class=\"pull-left tag tag3\">"+result[i].qd_professional+"</div>\n" +
+										"\t\t\t\t\t\t\t\t\t\t\t alt=\"\">"+result[i].qdSesame+"</div><div class=\"pull-left tag man\">"+result[i].qdAge+"</div>\n" +
+										"\t\t\t\t\t\t\t\t\t\t<div class=\"pull-left tag tag3\">"+result[i].qdProfessional+"</div>\n" +
 										"\t\t\t\t\t\t\t\t\t</div>\n" +
 										"\t\t\t\t\t\t\t\t\t<div class=\"user-salary-wrapper\">\n" +
-										"\t\t\t\t\t\t\t\t\t\t<div class=\"pull-left salary\"><strong>￥"+result[i].qd_loanpay+"</strong><span>"+result[i].qd_time+"</span></div>\n" +
+										"\t\t\t\t\t\t\t\t\t\t<div class=\"pull-left salary\"><strong>￥"+result[i].qdLoanpay+"</strong><span>"+result[i].qdTime+"</span></div>\n" +
 										"\t\t\t\t\t\t\t\t\t\t<div class=\"pull-right location\"><img src=\"data:image/jpeg;base64,/9j/4QAYRXhpZgAASUkqAAgAAAAAAAAAAAAAAP/sABFEdWNreQABAAQAAABQAAD/4QMsaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLwA8P3hwYWNrZXQgYmVnaW49Iu+7vyIgaWQ9Ilc1TTBNcENlaGlIenJlU3pOVGN6a2M5ZCI/PiA8eDp4bXBtZXRhIHhtbG5zOng9ImFkb2JlOm5zOm1ldGEvIiB4OnhtcHRrPSJBZG9iZSBYTVAgQ29yZSA1LjYtYzE0MCA3OS4xNjA0NTEsIDIwMTcvMDUvMDYtMDE6MDg6MjEgICAgICAgICI+IDxyZGY6UkRGIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyI+IDxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PSIiIHhtbG5zOnhtcD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLyIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bXA6Q3JlYXRvclRvb2w9IkFkb2JlIFBob3Rvc2hvcCBDQyAoTWFjaW50b3NoKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDpBNkU0RDlGRjNFNUExMUU4QjQ2NkIwNTlGQ0ZCNUYwRSIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDpBNkU0REEwMDNFNUExMUU4QjQ2NkIwNTlGQ0ZCNUYwRSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkE2REU3RkZBM0U1QTExRThCNDY2QjA1OUZDRkI1RjBFIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOkE2RTREOUZFM0U1QTExRThCNDY2QjA1OUZDRkI1RjBFIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+/+4ADkFkb2JlAGTAAAAAAf/bAIQAAgICAgICAgICAgMCAgIDBAMCAgMEBQQEBAQEBQYFBQUFBQUGBgcHCAcHBgkJCgoJCQwMDAwMDAwMDAwMDAwMDAEDAwMFBAUJBgYJDQsJCw0PDg4ODg8PDAwMDAwPDwwMDAwMDA8MDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwM/8AAEQgAEgAPAwERAAIRAQMRAf/EAGUAAQADAAAAAAAAAAAAAAAAAAQFBwkBAQAAAAAAAAAAAAAAAAAAAAAQAAEEAAMGBAcAAAAAAAAAAAIBAwQFABE0ITFBEjIGUWETNYFCUmIzFTYRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/ANq7i4kzZNiRWUuspKuWlcDdeOcyXMVEVQAuCDgBtXMiCwBjZWdlSWavV7jbwp+zhzBBcgEtmZrwz44BV3Wx62wkhY+qPbt7KCUM5kuRyDPzy9Tm+VDz3rsTADiVkC1VxuM+9H7VpCekyLgzydlTSBeaQLq70bTbzJgLC7i9ittPpj1XRuXq8/DzwEfF/jD0Xtjv4tJ0Fv8At+r44D//2Q==\"\n" +
 										"\t\t\t\t\t\t\t\t\t\t\t alt=\"\">\n" +
-										"\t\t\t\t\t\t\t\t\t\t\t<p>"+result[i].qd_region+"</p>\n" +
+										"\t\t\t\t\t\t\t\t\t\t\t<p>"+result[i].qdRegion+"</p>\n" +
 										"\t\t\t\t\t\t\t\t\t\t</div>\n" +
 										"\t\t\t\t\t\t\t\t\t</div>\n" +
 										"\t\t\t\t\t\t\t\t</div>\n" +
 										"\t\t\t\t\t\t\t\t<div class=\"pull-left d-relative user-data user-data2\"><a href=\"\"\n" +
 										"\t\t\t\t\t\t\t\t\t class=\"full-cover-link\"></a>\n" +
 										"\t\t\t\t\t\t\t\t\t<ul class=\"fore1\">\n" +
-										"\t\t\t\t\t\t\t\t\t\t<li>工作单位：<span>"+result[i].qd_units+"</span></li>\n" +
-										"\t\t\t\t\t\t\t\t\t\t<li>月收入：<span>"+result[i].qd_income+"以上</span></li>\n" +
-										"\t\t\t\t\t\t\t\t\t\t<li>资产情况：<span>"+result[i].qd_plicy+"</span></li>\n" +
+										"\t\t\t\t\t\t\t\t\t\t<li>工作单位：<span>"+result[i].qdUnits+"</span></li>\n" +
+										"\t\t\t\t\t\t\t\t\t\t<li>月收入：<span>"+result[i].qdIncome+"以上</span></li>\n" +
+										"\t\t\t\t\t\t\t\t\t\t<li>资产情况：<span>"+result[i].qdPlicy+"</span></li>\n" +
 										"\t\t\t\t\t\t\t\t\t</ul>\n" +
 										"\t\t\t\t\t\t\t\t\t<ul class=\"fore2 last\">\n" +
-										"\t\t\t\t\t\t\t\t\t\t<li>学历状况：<span>"+result[i].qd_often+"</span></li>\n" +
-										"\t\t\t\t\t\t\t\t\t\t<li>社保：<span>"+result[i].qd_often+"</span></li>\n" +
-										"\t\t\t\t\t\t\t\t\t\t<li>公积金：<span>"+result[i].qd_fund+"</span></li>\n" +
+										"\t\t\t\t\t\t\t\t\t\t<li>学历状况：<span>"+result[i].qdOften+"</span></li>\n" +
+										"\t\t\t\t\t\t\t\t\t\t<li>社保：<span>"+result[i].qdOften+"</span></li>\n" +
+										"\t\t\t\t\t\t\t\t\t\t<li>公积金：<span>"+result[i].qdFund+"</span></li>\n" +
 										"\t\t\t\t\t\t\t\t\t</ul>\n" +
 										"\t\t\t\t\t\t\t\t</div>\n" +
 										"\t\t\t\t\t\t\t\t<div class=\"pull-left d-relative user-data user-data3 last\"><a href=\"\"\n" +
@@ -217,7 +296,7 @@
 										"\t\t\t\t\t\t\t\t</div>\n" +
 										"\t\t\t\t\t\t\t\t<div class=\"pull-right buy-wrapper\">\n" +
 										"\t\t\t\t\t\t\t\t\t<div class=\"time\">"+qbtime[0]+"</div>\n" +
-										"\t\t\t\t\t\t\t\t\t<div class=\"buy\">"+result[i].qd_gm_pay+"币购买</div>\n" +
+										"\t\t\t\t\t\t\t\t\t<a onclick=\"purchasess("+result[i].lgShopUid+","+result[i].qdGmPay+")\"><div class=\"buy\">"+result[i].qdGmPay+"币购买</div></a>\n" +
 										"\t\t\t\t\t\t\t\t\t<!---->\n" +
 										"\t\t\t\t\t\t\t\t</div>\n" +
 										"\t\t\t\t\t\t\t</div>\n" +
@@ -239,6 +318,154 @@
 			}
 
 		</script>
-		
+		<style>
+			.citymaxbox{
+				width: 100%;
+				height:2000px;
+				position: fixed;
+				background: rgba(50,50,50,0.5);
+				z-index: 1000000;
+			}
+			.cityminboxtop{
+				height: auto;
+				margin-bottom: 30px;
+				font-size: 20px;
+				height: 220px;
+			}
+			.cityminboxtop li{
+				padding: 3px 10px;
+				margin: 10px 15px 10px 0;
+				border: 1px solid #e3dada;
+				list-style: none;
+				font-size: 18px;
+				float: left;
+			}
+			.cityminboxtop li:hover{
+				background: #ffb00a;
+				color: white;
+				cursor: pointer;
+			}
+			.cityqunding{
+				width: 120px;
+				height: 50px;
+				line-height: 50px;
+				text-align: center;
+				float: right;
+				background: orange;
+				color: #fff;
+				font-size: 16px;
+				font-weight: bold;
+			}
+			.cityquxiao{
+				width: 120px;
+				height: 50px;
+				line-height: 50px;
+				text-align: center;
+				float: right;
+				background: #999;
+				margin-right: 30px;
+				font-weight: bold;
+				color: #fff;
+				font-size: 16px;
+
+			}
+			.cityminboxbuttom{
+				height: 70px;
+			}
+			.citybox{
+
+				position: relative;
+				left: 50%;
+				margin-left: -405px;
+				top: 200px;
+				padding: 30px;
+				z-index: 1000001;
+				width: 700px;
+				height: 370px;
+
+				background: #FFF;
+			}
+			.tanchumaxbox{
+				display: none;
+				width: 100%;
+				height:2000px;
+				position: fixed;
+				background: rgba(50,50,50,0.5);
+				z-index: 1000000;
+			}
+			.tanchuminboxtop{
+				height: 180px;
+				font-size: 20px;
+			}
+			.qunding{
+				width: 120px;
+				height: 50px;
+				line-height: 50px;
+				text-align: center;
+				float: right;
+				background: orange;
+				color: #fff;
+				font-size: 16px;
+				border-radius: 13px;
+			}
+			.qunding2{
+				width: 120px;
+				height: 50px;
+				line-height: 50px;
+				text-align: center;
+				float: left;
+				background: #909090;
+				color: #fff;
+				font-size: 16px;
+				border-radius: 13px;
+
+			}
+			.cityqunding:hover{
+				cursor: pointer;
+				background: #ffdb19;
+			}
+			.cityquxiao:hover{
+				cursor: pointer;
+				background: #7d7d7d;
+			}
+			.tanchuminboxbuttom{
+				height: 70px;
+			}
+			.tanchubox{
+				display: none;
+				position: relative;
+				left: 50%;
+				margin-left: -180px;
+				top: 200px;
+				padding: 50px;
+				z-index: 1000001;
+				display: none;
+				width: 250px;
+				height: 250px;
+				background: #FFF;
+				border-radius: 20px;
+			}
+		</style>
+		<div class="tanchumaxbox"  onclick="closeInformation()">
+		</div>
+		<div class="tanchubox">
+			<div class="tanchuminboxtop"></div>
+			<div class="tanchuminboxbuttom">
+				<div class="qunding2" onclick="closeInformation()">关闭购买</div>
+				<div class="qunding" onclick="purchaseInformation()">确定购买</div>
+			</div>
+		</div>
+		<div class="citymaxbox">
+		</div>
+		<div class="citybox">
+			<h2>城市选择</h2>
+			<div class="cityminboxtop" id="cityminboxtops">
+
+			</div>
+			<div class="cityminboxbuttom">
+				<div class="cityqunding" onclick="cityQueding()">确定</div>
+				<div class="cityquxiao" onclick="cityGuanbi()">关闭</div>
+			</div>
+		</div>
 	</body>
 </html>

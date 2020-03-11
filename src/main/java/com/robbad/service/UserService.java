@@ -21,5 +21,13 @@ public interface UserService {
 
     Object GrabASingleList(SearchCondition searchCondition);
 
-    Object particularsMessage(Integer particularsId);
+    Object particularsMessage(Integer particularsId, String lgPhone);
+
+    Object purchaseList(SearchCondition searchCondition);
+
+    Object DicectDriveList(SearchCondition searchCondition);
+
+    Object purchaseInformation(Integer gmid,String lgPhone);
+
+    Object cityInfo();
 }

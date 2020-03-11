@@ -4,10 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
 import com.robbad.dao.UserDao;
-import com.robbad.model.Building;
-import com.robbad.model.BuildingName;
-import com.robbad.model.SearchCondition;
-import com.robbad.model.User;
+import com.robbad.model.*;
 
 import com.robbad.service.UserService;
 import com.robbad.util.*;
@@ -104,13 +101,134 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Object GrabASingleList(SearchCondition searchCondition) {
+        if(searchCondition.getHaveReadUnread()==1){
+            List<QdLgPower> qdLgPowerList=userDao.qdLgPowerList(searchCondition);
+            List<Basicmanager> searchConditionLists=new ArrayList<>();
+            for (QdLgPower qdLgPower:qdLgPowerList) {
+
+                Basicmanager BasicmanagerData = userDao.GrabASingleListYidu(searchCondition,qdLgPower.getLgRead());
+                if(BasicmanagerData!=null){
+
+                    searchConditionLists.add(BasicmanagerData);
+                }
+
+            }
+            System.out.println(searchConditionLists);
+           return searchConditionLists;
+        }
+        if(searchCondition.getHaveReadUnread()==0){
+            List<Basicmanager> BasicmanagerList=userDao.BasicmanagerList();
+            List<Basicmanager> searchConditionLists=new ArrayList<>();
+            for (Basicmanager basicmanager:BasicmanagerList) {
+                QdLgPower qdLgPower = userDao.qdLgPowerWeidu(searchCondition,basicmanager.getLgShopUid());
+                if(qdLgPower==null){
+                    searchConditionLists.add(basicmanager);
+                }
+            }
+            System.out.println(searchConditionLists);
+            return searchConditionLists;
+        }
         Object qdlist=userDao.GrabASingleListImpl(searchCondition);
         System.out.println(qdlist);
         return qdlist;
     }
+    //生成很多个*号
+    public String createAsterisk(int length) {
+        StringBuffer stringBuffer = new StringBuffer();
+        for (int i = 0; i < length; i++) {
+            stringBuffer.append("*");
+        }
+        return stringBuffer.toString();
+    }
 
     @Override
-    public Object particularsMessage(Integer particularsId) {
-        return userDao.particularsMessage(particularsId);
+    public Object particularsMessage(Integer particularsId, String lgPhone) {
+        if(userDao.whetherYidu(lgPhone,particularsId)==0){
+            userDao.powerAdd(particularsId, lgPhone);
+        }
+        Basicmanager basicmanagerData=userDao.particularsMessage(particularsId);
+        if(userDao.whetherPurchase(lgPhone,particularsId)==0){
+       // basicmanagerData.setQdCard(StringReplaceUtil.idCardReplaceWithStar(basicmanagerData.getQdCard()));
+        basicmanagerData.setQdUsername(StringReplaceUtil.userNameReplaceWithStar(basicmanagerData.getQdUsername()));
+        basicmanagerData.setQdCard(StringReplaceUtil.idCardReplaceWithStar(basicmanagerData.getQdCard()));
+
+
+
+            return basicmanagerData;
+        }
+            return basicmanagerData;
+
+
+    }
+
+    @Override
+    public Object purchaseList(SearchCondition searchCondition) {
+        List<QdLgPower> qdLgPowerList=userDao.qdLgPowerList(searchCondition);
+        List<Basicmanager> searchConditionLists=new ArrayList<>();
+        for (QdLgPower qdLgPower:qdLgPowerList) {
+
+            Basicmanager BasicmanagerData = userDao.GrabASingleListYidu(searchCondition,qdLgPower.getLgShopUid());
+            if(BasicmanagerData!=null){
+                searchConditionLists.add(BasicmanagerData);
+            }
+
+        }
+        System.out.println(searchConditionLists);
+        return searchConditionLists;
+//        return userDao.purchaseList(searchCondition);
+    }
+
+    @Override
+    public Object DicectDriveList(SearchCondition searchCondition) {
+        if(searchCondition.getHaveReadUnread()==1){
+            List<Basicmanager> BasicmanagerList=userDao.BasicmanagerList();
+            List<Basicmanager> searchConditionLists=new ArrayList<>();
+            for (Basicmanager basicmanager:BasicmanagerList) {
+                QdLgPower qdLgPower = userDao.qdLgPowerWeiLianXi(searchCondition,basicmanager.getLgShopUid());
+                if(qdLgPower==null){
+                    basicmanager.setWhetherContact(0);
+                    searchConditionLists.add(basicmanager);
+                }
+            }
+            System.out.println(searchConditionLists);
+            return searchConditionLists;
+        }
+        List<Basicmanager> basicmanagers = userDao.dicectDriveList(searchCondition);
+        List<Basicmanager> basicmanagerList=new ArrayList<>();
+        for (Basicmanager basicmanager:basicmanagers){
+           if(userDao.whetherqdLgPowerWei(searchCondition.getPhone(),basicmanager.getLgShopUid())==0){
+               basicmanager.setWhetherContact(0);
+           }else{
+               basicmanager.setWhetherContact(1);
+           }
+            basicmanagerList.add(basicmanager);
+        }
+        return basicmanagers;
+    }
+
+    @Override
+    public Object purchaseInformation(Integer gmid,String lgPhone) {
+
+        Integer price=userDao.inquirePrice(gmid);
+        if(price>0){
+            Integer balancec=userDao.inquireBalance(lgPhone);
+            if(balancec<price){return WebTools.returnData("余额不足，请联系客服！",1);}
+            Integer whetherPurchase=userDao.whetherPurchase(lgPhone,gmid);
+            if(whetherPurchase>0){return WebTools.returnData("购买失败   此信息你已购买，请前往 [ 已购客户 ] 查看",1);}
+            Integer returnUpdateBalance=userDao.updateBalance(lgPhone,price);
+            if(returnUpdateBalance>0){
+                Integer addQdLgPowerGm=userDao.addQdLgPowerGm(lgPhone,gmid);
+                if (addQdLgPowerGm>0){
+                    return WebTools.returnData("购买成功",0);
+                }
+            }
+        }
+
+        return WebTools.returnData("购买失败",1);
+    }
+
+    @Override
+    public Object cityInfo() {
+        return userDao.cityInfoImp();
     }
 }

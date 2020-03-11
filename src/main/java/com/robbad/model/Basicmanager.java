@@ -1,8 +1,10 @@
 package com.robbad.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 @ToString
@@ -11,6 +13,8 @@ import java.util.Date;
 public class Basicmanager {
     private Integer lgShopUid; //用户表购买id
     private Integer qdGmPay;//购买价格
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern="yyyy-MM-dd",timezone="GMT+8")
     private Date qdFbTime;//添加时间
     private Integer qdSesame;//芝麻分
     private String qdWechat;//抢单列表中微信号
@@ -18,6 +22,7 @@ public class Basicmanager {
     private Integer qdPhone;//抢单列表中用户手机号
     private String qdUsername;//渠道用户名称
     private Integer qdLoanpay;//渠道贷款金额
+
     private String qdTime;//渠道用户显示期限
     private String qdRegion;//渠道用户地区
     private String qdAge;//渠道用户年龄
@@ -54,4 +59,5 @@ public class Basicmanager {
     private String qdIncome;//渠道用户月收入
     private String qdSalary;//渠道用户发放薪水日期
 
+    private Integer whetherContact;//是否联系
 }

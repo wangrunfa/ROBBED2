@@ -55,4 +55,51 @@ public interface UserDao {
 //            "                qd_basicmanager where lg_shop_uid=#{particularsId} limit 1")
 @Select(" select * from  qd_basicmanager where lg_shop_uid=#{particularsId} limit 1")
 Basicmanager particularsMessage(@Param("particularsId")Integer particularsId);
+
+    @Insert("INSERT INTO qd_lg_power(lg_phone,lg_read,lg_addtime) values(#{lgPhone},#{particularsId},NOW());")
+    int powerAdd(@Param("particularsId")Integer particularsId,@Param("lgPhone") String lgPhone);
+
+    List<Basicmanager> purchaseList(@Param("searchConditions") SearchCondition searchCondition);
+
+    List<Basicmanager> dicectDriveList(@Param("searchConditions")SearchCondition searchCondition);
+    @Select(" select * from  qd_lg_power where lg_phone=#{searchConditions.phone} group by lg_read")
+    List<QdLgPower> qdLgPowerList(@Param("searchConditions") SearchCondition searchCondition);
+
+    @Select(" select * from  qd_lg_power where lg_phone=#{searchConditions.phone}and lg_shop_uid is not NULL  group by lg_read")
+    List<QdLgPower> qdLgPowerListGM(@Param("searchConditions") SearchCondition searchCondition);
+
+    Basicmanager GrabASingleListYidu(@Param("searchConditions") SearchCondition searchCondition,@Param("getLgRead") Integer getLgRead);
+
+
+
+    List<Basicmanager> BasicmanagerList();
+    @Select(" select * from qd_lg_power where lg_phone=#{searchConditions.phone} and lg_read = #{lgShopUid} LIMIT 1")
+    QdLgPower qdLgPowerWeidu(@Param("searchConditions") SearchCondition searchCondition,@Param("lgShopUid") Integer lgShopUid);
+    //查询是否联系
+    @Select(" select * from qd_lg_power where lg_phone=#{searchConditions.phone} and lg_lx = #{lgShopUid} LIMIT 1")
+    QdLgPower qdLgPowerWeiLianXi(@Param("searchConditions")SearchCondition searchCondition,@Param("lgShopUid") Integer lgShopUid);
+    //查询是否联系
+    @Select(" select count(*) from qd_lg_power where lg_phone=#{lgPhone} and lg_lx = #{lgShopUid} LIMIT 1")
+    Integer  whetherqdLgPowerWei(@Param("lgPhone")String lgPhone,@Param("lgShopUid") Integer lgShopUid);
+    //修改余额
+    @Update("update qd_user set lg_balance=lg_balance-#{price} where lg_phone=#{lgPhone} limit 1")
+    Integer updateBalance(@Param("lgPhone")String lgPhone, @Param("price")Integer price);
+    //添加购买信息
+    @Insert("INSERT INTO qd_lg_power(lg_phone,lg_shop_uid,lg_addtime) values(#{lgPhone},#{gmid},NOW());")
+    Integer addQdLgPowerGm(@Param("lgPhone")String lgPhone,@Param("gmid") Integer gmid);
+    //查询价格
+    @Select("select qd_gm_pay from qd_basicmanager where lg_shop_uid=#{gmid}")
+    Integer inquirePrice(@Param("gmid") Integer gmid);
+    //查询余额
+    @Select("select lg_balance from qd_user where lg_phone=#{lgPhone}")
+    Integer inquireBalance(@Param("lgPhone") String lgPhone);
+    //查询是否购买
+    @Select("select count(*) from qd_lg_power where lg_phone=#{lgPhone} and lg_shop_uid=#{gmid}")
+    Integer whetherPurchase(@Param("lgPhone")String lgPhone,@Param("gmid") Integer gmid);
+    //查询是否购买
+    @Select("select count(*) from qd_lg_power where lg_phone=#{lgPhone} and lg_read=#{gmid}")
+    Integer whetherYidu(@Param("lgPhone")String lgPhone,@Param("gmid") Integer gmid);
+    //城市名数据
+    @Select("select * from qd_city")
+    List<CityModel> cityInfoImp();
 }
