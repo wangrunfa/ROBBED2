@@ -101,36 +101,27 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Object GrabASingleList(SearchCondition searchCondition) {
-        if(searchCondition.getHaveReadUnread()==1){
-            List<QdLgPower> qdLgPowerList=userDao.qdLgPowerList(searchCondition);
-            List<Basicmanager> searchConditionLists=new ArrayList<>();
-            for (QdLgPower qdLgPower:qdLgPowerList) {
-
-                Basicmanager BasicmanagerData = userDao.GrabASingleListYidu(searchCondition,qdLgPower.getLgRead());
-                if(BasicmanagerData!=null){
-
-                    searchConditionLists.add(BasicmanagerData);
-                }
-
+        List<Basicmanager> GrabASingleLists=userDao.GrabASingleListImpl(searchCondition);
+        List<Basicmanager> GrabASingleArrayList=new ArrayList<>();
+        for(Basicmanager GrabASingleList:GrabASingleLists){
+         if(userDao.whetherPurchase(searchCondition.getPhone(),GrabASingleList.getLgShopUid())==0){
+            if(searchCondition.getHaveReadUnread()==0){
+               if(userDao.whetherYidu(searchCondition.getPhone(),GrabASingleList.getLgShopUid())==0){
+                   GrabASingleArrayList.add(GrabASingleList);
+               }
             }
-            System.out.println(searchConditionLists);
-           return searchConditionLists;
-        }
-        if(searchCondition.getHaveReadUnread()==0){
-            List<Basicmanager> BasicmanagerList=userDao.BasicmanagerList();
-            List<Basicmanager> searchConditionLists=new ArrayList<>();
-            for (Basicmanager basicmanager:BasicmanagerList) {
-                QdLgPower qdLgPower = userDao.qdLgPowerWeidu(searchCondition,basicmanager.getLgShopUid());
-                if(qdLgPower==null){
-                    searchConditionLists.add(basicmanager);
+            if(searchCondition.getHaveReadUnread()==1){
+                if(userDao.whetherYidu(searchCondition.getPhone(),GrabASingleList.getLgShopUid())!=0){
+                    GrabASingleArrayList.add(GrabASingleList);
                 }
             }
-            System.out.println(searchConditionLists);
-            return searchConditionLists;
+            if(searchCondition.getHaveReadUnread()==2){
+                    GrabASingleArrayList.add(GrabASingleList);
+            }
+         }
         }
-        Object qdlist=userDao.GrabASingleListImpl(searchCondition);
-        System.out.println(qdlist);
-        return qdlist;
+        return GrabASingleArrayList;
+//
     }
     //生成很多个*号
     public String createAsterisk(int length) {
@@ -148,11 +139,16 @@ public class UserServiceImpl implements UserService {
         }
         Basicmanager basicmanagerData=userDao.particularsMessage(particularsId);
         if(userDao.whetherPurchase(lgPhone,particularsId)==0){
-       // basicmanagerData.setQdCard(StringReplaceUtil.idCardReplaceWithStar(basicmanagerData.getQdCard()));
-        basicmanagerData.setQdUsername(StringReplaceUtil.userNameReplaceWithStar(basicmanagerData.getQdUsername()));
-        basicmanagerData.setQdCard(StringReplaceUtil.idCardReplaceWithStar(basicmanagerData.getQdCard()));
 
-
+            basicmanagerData.setQdUsername(basicmanagerData.getQdUsername().replaceAll("(?<=.{1}).*(?=.{0})","*"));
+            basicmanagerData.setQdCard(StringReplaceUtil.idCardReplaceWithStar(basicmanagerData.getQdCard()));
+            basicmanagerData.setQdQq("购买后显示");
+            basicmanagerData.setQdPhone("购买后显示");
+            basicmanagerData.setQdWechat("购买后显示");
+            basicmanagerData.setQdDress(basicmanagerData.getQdDress().replaceAll("(?<=.{2}).*(?=.{0})","*"));
+            basicmanagerData.setQdUnitsDress(basicmanagerData.getQdUnitsDress().replaceAll("(?<=.{2}).*(?=.{2})","*"));
+            basicmanagerData.setQdNewAddress(basicmanagerData.getQdNewAddress().replaceAll("(?<=.{3}).*(?=.{0})","*"));
+            basicmanagerData.setQdUnits(basicmanagerData.getQdUnits().replaceAll("(?<=.{2}).*(?=.{2})","*"));
 
             return basicmanagerData;
         }
@@ -161,15 +157,33 @@ public class UserServiceImpl implements UserService {
 
     }
 
+//    @Override
+//    public Object purchaseList(SearchCondition searchCondition) {
+//        List<QdLgPower> qdLgPowerList=userDao.qdLgPowerList(searchCondition);
+//        List<Basicmanager> searchConditionLists=new ArrayList<>();
+//        for (QdLgPower qdLgPower:qdLgPowerList) {
+//
+//            Basicmanager BasicmanagerData = userDao.GrabASingleListYidu(searchCondition,qdLgPower.getLgShopUid());
+//            if(BasicmanagerData!=null){
+//                searchConditionLists.add(BasicmanagerData);
+//            }
+//
+//        }
+//        System.out.println(searchConditionLists);
+//        return searchConditionLists;
+////        return userDao.purchaseList(searchCondition);
+//    }
+
     @Override
     public Object purchaseList(SearchCondition searchCondition) {
-        List<QdLgPower> qdLgPowerList=userDao.qdLgPowerList(searchCondition);
-        List<Basicmanager> searchConditionLists=new ArrayList<>();
-        for (QdLgPower qdLgPower:qdLgPowerList) {
+        List<Basicmanager> purchaseLists= userDao.purchaseList(searchCondition);
 
-            Basicmanager BasicmanagerData = userDao.GrabASingleListYidu(searchCondition,qdLgPower.getLgShopUid());
-            if(BasicmanagerData!=null){
-                searchConditionLists.add(BasicmanagerData);
+        List<Basicmanager> searchConditionLists=new ArrayList<>();
+        for (Basicmanager purchaseList:purchaseLists) {
+
+            Integer getLgReadStatus = userDao.whetherPurchase(searchCondition.getPhone(),purchaseList.getLgShopUid());
+            if(getLgReadStatus>0){
+                searchConditionLists.add(purchaseList);
             }
 
         }
@@ -180,6 +194,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Object DicectDriveList(SearchCondition searchCondition) {
+
         if(searchCondition.getHaveReadUnread()==1){
             List<Basicmanager> BasicmanagerList=userDao.BasicmanagerList();
             List<Basicmanager> searchConditionLists=new ArrayList<>();
@@ -230,5 +245,35 @@ public class UserServiceImpl implements UserService {
     @Override
     public Object cityInfo() {
         return userDao.cityInfoImp();
+    }
+
+    @Override
+    public Object clickContact(Integer gmid, String lgPhone) {
+
+                Integer addQdLgPowerContacts=userDao.addQdLgPowerContact(lgPhone,gmid);
+                if (addQdLgPowerContacts>0){
+                    return WebTools.returnData("成功",0);
+                }
+
+
+        return WebTools.returnData("失败",1);
+    }
+
+    @Override
+    public Object directDriveApplyForService(StraightPush straightPush) {
+        Integer whetherPushExcessive= userDao.whetherPushExcessiveDao(straightPush.getQdSqUid());
+        if(whetherPushExcessive>0){
+            return WebTools.returnData("你已提交过，请不要重复提交",1);
+        }
+        Integer returns= userDao.directDriveApplyForImp(straightPush);
+        if(returns>0){
+            return WebTools.returnData("提交成功",0);
+        }
+        return WebTools.returnData("提交失败",1);
+    }
+
+    @Override
+    public Integer whetherPushExcessiveDao(int uid) {
+        return userDao.whetherPushExcessiveDao(uid);
     }
 }

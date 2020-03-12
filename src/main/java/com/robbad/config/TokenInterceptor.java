@@ -15,9 +15,10 @@ public class TokenInterceptor extends HandlerInterceptorAdapter {
         System.out.println("进入拦截器");
         //检查
         HttpSession session = request.getSession();
+        System.out.println((boolean)session.getAttribute("status"));
         try {
 
-            if ((boolean) session.getAttribute("status")) {
+            if ((boolean)session.getAttribute("status")) {
                 System.out.println(request.getRequestURI() + " : 通过检查");
                 return true;
             } else {

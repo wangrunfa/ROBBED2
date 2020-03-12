@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<link rel="stylesheet" href="css/login.css" />
+		<script src="vendor/jquery/jquery.min.js"></script>
+		<script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+
+	</head>
+	<body>
+		<div id="app">
+			<div class="af-page">
+				<div class="page-header"><a href="#/" class="pull-left logo router-link-exact-active router-link-active"><img src="img/haoduoyu.png"
+						 alt=""></a>
+					<div class="pull-right header-nav">
+						<ul>
+							<li class="d-relative fore1"><a href="#/subscribe" class="full-cover-link"></a>
+								个人订阅设置
+							</li>
+							<li class="fore3">
+								微信客服
+								<div class="qrcode-box"><img src="img/haoduoyu.png" alt="">
+									<p>客服二维码</p>
+								</div>
+							</li>
+							<li class="d-relative fore1">
+								修改密码
+							</li>
+							<a href="/outLogin" style="color: #333;">
+							<li class="fore4">
+								退出
+							</li>
+							</a>
+						</ul>
+					</div>
+					<!---->
+					<!---->
+					<!---->
+					<!---->
+				</div>
+				<div class="aside-nav" style="z-index: 999999;">
+					<div class="avatar-box"><img src="http://api.jbd.melonmobile.cn/cdn/resource/usr_ico_default.png" alt="">
+						<div class="username text-overflow" th:text="${lgUsername}"></div>
+						<div class="user-id text-overflow"><p th:text="'Tel：'+${lgPhone}"></p></div>
+						<div class="user-id text-overflow"><p th:text="'余额：'+${lgBalance}"></p></div>
+					</div>
+					<div class="nav"><a href="/grondstoffenlijst" class="fore1">
+						<div class="line"></div>
+						抢单列表
+					</a>
+						<!---->
+						<!----> <a href="/DirectDrive" class="fore2 router-link-exact-active router-link-active">
+							<div class="line"></div>
+							优米借直推
+						</a>
+						<!----> <a href="/purchase" class="fore3">
+							<div class="line"></div>
+							已购的客户
+						</a> <a href="" class="fore4">
+							<div class="line"></div>
+							购买生财币
+						</a></div>
+				</div>
+				<div class="content-box">
+					<div class="push-box" style="height: 827px;"><div class="push-item"><h2>什么是直推单？</h2>
+						<p>无需抢单，每天定量推送，一个客户分发三个商家。</p></div> <div class="push-item">
+						<h2>如何开通直推单？</h2> <p>点击下方“申请开通”按钮在线申请，问题咨询请联系客服微信：<span>www002345678900</span></p>
+					</div> <div class="push-item"><h2>直推单如何收费？</h2> <p>开通直推单后，每次充值不低于一万元，只能通过客服通道充值，无法App在线充值。</p>
+						<p>但是无论抢单、直推，所有的客户都会根据客户信用分设定购买所需的生财币，直推无需抢单直接扣除对应的生财币，生财币不足则不会直推。</p></div>
+						<a href="#" style="background: #999;padding: 0 15px" class="btn bg-orange">您已申请开通，请等待</a></div>
+				</div>
+				<!---->
+				<!---->
+			</div>
+		</div>
+
+
+	</body>
+</html>

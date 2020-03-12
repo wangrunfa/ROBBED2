@@ -14,6 +14,7 @@ public class User {
     private String lgSex;
     private String lgPhone;
     private Integer lgBalance;
+    private Integer lgZtcStaus;
     private String lgIp;
     private String lgAuthcode;
 

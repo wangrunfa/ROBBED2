@@ -2,17 +2,16 @@ package com.robbad.controller;
 
 
 import com.robbad.model.SearchCondition;
+import com.robbad.model.StraightPush;
 import com.robbad.model.User;
 import com.robbad.service.UserService;
 import com.robbad.util.RedisUtil;
 import com.robbad.util.WebTools;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -59,10 +58,12 @@ public class UserController {
             if (!StringUtils.isEmpty(returnz.getId())) {
                 HttpSession session = request.getSession();
                 System.out.println(returnz.toString());
-                session.setAttribute("lgPhone", user.getLgPhone());
+                session.setAttribute("uid", returnz.getId());
+                session.setAttribute("lgPhone", returnz.getLgPhone());
                 session.setAttribute("lgUsername", returnz.getLgUsername());
                 session.setAttribute("lgBalance", returnz.getLgBalance());
                 session.setAttribute("status", true);
+                session.setAttribute("ztcStaus", returnz.getLgZtcStaus());
                 model.addAttribute("lgUsername", returnz.getLgUsername());
                 model.addAttribute("lgPhone", user.getLgPhone());
                 model.addAttribute("lgBalance", returnz.getLgBalance());
@@ -112,11 +113,19 @@ public class UserController {
     @RequestMapping("/DicectDriveList")
     public Object DicectDriveList(SearchCondition searchCondition, HttpServletRequest request) {
         HttpSession session = request.getSession();
+
+        if(userService.whetherPushExcessiveDao((int)session.getAttribute("uid"))>0){
+            return "DirectDriveApplyForCentre";
+        }
+        if((int)session.getAttribute("ztcStaus")==0){
+            return WebTools.returnData("未开通",3);//直推车未开通 3
+        }
         try{
             String phone=(String)session.getAttribute("lgPhone");
             if(phone==null){
                 return WebTools.returnData("session未保持",1);
             }
+
             searchCondition.setPhone(phone);
             return userService.DicectDriveList(searchCondition);
         }catch (Exception e){
@@ -200,21 +209,53 @@ public class UserController {
         return "login";
     }
     /**
+     * 抢单
+     * @param model
+     * @param request
+     * @return
+     */
+    @RequestMapping("/grondstoffenlijstParticularsRequest")
+    public Object grondstoffenlijstParticularsRequest(Model model,Integer particularsId, HttpServletRequest request ) {
+        System.out.println(particularsId);
+        HttpSession session = request.getSession();
+        model.addAttribute("lgUsername", session.getAttribute("lgUsername"));
+        model.addAttribute("lgPhone", session.getAttribute("lgPhone"));
+        model.addAttribute("lgBalance", session.getAttribute("lgBalance"));
+        model.addAttribute("particularsMessages",userService.particularsMessage(particularsId,(String)session.getAttribute("lgPhone")));
+        return "Grondstoffenlijstparticulars";
+    }
+    /**
+     * 直推车
+     * @param model
+     * @param request
+     * @return
+     */
+    @RequestMapping("/DirectDriveParticularsParticularsRequest")
+    public Object DirectDriveParticularsParticularsRequest(Model model,Integer particularsId, HttpServletRequest request) {
+        System.out.println(particularsId);
+        HttpSession session = request.getSession();
+        model.addAttribute("lgUsername", session.getAttribute("lgUsername"));
+        model.addAttribute("lgPhone", session.getAttribute("lgPhone"));
+        model.addAttribute("lgBalance", session.getAttribute("lgBalance"));
+        model.addAttribute("particularsMessages",userService.particularsMessage(particularsId,(String)session.getAttribute("lgPhone")));
+
+        return "DirectDriveParticulars";
+    }
+    /**
      * 详情页面
      * @param model
      * @param request
      * @return
      */
-    @RequestMapping("/particularsRequest")
-    public Object particularsRequest(Model model,Integer particularsId, HttpServletRequest request ) {
+    @RequestMapping("/PurchaseParticularsParticularsRequest")
+    public Object PurchaseParticularsParticularsRequest(Model model,Integer particularsId, HttpServletRequest request ) {
         System.out.println(particularsId);
         HttpSession session = request.getSession();
-
         model.addAttribute("lgUsername", session.getAttribute("lgUsername"));
         model.addAttribute("lgPhone", session.getAttribute("lgPhone"));
         model.addAttribute("lgBalance", session.getAttribute("lgBalance"));
         model.addAttribute("particularsMessages",userService.particularsMessage(particularsId,(String)session.getAttribute("lgPhone")));
-        return "particulars";
+        return "PurchaseParticulars";
     }
     /**
      * 抢单页面
@@ -242,6 +283,13 @@ public class UserController {
         model.addAttribute("lgUsername", session.getAttribute("lgUsername"));
         model.addAttribute("lgPhone", session.getAttribute("lgPhone"));
         model.addAttribute("lgBalance", session.getAttribute("lgBalance"));
+
+        if(userService.whetherPushExcessiveDao((int)session.getAttribute("uid"))>0 && (int)session.getAttribute("ztcStaus")==0){
+            return "DirectDriveApplyForCentre";
+        }
+        if((int)session.getAttribute("ztcStaus")==0){
+            return "DirectDriveNoDredge";
+        }
         return "DirectDrive";
     }
 
@@ -295,8 +343,28 @@ public class UserController {
      * @return
      */
     @ResponseBody
+    @RequestMapping("/clickContact")
+    public Object clickContact(Integer gmid, HttpServletRequest request ) {
+        HttpSession session = request.getSession();
+        return userService.clickContact(gmid,(String)session.getAttribute("lgPhone"));
+    }
+    /**
+     * 已购信息数据
+     * @param gmid
+     * @param request
+     * @return
+     */
+    @ResponseBody
     @RequestMapping("/cityInfo")
     public Object cityInfo() {
         return userService.cityInfo();
+    }
+
+    @ResponseBody
+    @RequestMapping("/directDriveApplyFor")
+    public Object directDriveApplyFor(StraightPush straightPush, HttpServletRequest request ) {
+        HttpSession session = request.getSession();
+        straightPush.setQdSqUid ((int)session.getAttribute("uid"));
+        return userService.directDriveApplyForService(straightPush);
     }
 }

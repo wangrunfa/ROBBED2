@@ -70,7 +70,7 @@
 								<li value="1" class="">已读</li>
 							</ul>
 						</div>
-						<div class="pull-left date-wrapper"><button style="background: rgb(202, 202, 198) none repeat scroll 0% 0%; border: 1px solid rgb(202, 202, 198); margin-left: 6px; height: 30px;">重置</button></div>
+						<div class="pull-left date-wrapper"><button class="chongzhiann" style="background: rgb(202, 202, 198) none repeat scroll 0% 0%; border: 1px solid rgb(202, 202, 198); margin-left: 6px; height: 30px;">重置</button></div>
 						<div class="pull-right filter-wrapper">
 							<ul>
 								<li  onclick="cityAnn()" class="fore1"><img src="data:image/jpeg;base64,/9j/4QAYRXhpZgAASUkqAAgAAAAAAAAAAAAAAP/sABFEdWNreQABAAQAAABQAAD/4QMsaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLwA8P3hwYWNrZXQgYmVnaW49Iu+7vyIgaWQ9Ilc1TTBNcENlaGlIenJlU3pOVGN6a2M5ZCI/PiA8eDp4bXBtZXRhIHhtbG5zOng9ImFkb2JlOm5zOm1ldGEvIiB4OnhtcHRrPSJBZG9iZSBYTVAgQ29yZSA1LjYtYzE0MCA3OS4xNjA0NTEsIDIwMTcvMDUvMDYtMDE6MDg6MjEgICAgICAgICI+IDxyZGY6UkRGIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyI+IDxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PSIiIHhtbG5zOnhtcD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLyIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bXA6Q3JlYXRvclRvb2w9IkFkb2JlIFBob3Rvc2hvcCBDQyAoTWFjaW50b3NoKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDpBNkU0RDlGRjNFNUExMUU4QjQ2NkIwNTlGQ0ZCNUYwRSIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDpBNkU0REEwMDNFNUExMUU4QjQ2NkIwNTlGQ0ZCNUYwRSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkE2REU3RkZBM0U1QTExRThCNDY2QjA1OUZDRkI1RjBFIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOkE2RTREOUZFM0U1QTExRThCNDY2QjA1OUZDRkI1RjBFIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+/+4ADkFkb2JlAGTAAAAAAf/bAIQAAgICAgICAgICAgMCAgIDBAMCAgMEBQQEBAQEBQYFBQUFBQUGBgcHCAcHBgkJCgoJCQwMDAwMDAwMDAwMDAwMDAEDAwMFBAUJBgYJDQsJCw0PDg4ODg8PDAwMDAwPDwwMDAwMDA8MDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwM/8AAEQgAEgAPAwERAAIRAQMRAf/EAGUAAQADAAAAAAAAAAAAAAAAAAQFBwkBAQAAAAAAAAAAAAAAAAAAAAAQAAEEAAMGBAcAAAAAAAAAAAIBAwQFABE0ITFBEjIGUWETNYFCUmIzFTYRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/ANq7i4kzZNiRWUuspKuWlcDdeOcyXMVEVQAuCDgBtXMiCwBjZWdlSWavV7jbwp+zhzBBcgEtmZrwz44BV3Wx62wkhY+qPbt7KCUM5kuRyDPzy9Tm+VDz3rsTADiVkC1VxuM+9H7VpCekyLgzydlTSBeaQLq70bTbzJgLC7i9ittPpj1XRuXq8/DzwEfF/jD0Xtjv4tJ0Fv8At+r44D//2Q=="
@@ -92,7 +92,7 @@
 										</ul>
 									</div>
 								</li>
-								<li class="fore3">刷新
+								<li class="fore3 shuaxingann">刷新
 									<!---->
 								</li>
 							</ul>
@@ -191,6 +191,18 @@
 				goumaiid=id;
 			}
 
+			$(".shuaxingann").click(function () {
+				thmladd="";
+				refresh();
+			})
+			$(".chongzhiann").click(function () {
+				 number=0;  // 开始加载条数
+				 orderColumn=2; //  已读未读
+				 region="重庆";   // 地区
+				 selectItemSort="1";//排序
+				thmladd="";
+				refresh();
+			})
 			function cityGuanbi(){
 				$(".citymaxbox").hide()
 				$(".citybox").hide()
@@ -207,9 +219,6 @@
 			function cityAnn() {
 				$(".citymaxbox").show()
 				$(".citybox").show()
-				var message="是否花费"+money+"购买币 购买此条信息！ "
-				$(".cityminboxtop").html(message)
-				goumaiid=id;
 			}
 
 			function cityInitialMessage() {
@@ -232,6 +241,9 @@
 			}
 			function citySelect(value) {
 				region=value;
+				var cname="城市选择     "+value
+				$("#cityxhuanzhe").html(cname)
+
 			}
 			function refresh() {
 					console.log("进入----");
@@ -249,7 +261,7 @@
 								thmladd += "<div class=\"w100 user-list\">\n" +
 										"\t\t\t\t\t\t\t<!---->\n" +
 										"\t\t\t\t\t\t\t<div class=\"user-item\">\n" +
-										"\t\t\t\t\t\t\t\t<div class=\"d-relative pull-left user-avatar\"><a href=\"/particularsRequest?particularsId="+result[i].lgShopUid+"\" "+
+										"\t\t\t\t\t\t\t\t<div class=\"d-relative pull-left user-avatar\"><a href=\"/grondstoffenlijstParticularsRequest?particularsId="+result[i].lgShopUid+"\" "+
 										"\t\t\t\t\t\t\t\t\t class=\"full-cover-link\"></a> <img src=\"http://api.jbd.melonmobile.cn/cdn/resource/usr_ico_default.png\" alt=\"\"></div>\n" +
 										"\t\t\t\t\t\t\t\t<div class=\"d-relative pull-left user-data user-data1\"\n" +
 										"\t\t\t\t\t\t\t\t\t class=\"full-cover-link\"></a>\n" +
@@ -325,6 +337,7 @@
 				position: fixed;
 				background: rgba(50,50,50,0.5);
 				z-index: 1000000;
+				display: none;
 			}
 			.cityminboxtop{
 				height: auto;
@@ -373,7 +386,7 @@
 				height: 70px;
 			}
 			.citybox{
-
+                display: none;
 				position: relative;
 				left: 50%;
 				margin-left: -405px;
@@ -384,6 +397,14 @@
 				height: 370px;
 
 				background: #FFF;
+			}
+			.cityqunding:hover{
+				cursor: pointer;
+				background: #ffdb19;
+			}
+			.cityquxiao:hover{
+				cursor: pointer;
+				background: #7d7d7d;
 			}
 			.tanchumaxbox{
 				display: none;
@@ -420,14 +441,7 @@
 				border-radius: 13px;
 
 			}
-			.cityqunding:hover{
-				cursor: pointer;
-				background: #ffdb19;
-			}
-			.cityquxiao:hover{
-				cursor: pointer;
-				background: #7d7d7d;
-			}
+
 			.tanchuminboxbuttom{
 				height: 70px;
 			}
@@ -458,7 +472,7 @@
 		<div class="citymaxbox">
 		</div>
 		<div class="citybox">
-			<h2>城市选择</h2>
+			<h2 id="cityxhuanzhe">城市选择</h2>
 			<div class="cityminboxtop" id="cityminboxtops">
 
 			</div>

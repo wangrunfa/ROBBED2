@@ -1,6 +1,7 @@
 package com.robbad.service;
 
 import com.robbad.model.SearchCondition;
+import com.robbad.model.StraightPush;
 import com.robbad.model.User;
 
 import java.util.Map;
@@ -30,4 +31,10 @@ public interface UserService {
     Object purchaseInformation(Integer gmid,String lgPhone);
 
     Object cityInfo();
+
+    Object clickContact(Integer gmid, String lgPhone);
+
+    Object directDriveApplyForService(StraightPush straightPush);
+
+    Integer whetherPushExcessiveDao(int uid);
 }

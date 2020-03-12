@@ -19,6 +19,18 @@ public class PageController {
     public String loginym1() {
         return "login";
     }
+    @RequestMapping("/loginym")
+    public String loginym() {
+        return "login";
+    }
+    @RequestMapping("/DirectDriveApplyForTable")
+    public String DirectDriveApplyForTable() {
+        return "DirectDriveApplyForTable";
+    }
+    @RequestMapping("/DirectDriveNoDredge")
+    public String DirectDriveNoDredge() {
+        return "DirectDriveNoDredge";
+    }
 
     @RequestMapping("/")
     public String loginym2() {

@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface UserDao {
 
-   @Select("SELECT id,lg_username,lg_sex,lg_balance from qd_user where lg_phone=#{user.lgPhone} and lg_password=#{user.lgPassword} LIMIT 1")
+   @Select("SELECT * from qd_user where lg_phone=#{user.lgPhone} and lg_password=#{user.lgPassword} LIMIT 1")
    User qclogin(@Param("user") User user);
 
    @Insert("INSERT INTO qd_user(lg_username,lg_sex,lg_password,lg_phone) values(#{user.lgUsername},#{user.lgSex},#{user.lgPassword},#{user.lgPhone});")
@@ -49,10 +49,8 @@ public interface UserDao {
     @Update("update qd_user set lg_password=#{user.lgPassword} where lg_phone=#{user.lgPhone} limit 1")
     int updatePassword(@Param("user") User user);
 
-    List<SearchCondition> GrabASingleListImpl(@Param("searchConditions") SearchCondition searchCondition);
-//    @Select(" select lg_shop_uid,qd_gm_pay,qd_fb_time,qd_sesame,qd_loanpay,qd_username,qd_region,qd_age,qd_professional,\n" +
-//            "                qd_often,qd_social,qd_plicy,qd_assets,qd_income,qd_units,qd_fund,qd_time from\n" +
-//            "                qd_basicmanager where lg_shop_uid=#{particularsId} limit 1")
+    List<Basicmanager> GrabASingleListImpl(@Param("searchConditions") SearchCondition searchCondition);
+
 @Select(" select * from  qd_basicmanager where lg_shop_uid=#{particularsId} limit 1")
 Basicmanager particularsMessage(@Param("particularsId")Integer particularsId);
 
@@ -69,8 +67,6 @@ Basicmanager particularsMessage(@Param("particularsId")Integer particularsId);
     List<QdLgPower> qdLgPowerListGM(@Param("searchConditions") SearchCondition searchCondition);
 
     Basicmanager GrabASingleListYidu(@Param("searchConditions") SearchCondition searchCondition,@Param("getLgRead") Integer getLgRead);
-
-
 
     List<Basicmanager> BasicmanagerList();
     @Select(" select * from qd_lg_power where lg_phone=#{searchConditions.phone} and lg_read = #{lgShopUid} LIMIT 1")
@@ -96,10 +92,21 @@ Basicmanager particularsMessage(@Param("particularsId")Integer particularsId);
     //查询是否购买
     @Select("select count(*) from qd_lg_power where lg_phone=#{lgPhone} and lg_shop_uid=#{gmid}")
     Integer whetherPurchase(@Param("lgPhone")String lgPhone,@Param("gmid") Integer gmid);
-    //查询是否购买
+    //查询是否已读
     @Select("select count(*) from qd_lg_power where lg_phone=#{lgPhone} and lg_read=#{gmid}")
     Integer whetherYidu(@Param("lgPhone")String lgPhone,@Param("gmid") Integer gmid);
     //城市名数据
     @Select("select * from qd_city")
     List<CityModel> cityInfoImp();
+    //查询是否联系
+    @Insert("INSERT INTO qd_lg_power(lg_phone,lg_lx,lg_addtime) values(#{lgPhone},#{gmid},NOW());")
+    Integer addQdLgPowerContact(@Param("lgPhone")String lgPhone,@Param("gmid") Integer gmid);
+
+    boolean dicectDriveQueryStatus(String phone);
+
+    @Insert("INSERT INTO qd_straight_push_application(qd_sq_phone,qd_sq_order_quantity,qd_sq_team_name,qd_sq_uid,qd_sq_addtime) " +
+            "values(#{straightPush.qdSqPhone},#{straightPush.qdSqOrderQuantity},#{straightPush.qdSqTeamName},#{straightPush.qdSqUid},NOW());")
+    Integer directDriveApplyForImp(@Param("straightPush")StraightPush straightPush);
+    @Select("select count(*) from qd_straight_push_application where qd_sq_uid=#{uid}")
+    Integer whetherPushExcessiveDao(@Param("uid")int uid);
 }

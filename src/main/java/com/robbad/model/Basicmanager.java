@@ -19,8 +19,9 @@ public class Basicmanager {
     private Integer qdSesame;//芝麻分
     private String qdWechat;//抢单列表中微信号
     private String qdQq;//抢单列表中qq
-    private Integer qdPhone;//抢单列表中用户手机号
+    private String qdPhone;//抢单列表中用户手机号
     private String qdUsername;//渠道用户名称
+
     private Integer qdLoanpay;//渠道贷款金额
 
     private String qdTime;//渠道用户显示期限
@@ -60,4 +61,7 @@ public class Basicmanager {
     private String qdSalary;//渠道用户发放薪水日期
 
     private Integer whetherContact;//是否联系
+
+
+    private String qdUserAlias;//别名
 }
