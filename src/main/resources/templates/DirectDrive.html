@@ -230,7 +230,7 @@ this.cityInitialMessage();
                     dataType: "json",
                     success: function (result) {
                         if (result.code==0){
-                            $(location).prop('href', '/particularsRequest?particularsId='+goumaiid)
+                            $(location).prop('href', '/DirectDriveParticularsParticularsRequest?particularsId='+goumaiid)
                         }
                         var message=result.message
                         $(".tanchuminboxtop").html(message)
@@ -260,6 +260,15 @@ this.cityInitialMessage();
 								 }else {
 									 liianxianniu="<div class=\"buy\" style=\"background: #2f72ff\">已被联系</div>"
 								 }
+								var shortName = result[i].qdUsername.substring(0,1);
+
+                                 if (result[i].qdSex==0){
+									 shortName=shortName+'先生'
+								 }else if (result[i].qdSex==1) {
+									 shortName=shortName+'女士'
+								 }else{
+									 shortName=shortName+'先生'
+								 }
 								thmladd += "<div class=\"w100 user-list\">\n" +
 										"\t\t\t\t\t\t\t<!---->\n" +
 										"\t\t\t\t\t\t\t<div class=\"user-item\">\n" +
@@ -268,7 +277,7 @@ this.cityInitialMessage();
 										"\t\t\t\t\t\t\t\t<div class=\"d-relative pull-left user-data user-data1\"\n" +
 										"\t\t\t\t\t\t\t\t\t class=\"full-cover-link\"></a>\n" +
 										"\t\t\t\t\t\t\t\t\t<div class=\"user-name-wrapper\">\n" +
-										"\t\t\t\t\t\t\t\t\t\t<div class=\"pull-left username\">"+result[i].qdUsername+"</div>\n" +
+										"\t\t\t\t\t\t\t\t\t\t<div class=\"pull-left username\">"+shortName+"</div>\n" +
 										"\t\t\t\t\t\t\t\t\t\t<div class=\"pull-left tag tag1\"><img src=\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAABQElEQVQ4T3XSv6uOYRgH8M+XzqB0LEdOYjiTwUAGOfIHSFInzJLFolhMRCHJYGGTgdVmQCIGWQxSymJmUUqZDpfut+fW6+l97/F6rs9z/7i+MVpVtYAbOI11vMalJF+mWzMDXsWVUf0n1pK87PX/YFVtxTPsG/8Qv7Ca5GP79g9W1VlswgkcnAFb6T0OJPk9gVW1E5/xBq9wew5s5VNJHnZ4B+fxB0dxE3vm4OdJDnfYdts1NF7HPTzF3hn4e5KlDtuzb8TdJOeG4y/iBfaP8HqShQ7bi23AcpIfvbGq2nE/jODXJNs7fIeVJMvTTVW1Dd9G8EmSYx1exC0cSvJ2asczuD+CJ5M87nAz2mC34PJwvFVcG2bbbQvHkSQ1HYDdQ2p2zBlDy2yL3eQNxpFbwgUcb3dGy+gnPMCjJG3Ok/UXLXtrD5W+ae4AAAAASUVORK5CYII=\"\n" +
 										"\t\t\t\t\t\t\t\t\t\t\t alt=\"\">"+result[i].qdSesame+"</div><div class=\"pull-left tag man\">"+result[i].qdAge+"</div>\n" +
 										"\t\t\t\t\t\t\t\t\t\t<div class=\"pull-left tag tag3\">"+result[i].qdProfessional+"</div>\n" +

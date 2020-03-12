@@ -62,7 +62,7 @@ public class UserController {
                 session.setAttribute("lgPhone", returnz.getLgPhone());
                 session.setAttribute("lgUsername", returnz.getLgUsername());
                 session.setAttribute("lgBalance", returnz.getLgBalance());
-                session.setAttribute("status", true);
+                session.setAttribute("userStatus", true);
                 session.setAttribute("ztcStaus", returnz.getLgZtcStaus());
                 model.addAttribute("lgUsername", returnz.getLgUsername());
                 model.addAttribute("lgPhone", user.getLgPhone());
@@ -114,18 +114,8 @@ public class UserController {
     public Object DicectDriveList(SearchCondition searchCondition, HttpServletRequest request) {
         HttpSession session = request.getSession();
 
-        if(userService.whetherPushExcessiveDao((int)session.getAttribute("uid"))>0){
-            return "DirectDriveApplyForCentre";
-        }
-        if((int)session.getAttribute("ztcStaus")==0){
-            return WebTools.returnData("未开通",3);//直推车未开通 3
-        }
         try{
             String phone=(String)session.getAttribute("lgPhone");
-            if(phone==null){
-                return WebTools.returnData("session未保持",1);
-            }
-
             searchCondition.setPhone(phone);
             return userService.DicectDriveList(searchCondition);
         }catch (Exception e){
@@ -334,7 +324,11 @@ public class UserController {
     @RequestMapping("/purchaseInformation")
     public Object purchaseInformation(Integer gmid, HttpServletRequest request ) {
         HttpSession session = request.getSession();
-        return userService.purchaseInformation(gmid,(String)session.getAttribute("lgPhone"));
+       Map<String,Object> maps= (Map<String, Object>) userService.purchaseInformation(gmid,(String)session.getAttribute("lgPhone"));
+       if((int)maps.get("code")==0){
+           session.setAttribute("lgBalance",((int)session.getAttribute("lgBalance")-(int)maps.get("data")));
+       }
+        return maps;
     }
     /**
      * 已购信息数据

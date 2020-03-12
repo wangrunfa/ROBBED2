@@ -34,7 +34,7 @@ public class Basicmanager {
     private String qdAssets;//渠道用户资产
     private String qdCard;//渠道用户身份证号
     private String qdMarriage;//渠道用户婚姻情况
-    private String qdSex;//渠道用户性别
+    private Integer qdSex;//渠道用户性别
     private String qdDress;//渠道用户现住地址
     private String qdFund;//渠道用户公积金
     private String qdCredit;//渠道信用卡

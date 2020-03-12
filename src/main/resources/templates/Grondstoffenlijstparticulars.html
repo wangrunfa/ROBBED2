@@ -69,7 +69,11 @@
 									<img src="http://api.jbd.melonmobile.cn/cdn/resource/usr_ico_default.png" alt=""></div>
 								<div class="d-relative pull-left user-data user-data1"><a href="#/index/detail" class="full-cover-link router-link-active"></a>
 									<div class="user-name-wrapper">
-										<div class="pull-left username" th:text="${particularsMessages.qdUsername}">王先生</div>
+										<div class="pull-left username">
+											<b  th:text="${#strings.substring(particularsMessages.qdUsername,0,1)}"></b>
+											<b th:if="${particularsMessages.qdSex} eq 0">先生</b>
+											<b th:if="${particularsMessages.qdSex} eq 1">女士</b>
+										</div>
 										<div class="pull-left tag tag1"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAABQElEQVQ4T3XSv6uOYRgH8M+XzqB0LEdOYjiTwUAGOfIHSFInzJLFolhMRCHJYGGTgdVmQCIGWQxSymJmUUqZDpfut+fW6+l97/F6rs9z/7i+MVpVtYAbOI11vMalJF+mWzMDXsWVUf0n1pK87PX/YFVtxTPsG/8Qv7Ca5GP79g9W1VlswgkcnAFb6T0OJPk9gVW1E5/xBq9wew5s5VNJHnZ4B+fxB0dxE3vm4OdJDnfYdts1NF7HPTzF3hn4e5KlDtuzb8TdJOeG4y/iBfaP8HqShQ7bi23AcpIfvbGq2nE/jODXJNs7fIeVJMvTTVW1Dd9G8EmSYx1exC0cSvJ2asczuD+CJ5M87nAz2mC34PJwvFVcG2bbbQvHkSQ1HYDdQ2p2zBlDy2yL3eQNxpFbwgUcb3dGy+gnPMCjJG3Ok/UXLXtrD5W+ae4AAAAASUVORK5CYII="
 											 alt="" th:text="${particularsMessages.qdSesame}">
 
@@ -189,7 +193,7 @@
 			dataType: "json",
 			success: function (result) {
 				if (result.code==0){
-					$(location).prop('href', '/particularsRequest?particularsId='+id)
+					$(location).prop('href', '/grondstoffenlijstParticularsRequest?particularsId='+id)
 				}
 				var message=result.message
 				$(".tanchuminboxtop").html(message)

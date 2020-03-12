@@ -234,7 +234,7 @@ public class UserServiceImpl implements UserService {
             if(returnUpdateBalance>0){
                 Integer addQdLgPowerGm=userDao.addQdLgPowerGm(lgPhone,gmid);
                 if (addQdLgPowerGm>0){
-                    return WebTools.returnData("购买成功",0);
+                    return WebTools.returnData(price,0);
                 }
             }
         }

@@ -15,10 +15,9 @@ public class TokenInterceptor extends HandlerInterceptorAdapter {
         System.out.println("进入拦截器");
         //检查
         HttpSession session = request.getSession();
-        System.out.println((boolean)session.getAttribute("status"));
+        System.out.println(session.getAttribute("lgPhone"));
         try {
-
-            if ((boolean)session.getAttribute("status")) {
+            if ((boolean)session.getAttribute("userStatus")) {
                 System.out.println(request.getRequestURI() + " : 通过检查");
                 return true;
             } else {
@@ -28,8 +27,7 @@ public class TokenInterceptor extends HandlerInterceptorAdapter {
             }
         } catch (Exception e) {
             e.printStackTrace();
-
-            session.setAttribute("status",false);
+            session.setAttribute("userStatus",false);
             request.getRequestDispatcher("login").forward(request,response);
             return false;
         }
