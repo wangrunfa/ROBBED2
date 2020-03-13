@@ -10,13 +10,13 @@ import java.util.List;
 
 public interface UserDao {
 
-   @Select("SELECT * from qd_user where lg_phone=#{user.lgPhone} and lg_password=#{user.lgPassword} LIMIT 1")
+   @Select("SELECT * from qd_userss where lg_phone=#{user.lgPhone} and lg_password=#{user.lgPassword} LIMIT 1")
    User qclogin(@Param("user") User user);
 
-   @Insert("INSERT INTO qd_user(lg_username,lg_sex,lg_password,lg_phone) values(#{user.lgUsername},#{user.lgSex},#{user.lgPassword},#{user.lgPhone});")
+   @Insert("INSERT INTO qd_userss(lg_username,lg_sex,lg_password,lg_phone) values(#{user.lgUsername},#{user.lgSex},#{user.lgPassword},#{user.lgPhone});")
    int userRegister(@Param("user") User user);
 
-   @Select("SELECT count(*) from qd_user where lg_phone=#{phone}")
+   @Select("SELECT count(*) from qd_userss where lg_phone=#{phone}")
    int duplicateChecking( @Param("phone")  String phone);
 
    @Select("SELECT id,building from t_building_name where sex_building=#{rensex}")
@@ -43,10 +43,10 @@ public interface UserDao {
     @Select("SELECT building from t_building_name where id=#{buildingId}  limit 1")
     String findbuil(@Param("buildingId") Integer buildingId);
 
-    @Select("SELECT count(*) from qd_user where lg_phone=#{phone}  limit 1")
+    @Select("SELECT count(*) from qd_userss where lg_phone=#{phone}  limit 1")
     int associatedChecking(@Param("phone") String phone);
 
-    @Update("update qd_user set lg_password=#{user.lgPassword} where lg_phone=#{user.lgPhone} limit 1")
+    @Update("update qd_userss set lg_password=#{user.lgPassword} where lg_phone=#{user.lgPhone} limit 1")
     int updatePassword(@Param("user") User user);
 
     List<Basicmanager> GrabASingleListImpl(@Param("searchConditions") SearchCondition searchCondition);
@@ -78,7 +78,7 @@ Basicmanager particularsMessage(@Param("particularsId")Integer particularsId);
     @Select(" select count(*) from qd_lg_power where lg_phone=#{lgPhone} and lg_lx = #{lgShopUid} LIMIT 1")
     Integer  whetherqdLgPowerWei(@Param("lgPhone")String lgPhone,@Param("lgShopUid") Integer lgShopUid);
     //修改余额
-    @Update("update qd_user set lg_balance=lg_balance-#{price} where lg_phone=#{lgPhone} limit 1")
+    @Update("update qd_userss set lg_balance=lg_balance-#{price} where lg_phone=#{lgPhone} limit 1")
     Integer updateBalance(@Param("lgPhone")String lgPhone, @Param("price")Integer price);
     //添加购买信息
     @Insert("INSERT INTO qd_lg_power(lg_phone,lg_shop_uid,lg_addtime) values(#{lgPhone},#{gmid},NOW());")
@@ -87,7 +87,7 @@ Basicmanager particularsMessage(@Param("particularsId")Integer particularsId);
     @Select("select qd_gm_pay from qd_basicmanager where lg_shop_uid=#{gmid}")
     Integer inquirePrice(@Param("gmid") Integer gmid);
     //查询余额
-    @Select("select lg_balance from qd_user where lg_phone=#{lgPhone}")
+    @Select("select lg_balance from qd_userss where lg_phone=#{lgPhone}")
     Integer inquireBalance(@Param("lgPhone") String lgPhone);
     //查询是否购买
     @Select("select count(*) from qd_lg_power where lg_phone=#{lgPhone} and lg_shop_uid=#{gmid}")
@@ -104,9 +104,10 @@ Basicmanager particularsMessage(@Param("particularsId")Integer particularsId);
 
     boolean dicectDriveQueryStatus(String phone);
 
-    @Insert("INSERT INTO qd_straight_push_application(qd_sq_phone,qd_sq_order_quantity,qd_sq_team_name,qd_sq_uid,qd_sq_addtime) " +
+    @Insert("INSERT INTO qd_straight_push_appteam(qd_sq_phone,qd_sq_order_quantity,qd_sq_team_name,qd_sq_uid,qd_sq_addtime) " +
             "values(#{straightPush.qdSqPhone},#{straightPush.qdSqOrderQuantity},#{straightPush.qdSqTeamName},#{straightPush.qdSqUid},NOW());")
     Integer directDriveApplyForImp(@Param("straightPush")StraightPush straightPush);
-    @Select("select count(*) from qd_straight_push_application where qd_sq_uid=#{uid}")
+
+    @Select("select count(*) from qd_straight_push_appteam where qd_sq_uid=#{uid}")
     Integer whetherPushExcessiveDao(@Param("uid")int uid);
 }
