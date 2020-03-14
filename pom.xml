@@ -60,12 +60,7 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-<!--        SUBMAIL-->
-        <dependency>
-            <groupId>com.SUBMAIL</groupId>
-            <artifactId>SUBMAILUtil</artifactId>
-            <version>1.0.0</version>
-        </dependency>
+
         <!--  jedis-->
         <dependency>
             <groupId>redis.clients</groupId>

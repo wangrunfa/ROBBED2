@@ -248,6 +248,13 @@ public class UserController {
         return "PurchaseParticulars";
     }
     /**
+     * 详情页面
+     * @param model
+     * @param request
+     * @return
+     */
+
+    /**
      * 抢单页面
      * @param model
      * @param request
@@ -296,6 +303,20 @@ public class UserController {
         model.addAttribute("lgPhone", session.getAttribute("lgPhone"));
         model.addAttribute("lgBalance", session.getAttribute("lgBalance"));
         return "purchase";
+    }
+    /**
+     * 购买生财币页面
+     * @param model
+     * @param request
+     * @return
+     */
+    @RequestMapping("/ToBuyCurrency")
+    public String ToBuyCurrency(Model model, HttpServletRequest request ){
+        HttpSession session = request.getSession();
+        model.addAttribute("lgUsername", session.getAttribute("lgUsername"));
+        model.addAttribute("lgPhone", session.getAttribute("lgPhone"));
+        model.addAttribute("lgBalance", session.getAttribute("lgBalance"));
+        return "ToBuyCurrency";
     }
 
     /**

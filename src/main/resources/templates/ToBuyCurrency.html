@@ -50,62 +50,27 @@
 						抢单列表
 					</a>
 						<!---->
-						<!----> <a href="/DirectDrive" class="fore2 router-link-exact-active router-link-active">
+						<!----> <a href="/DirectDrive" class="fore2">
 							<div class="line"></div>
 							优米借直推
 						</a>
 						<!----> <a href="/purchase" class="fore3">
 							<div class="line"></div>
 							已购的客户
-						</a> <a href="/ToBuyCurrency" class="fore4">
+						</a> <a href="/ToBuyCurrency" class="fore4 router-link-exact-active router-link-active">
 							<div class="line"></div>
 							购买生财币
 						</a></div>
 				</div>
 				<div class="content-box">
-					<div class="select-item-wrapper"><div class="select-item-nav">
-						直推单 <span> &gt;&gt; </span> 申请开通
-					</div></div>
-					<div class="push-box" style="height: 827px;">
-						<form action="" >
-						<div class="apply-form"><div class="in">
-							<div class="in-left">团队名称：</div>
-							<div class="in-right"><input type="text" id="qdSqTeamName" placeholder="" class="text"></div>
-						</div> <div class="in"><div class="in-left">日接单量：</div> <div class="in-right">
-							<input type="number" id="qdSqOrderQuantity" placeholder="" class="text"></div></div> <div class="in">
-							<div class="in-left">联系电话：</div> <div class="in-right"><input type="number" id="qdSqPhone" placeholder="" class="text"></div>
-						</div> <div class="in"><div class="in-left"></div>
-							<div class="in-right apply-submit"><a href="/DirectDriveNoDredge" class="submit-btn cancel router-link-active">取消</a>
-								<div onclick="zhitiusubmit()" class="submit-btn confirm">提交</div></div></div></div>
-						</form>
-					</div>
+					<div class="push-box buy-box" style="height: 827px;"><div class="buy-title">
+						生财币余额：<strong th:text="${lgBalance}"></strong></div> <div class="buy-text">直推单充值请联系客服</div></div>
 				</div>
 				<!---->
 				<!---->
 			</div>
 		</div>
-<script>
-	function zhitiusubmit() {
-		$.ajax({
-			url: "/directDriveApplyFor",
-			data:{"qdSqTeamName":$("#qdSqTeamName").val(),"qdSqOrderQuantity":$("#qdSqOrderQuantity").val(),"qdSqPhone":$("#qdSqPhone").val()},
-			type: "post",
-			dataType: "json",
-			success: function (result) {
-				if (result.code==0){
-					$(location).prop('href', '/grondstoffenlijst')
-				}
-				if (result.code==1){
-					alert(result.message)
-				}
 
-			},
-			error: function (result) {
-				console.log("error----");
-			}
-		})
-	}
-</script>
 
 	</body>
 </html>
