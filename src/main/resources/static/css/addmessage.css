@@ -1,0 +1,281 @@
+.BorrowingInput{
+	display: none;
+}
+.Borrowing{
+	z-index: 3000;
+	background: white;
+}
+.educationInput{
+	display: none;
+}
+.education{
+	z-index: 2900;
+	background: white;
+}
+.whetherInput{
+	display: none;
+}
+.whether{
+z-index: 2800;
+	background: white;
+}
+.anywhereInput{
+	display: none;
+}
+.anywhere{
+z-index: 2700;
+	background: white;
+}
+.AssetsInput{
+	display: none;
+}
+.Assets{
+z-index: 2600;
+	background: white;
+}
+.marriageInput{
+	display: none;
+}
+.marriage{
+z-index: 2500;
+	background: white;
+}
+.linusericssonInput{
+	display: none;
+}
+.linusericsson{
+z-index: 2400;
+	background: white;
+}
+.ProfessorInput{
+	display: none;
+}
+.Professor{
+z-index: 2300;
+	background: white;
+}
+.NorthwesternInput{
+	display: none;
+}
+.Northwestern{
+z-index: 2200;
+	background: white;
+}
+.ProfessionalInput{
+	display: none;
+}
+.Professional{
+z-index: 2100;
+	background: white;
+}
+.unitsCurrencyInput{
+	display: none;
+}
+.unitsCurrency{
+z-index: 2000;
+	background: white;
+}
+.AddressLocationInput{
+	display: none;
+}
+.AddressLocation{
+z-index: 1900;
+	background: white;
+}
+
+.monthlyInput{
+	display: none;
+}
+.monthly{
+z-index: 1800;
+	background: white;
+}
+
+.paydayInput{
+	display: none;
+}
+.payday{
+z-index: 1700;
+	background: white;
+}
+
+
+
+.maxbox {
+	height: 800px;
+	max-width: 400px;
+	width: 100%;
+	margin:  0 auto;
+}
+
+.inputmaxbox {
+	overflow-y: scroll;
+	height:350px;
+	
+	border-bottom: 1px solid #99A4AC;
+}
+
+.selectmaxbox {
+	overflow-x: scroll;
+	position: relative;
+	height: 550px;
+	width: 100%;
+}
+.selectmaxbox>div{
+	top: 0;
+	height: 550px;
+	width: 100%;
+	max-width: 400px;
+	position:absolute ;
+}
+.HintOf{
+	text-align: center;
+	padding: 10px;
+	color: #007FEB;
+	font-size: 23px;
+	font-weight: bold;
+}
+.jiedaiming{
+	padding: 10px;
+	color: #999;
+	font-size: 20px;
+	border-bottom: 1px solid #98979C;
+	margin-bottom: 10px;
+}
+.selectItems{
+	padding: 30px;
+	height: 400px;
+	overflow-y: scroll;
+}
+.selectItems li{
+	list-style: none;
+	padding: 15px;
+	border-radius: 10px;
+	color: wheat;
+	background: #007AFF;
+	margin-bottom: 20px;
+	font-weight: bold;
+	text-align: center;
+	max-width: 400px;
+	
+}
+.selectItemsbox li{
+	list-style: none;
+    margin-left: 20%;
+	border-radius: 10px;
+	color: wheat;
+	background: #007AFF;
+	margin-bottom: 20px;
+	font-weight: bold;
+	text-align: center;
+	max-width: 400px;
+}
+.inputminbox{
+	height: 35px;
+	width: 100%;
+	float: left;
+}
+.Sorting{
+	width: 27px;
+	height: 27px;
+	margin: 3px;
+	background: #007FEB;
+	color: wheat;
+	text-align: center;
+	line-height: 27px;
+	border-radius: 50%;
+	float: left;
+}
+.prompting{
+	width: 50%;
+	line-height: 35px;
+	color: #99A4AC;
+	padding-left: 8px;
+	height: 35px;
+	overflow: hidden;
+	float: left;
+}
+.ButtonThe{
+	width: 30%;
+	float: right;
+	height: 32px;
+	background: #007AFF;
+	color: white;
+	border-radius: 5px;
+	text-align: center;
+	line-height: 32px;
+}
+.topboxinput{
+	width: 100%;	
+	max-width: 400px;
+	height: 330px;
+}
+.startinputbox{
+	height: 300px;
+	width: 33%;
+	float: left;
+	overflow-y: scroll;
+}
+.startinputbox>li{
+	width: 60%;
+	height: 30px;
+	line-height: 30px;
+	text-align: center;
+	float: left;
+	cursor: pointer;
+	
+}
+.contentxian{
+	height: 300px;
+	width: 33%;
+	float: left;
+	text-align: center;
+	line-height: 300px;
+	font-size: 50px;
+	color: #007AFF;
+}
+.stopinputbox{
+	height: 300px;
+	width: 33%;
+	float: left;
+	overflow-y: scroll;
+}
+.stopinputbox>li{
+	line-height: 30px;
+	width: 60%;
+	height: 30px;
+	text-align: center;
+	float: left;
+cursor: pointer;
+}
+.xiayibu{
+	list-style: none;
+	padding: 15px;
+	margin: 10px 30px 15px;
+	border-radius: 10px;
+	color: wheat;
+	background: #007AFF;
+	
+	font-weight: bold;
+	text-align: center;
+	max-width: 400px;
+}
+.inputStyle{
+	    list-style: none;
+	    padding: 10px;
+	    width: 100%;
+	    border-radius: 10px;
+	    color: #73859F;
+		font-size: 20px;
+	    border: 1px solid #73859F;
+	   
+	    text-align: center;
+	    max-width: 400px;
+		margin: 0 auto;
+	
+}
+.unitsCurrencyselectItems{
+	padding: 30px;
+	height: 200px;
+	overflow-y: scroll;
+}

@@ -41,11 +41,11 @@
                   <form action="/loginUser" method="post"  class="form-validate mb-4">
                     <h3 th:text="${message}"></h3>
                     <div class="form-group">
-                      <input id="login-username" type="text" name="lgPhone" value="18385295580" required data-msg="Please enter your username" class="input-material">
+                      <input id="login-username" type="text" name="lgPhone" placeholder="请输入手机号" required data-msg="Please enter your username" class="input-material">
                       <label for="login-username" class="label-material">手机号</label>
                     </div>
                     <div class="form-group">
-                      <input id="login-password" type="password" name="lgPassword" value="123456"  required data-msg="Please enter your password" class="input-material">
+                      <input id="login-password" type="password" name="lgPassword" placeholder="请输入密码" required data-msg="Please enter your password" class="input-material">
                       <label for="login-password" class="label-material">密码</label>
                     </div>
                     <button type="submit" class="btn btn-primary" >登录账户</button>

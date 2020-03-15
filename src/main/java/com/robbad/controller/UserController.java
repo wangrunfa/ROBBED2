@@ -1,6 +1,7 @@
 package com.robbad.controller;
 
 
+import com.robbad.model.Basicmanager;
 import com.robbad.model.SearchCondition;
 import com.robbad.model.StraightPush;
 import com.robbad.model.User;
@@ -382,4 +383,16 @@ public class UserController {
         straightPush.setQdSqUid ((int)session.getAttribute("uid"));
         return userService.directDriveApplyForService(straightPush);
     }
+    /**
+     * 已购信息数据
+     * @param gmid
+     * @param request
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/insertBasicmanager")
+    public Object insertBasicmanager(Basicmanager basicmanager) {
+        return userService.insertBasicmanager(basicmanager);
+    }
+
 }

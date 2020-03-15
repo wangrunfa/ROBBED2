@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8">
+		<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport">
+		<meta content="yes" name="apple-mobile-web-app-capable">
+		<meta content="black" name="apple-mobile-web-app-status-bar-style">
+		<meta content="telephone=no" name="format-detection">
+		<title></title>
+		<script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+		<script src="js/addmessage.js"></script>
+		<link rel="stylesheet" href="css/addmessage.css" />		
+		<link rel="stylesheet" href="css/demo.css" />		
+		<link rel="stylesheet" href="css/ydui.css" />		
+		<script src="js/ydui.flexible.js"></script>
+	</head>
+	<body>
+		<div class="maxbox">
+			<div class="jiedaiming">优米借</div>
+	       <div class="inputmaxbox">
+		       <div class="inputminbox BorrowingInput">
+				   <div class="Sorting">1</div>
+				   <div class="prompting">借贷额度：3-5万</div>
+				   <div class="ButtonThe">我要修改</div>
+			   </div>
+			   <div class="inputminbox educationInput">
+			   				   <div class="Sorting">2</div>
+			   				   <div class="prompting"></div>
+			   				   <div class="ButtonThe">我要修改</div>
+			   </div>
+			   <div class="inputminbox whetherInput">
+			   				   <div class="Sorting">3</div>
+			   				   <div class="prompting"></div>
+			   				   <div class="ButtonThe">我要修改</div>
+			   </div>
+			   <div class="inputminbox anywhereInput" style="display: none;">
+			   				   <div class="Sorting">4</div>
+			   				   <div class="prompting"></div>
+			   				   <div class="ButtonThe">我要修改</div>
+			   </div>
+			   <div class="inputminbox AssetsInput">
+			   				   <div class="Sorting">5</div>
+			   				   <div class="prompting"></div>
+			   				   <div class="ButtonThe">我要修改</div>
+			   </div>
+			   <div class="inputminbox marriageInput">
+			   				   <div class="Sorting">6</div>
+			   				   <div class="prompting"></div>
+			   				   <div class="ButtonThe">我要修改</div>
+			   </div>
+			   <div class="inputminbox linusericssonInput" style="display: none;">
+			   				   <div class="Sorting">7</div>
+			   				   <div class="prompting"></div>
+			   				   <div class="ButtonThe">我要修改</div>
+			   </div>
+			   <div class="inputminbox ProfessorInput">
+			   				   <div class="Sorting">8</div>
+			   				   <div class="prompting"></div>
+			   				   <div class="ButtonThe">我要修改</div>
+			   </div>
+			   <div class="inputminbox NorthwesternInput">
+			   				   <div class="Sorting">9</div>
+			   				   <div class="prompting"></div>
+			   				   <div class="ButtonThe">我要修改</div>
+			   </div>
+                <div class="inputminbox ProfessionalInput">
+			   				   <div class="Sorting">10</div>
+			   				   <div class="prompting"></div>
+			   				   <div class="ButtonThe">我要修改</div>
+			   </div>
+
+			   <div class="inputminbox unitsCurrencyInput">
+			   				   <div class="Sorting">11</div>
+			   				   <div class="prompting"></div>
+			   				   <div class="ButtonThe">我要修改</div>
+			   </div>
+			   <div class="inputminbox AddressLocationInput" style="display: none;">
+			   				   <div class="Sorting">12</div>
+			   				   <div class="prompting"></div>
+			   				   <div class="ButtonThe">我要修改</div>
+			   </div>
+			   <div class="inputminbox monthlyInput">
+			   				   <div class="Sorting">13</div>
+			   				   <div class="prompting"></div>
+			   				   <div class="ButtonThe">我要修改</div>
+			   </div>
+			   <div class="inputminbox paydayInput">
+			   				   <div class="Sorting">14</div>
+			   				   <div class="prompting"></div>
+			   				   <div class="ButtonThe">我要修改</div>
+			   </div>
+	       </div>
+	       <div class="selectmaxbox">
+			   <!-- theFinalStep  最后一步 -->
+			    <div class="theFinalStep">
+			   				  <!-- Hint of 提示名 -->
+			   				    <div class="HintOf">最后一步</div>
+			   			 	   <div class="selectItems">
+							    <h3 style="padding: 10px 0;">姓名：</h3>
+			   			 	   <input type="text" class="inputStyle" id="ymjusername" placeholder="您的姓名" />
+							   <h3 style="padding: 10px 0;">年龄：</h3>
+							   <input type="text" class="inputStyle" id="ymjage" placeholder="您的年龄" />
+							  <h3 style="padding: 10px 0;">手机号：</h3>
+							   <input type="text" class="inputStyle" id="ymjphone" placeholder="您的手机号" />
+							   <h3 style="padding: 10px 0;">QQ号：</h3>
+							   <input type="text" class="inputStyle" id="ymjQQ" placeholder="您的QQ号" />
+							  <h3 style="padding: 10px 0;">微信号：</h3>
+							   <input type="text" class="inputStyle" id="ymjwechat" placeholder="您的微信号" />
+								   <h3 style="padding: 10px 0;">芝麻分：</h3>
+								   <input type="text" class="inputStyle" id="ymjSesame" placeholder="您的支付宝芝麻分" />
+								   <h3 style="padding: 10px 0;">身份证号：</h3>
+								   <input type="text" class="inputStyle" id="ymjCard" placeholder="您的身份证号码" />
+			   			 	   </div>
+			   							 
+			   							    <div class="xiayibu theFinalStepSbmit">提交</div>
+			    </div>
+			   <!-- payday  发薪日 -->
+			    <div class="payday">
+			   				  <!-- Hint of 提示名 -->
+			   				    <div class="HintOf">发薪日</div>
+			   			 	   <div class="unitsCurrencyselectItems">
+			   			 	   <input type="number" class="inputStyle" id="paydayMessage" placeholder="您的发薪日" />
+			   			 	   </div>
+							   <h4 style="margin-left: 30px;">注释：发薪日 每月工作发放日</h4>
+							    <div class="xiayibu paydayxiayibu">下一步</div>
+			    </div>
+				<!-- monthly  月收入 -->
+				 <div class="monthly">
+								  <!-- Hint of 提示名 -->
+								    <div class="HintOf">月收入</div>
+							 	    <div class="selectItems monthlyselect">
+									    <div class="unitsCurrencyselectItems">
+									    <input class="inputStyle"  type="number" id="monthlyMessage" placeholder="您的月收入 " />
+									    </div>
+										<h4 style="margin-left: 30px;">单位：人民币</h4>
+									     <div class="xiayibu monthlyxiayibu">下一步</div>
+									
+								   </div>
+				 </div>
+			   <!-- AddressLocation  单位地址 -->
+			    <div class="AddressLocation">
+			   				  <!-- Hint of 提示名 -->
+			   				    <div class="HintOf">单位地址</div>
+			   			 	    <div class="selectItems AddressLocationselect">
+			   					    <div class="m-cell">
+			   					              <div class="cell-item">
+			   					                  <div class="cell-left">单位地址：</div>
+			   					                  <div class="cell-right cell-arrow">
+			   					                      <input type="text" class="cell-input" readonly id="AddressLocationMessage" placeholder="单位地址">
+			   					                  </div>
+			   					              </div>
+			   					          </div>
+			   					 <div class="xiayibu AddressLocationxiayibu">下一步</div>
+			   				   </div>
+			    </div>
+				
+			   <!-- unitsCurrency  工作单位 -->
+			    <div class="unitsCurrency">
+			   				  <!-- Hint of 提示名 -->
+			   				    <div class="HintOf">工作单位</div>
+								<div class="unitsCurrencyselectItems">
+			   			 	    <input class="inputStyle"  type="text" id="unitsCurrencyMessage" placeholder="请输入您的工作单位名" />
+			   					</div>
+								 <h4 style="margin-left: 30px;">请填写：公司名字</h4>
+								 <div class="xiayibu unitsCurrencyxiayibu">下一步</div>
+			   				   
+			    </div>
+			   <!-- Professional  职业 -->
+			    <div class="Professional">
+			   				  <!-- Hint of 提示名 -->
+			   				    <div class="HintOf">职业</div>
+			   			 	    <div class="selectItems Professionalselect">
+			   					    <li value="生产业">生产业</li>
+			   					    <li value="加工业">加工业</li>
+			   					   <li value="制造业">制造业</li>
+			   					   <li value="服务业">服务业</li>
+								   <li value="娱乐业">娱乐业</li>
+								   <li value="政治">政治</li>
+								   <li value="科研业">科研业</li>
+								   <li value="教育业">教育业</li>
+								   <li value="农业">农业</li>
+								   <li value="管理业">管理业</li>
+			   					
+			   				   </div>
+			    </div>
+			   <!-- Northwestern  有无信用卡 -->
+			    <div class="Northwestern">
+			   				  <!-- Hint of 提示名 -->
+			   				    <div class="HintOf">有无信用卡</div>
+			   			 	    <div class="selectItems Northwesternselect">
+			   					    <li value="有信用卡">有信用卡</li>
+			   					    <li value="无信用卡">无信用卡</li>
+			   					   
+			   					
+			   				   </div>
+			    </div>
+			   <!-- Professor  有无本地公积金 -->
+			    <div class="Professor">
+			   				  <!-- Hint of 提示名 -->
+			   				    <div class="HintOf">有无本地公积金</div>
+			   			 	    <div class="selectItems Professorselect">
+			   					    <li value="有本地公积金">有本地公积金</li>
+			   					    <li value="无本地公积金">无本地公积金</li>
+			   					   
+			   					
+			   				   </div>
+			    </div>
+			   <!-- linusericsson  现居地 -->
+			    <div class="linusericsson">
+			   				  <!-- Hint of 提示名 -->
+			   				    <div class="HintOf">现居地</div>
+			   			 	   <div class="m-cell">
+			   			 	             <div class="cell-item">
+			   			 	                 <div class="cell-left">现居地：</div>
+			   			 	                 <div class="cell-right cell-arrow">
+			   			 	                     <input type="text" class="cell-input" readonly id="linusericssonmessage" placeholder="您的现居地">
+			   			 	                 </div>
+			   			 	             </div>
+			   			 	         </div>
+			   					 <div class="xiayibu linusericssonselectxiayibu">下一步</div>
+			   				   
+			    </div>
+			   <!-- anywhere  婚姻情况 -->
+			    <div class="marriage">
+			   				  <!-- Hint of 提示名 -->
+			   				    <div class="HintOf">婚姻情况</div>
+			   			 	    <div class="selectItems marriageselect">
+			   					    <li value="已婚">已婚</li>
+			   					    <li value="未婚">未婚</li>
+			   					   <li value="离异">离异</li>
+			   					 
+			   				   </div>
+			    </div>
+			   <!-- anywhere  资产情况 -->
+			    <div class="Assets">
+			   				  <!-- Hint of 提示名 -->
+			   				    <div class="HintOf">资产情况</div>
+			   			 	    <div class="selectItems Assetsselect">
+			   					    <li value="有车有房">有车有房</li>
+			   					    <li value="有车无房">有车无房</li>
+			   					   <li value="无车有房">无车有房</li>
+			   					   <li value="无车无房">无车无房</li>
+			   					
+			   				   </div>
+			    </div>
+			   <!-- anywhere  有无保单 -->
+			    <div class="anywhere">
+			   				  <!-- Hint of 提示名 -->
+			   				    <div class="HintOf">有无保单</div>
+			   			 	    <div class="selectItems anywhereselect">
+			   					    <li value="有保单">有保单</li>
+			   					    <li value="无保单">无保单</li>
+			   					   
+			   					
+			   				   </div>
+			    </div>
+			  <!-- education  学历 -->
+			   <div class="education">
+				  <!-- Hint of 提示名 -->
+				    <div class="HintOf">您的学历</div>
+			 	    <div class="selectItems educationselect">
+					    <li value="初中">初中</li>
+					    <li value="高中">高中</li>
+					    <li value="大学">大学</li>
+						<li value="研究生">研究生</li>
+						<li value="博士">博士</li>
+				   </div>
+			   </div>
+			   <!-- whether  有无社保 -->
+			    <div class="whether">
+			   				  <!-- Hint of 提示名 -->
+			   				    <div class="HintOf">有无社保</div>
+			   			 	    <div class="selectItems whetherselect">
+			   					    <li value="有社保">有社保</li>
+			   					    <li value="无社保">无社保</li>
+			   					  
+			   				   </div>
+			    </div>
+			   <!-- Borrowing  借贷金额 -->
+			    <div class="Borrowing">
+			   		<!-- Hint of 提示名 -->
+			   		<div class="HintOf">借贷额度</div>
+			   		<div class="selectItemsbox">
+			   			<div class="topboxinput">
+							<div class="startinputbox">
+								<li value="0">0 万</li>
+								<li value="1">1 万</li>
+								<li value="2">2 万</li>
+								<li value="3">3 万</li>
+								<li value="4">4 万</li>
+								<li value="5">5 万</li>
+								<li value="6">6 万</li>
+								<li value="7">7 万</li>
+								<li value="8">8 万</li>
+								<li value="9">9 万</li>
+							</div>
+							<div class="contentxian">
+								~
+							</div>
+							<div class="stopinputbox">
+								<li value="0">0 万</li>
+								<li value="1">1 万</li>
+								<li value="2">2 万</li>
+								<li value="3">3 万</li>
+								<li value="4">4 万</li>
+								<li value="5">5 万</li>
+								<li value="6">6 万</li>
+								<li value="7">7 万</li>
+								<li value="8">8 万</li>
+								<li value="9">9 万</li>
+							</div>
+						</div>
+						<h4 style="margin-left: 30px;">单位：万</h4>
+						 <div class="xiayibu Borrowingxiayibu">下一步</li>
+			   		</div>
+			    </div>
+		   </div>
+		</div>
+	</body>
+	<style>
+		
+	</style>
+<script src="js/jquery.min.js"></script>
+				<script src="js/ydui.citys.js"></script>
+				<script src="js/ydui.js"></script>
+	<script type="text/javascript">
+		/**
+		 * 默认调用
+		 */
+		!function () {
+			var $target = $('#AddressLocationMessage');
+
+			$target.citySelect();
+
+			$target.on('click', function (event) {
+				event.stopPropagation();
+				$target.citySelect('open');
+			});
+
+			$target.on('done.ydui.cityselect', function (ret) {
+				$(this).val(ret.provance + ' ' + ret.city + ' ' + ret.area);
+			});
+		}();
+		!function () {
+			var $target = $('#linusericssonmessage');
+
+			$target.citySelect();
+
+			$target.on('click', function (event) {
+				event.stopPropagation();
+				$target.citySelect('open');
+			});
+
+			$target.on('done.ydui.cityselect', function (ret) {
+				$(this).val(ret.provance + ' ' + ret.city + ' ' + ret.area);
+			});
+		}();
+	</script>
+</html>

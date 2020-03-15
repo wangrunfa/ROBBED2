@@ -41,5 +41,9 @@ public class PageController {
         return "changePassword";
     }
 
+    @RequestMapping("/addmessage")
+    public String addmessage() {
+        return "addmessage";
+    }
 
 }

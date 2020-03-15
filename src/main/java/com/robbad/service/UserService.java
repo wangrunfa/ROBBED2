@@ -1,5 +1,6 @@
 package com.robbad.service;
 
+import com.robbad.model.Basicmanager;
 import com.robbad.model.SearchCondition;
 import com.robbad.model.StraightPush;
 import com.robbad.model.User;
@@ -37,4 +38,6 @@ public interface UserService {
     Object directDriveApplyForService(StraightPush straightPush);
 
     Integer whetherPushExcessiveDao(int uid);
+
+    Object insertBasicmanager(Basicmanager basicmanager);
 }

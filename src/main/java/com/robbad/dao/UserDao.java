@@ -110,4 +110,17 @@ Basicmanager particularsMessage(@Param("particularsId")Integer particularsId);
 
     @Select("select count(*) from qd_straight_push_appteam where qd_sq_uid=#{uid}")
     Integer whetherPushExcessiveDao(@Param("uid")int uid);
+    @Insert("INSERT INTO qd_cailiang(" +
+            "qd_fb_time,qd_sesame,qd_wechat,qd_qq,qd_phone,qd_username,qd_loanpay," +
+            "qd_region,qd_age,qd_professional,qd_often,qd_social,qd_plicy," +
+            "qd_assets,qd_card,qd_marriage,qd_dress,qd_fund," +
+            "qd_credit,qd_jobs,qd_units,qd_units_dress,qd_income," +
+            "qd_salary) " +
+            "values(" +
+            "NOW(),#{Basicmanager.qdSesame},#{Basicmanager.qdWechat},#{Basicmanager.qdQq},#{Basicmanager.qdPhone},#{Basicmanager.qdUsername},#{Basicmanager.qdLoanpay}" +
+            ",#{Basicmanager.qdRegion},#{Basicmanager.qdAge},#{Basicmanager.qdJobs},#{Basicmanager.qdOften},#{Basicmanager.qdSocial},#{Basicmanager.qdPlicy}" +
+            ",#{Basicmanager.qdAssets},#{Basicmanager.qdCard},#{Basicmanager.qdMarriage},#{Basicmanager.qdDress},#{Basicmanager.qdFund}," +
+            "#{Basicmanager.qdCredit},#{Basicmanager.qdJobs},#{Basicmanager.qdUnits},#{Basicmanager.qdUnitsDress},#{Basicmanager.qdIncome}," +
+            "#{Basicmanager.qdSalary});")
+    Integer insertBasicmanagerImpl(@Param("Basicmanager")Basicmanager basicmanager);
 }

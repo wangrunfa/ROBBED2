@@ -147,7 +147,7 @@ public class UserServiceImpl implements UserService {
             basicmanagerData.setQdWechat("购买后显示");
             basicmanagerData.setQdDress(basicmanagerData.getQdDress().replaceAll("(?<=.{2}).*(?=.{0})","*"));
             basicmanagerData.setQdUnitsDress(basicmanagerData.getQdUnitsDress().replaceAll("(?<=.{2}).*(?=.{2})","*"));
-            basicmanagerData.setQdNewAddress(basicmanagerData.getQdNewAddress().replaceAll("(?<=.{3}).*(?=.{0})","*"));
+
             basicmanagerData.setQdUnits(basicmanagerData.getQdUnits().replaceAll("(?<=.{2}).*(?=.{2})","*"));
 
             return basicmanagerData;
@@ -275,5 +275,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public Integer whetherPushExcessiveDao(int uid) {
         return userDao.whetherPushExcessiveDao(uid);
+    }
+
+    @Override
+    public Object insertBasicmanager(Basicmanager basicmanager) {
+        if(userDao.insertBasicmanagerImpl(basicmanager)>0){
+            return WebTools.returnData("成功",0);
+        }
+        return WebTools.returnData("提交失败",1);
     }
 }
