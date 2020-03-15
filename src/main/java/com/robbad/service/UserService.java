@@ -39,5 +39,5 @@ public interface UserService {
 
     Integer whetherPushExcessiveDao(int uid);
 
-    Object insertBasicmanager(Basicmanager basicmanager);
+    Object insertBasicmanager(Basicmanager basicmanager,String submitIP);
 }

@@ -38,7 +38,7 @@ public class Basicmanager {
     private String qdDress;//渠道用户现住地址
     private String qdFund;//渠道用户公积金
     private String qdCredit;//渠道信用卡
-    private String qdSource;//渠道用户来源
+    private int qdSource;//渠道用户来源
     private String qdJobs;//渠道用户职业
     private String qdUnits;//渠道工作单位
     private String qdUnitsDress;//渠道工作单位地址

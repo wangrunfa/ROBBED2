@@ -115,12 +115,16 @@ Basicmanager particularsMessage(@Param("particularsId")Integer particularsId);
             "qd_region,qd_age,qd_professional,qd_often,qd_social,qd_plicy," +
             "qd_assets,qd_card,qd_marriage,qd_dress,qd_fund," +
             "qd_credit,qd_jobs,qd_units,qd_units_dress,qd_income," +
-            "qd_salary) " +
+            "qd_salary,qd_submit_ip) " +
             "values(" +
             "NOW(),#{Basicmanager.qdSesame},#{Basicmanager.qdWechat},#{Basicmanager.qdQq},#{Basicmanager.qdPhone},#{Basicmanager.qdUsername},#{Basicmanager.qdLoanpay}" +
             ",#{Basicmanager.qdRegion},#{Basicmanager.qdAge},#{Basicmanager.qdJobs},#{Basicmanager.qdOften},#{Basicmanager.qdSocial},#{Basicmanager.qdPlicy}" +
             ",#{Basicmanager.qdAssets},#{Basicmanager.qdCard},#{Basicmanager.qdMarriage},#{Basicmanager.qdDress},#{Basicmanager.qdFund}," +
             "#{Basicmanager.qdCredit},#{Basicmanager.qdJobs},#{Basicmanager.qdUnits},#{Basicmanager.qdUnitsDress},#{Basicmanager.qdIncome}," +
-            "#{Basicmanager.qdSalary});")
-    Integer insertBasicmanagerImpl(@Param("Basicmanager")Basicmanager basicmanager);
+            "#{Basicmanager.qdSalary},#{submitIP});")
+    Integer insertBasicmanagerImpl(@Param("Basicmanager")Basicmanager basicmanager,@Param("submitIP")String submitIP);
+    @Select("select count(*) from qd_cailiang where qd_submit_ip=#{submitIP}")
+    Integer findCaiLiangIP(@Param("submitIP")String submitIP);
+    @Update("update qd_qdtj set qd_sql=qd_sql+1 where qd_id=#{qdSource}")
+    Integer updateQDTJSql(@Param("qdSource")int qdSource);
 }

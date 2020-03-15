@@ -278,9 +278,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Object insertBasicmanager(Basicmanager basicmanager) {
-        if(userDao.insertBasicmanagerImpl(basicmanager)>0){
-            return WebTools.returnData("成功",0);
+    public Object insertBasicmanager(Basicmanager basicmanager,String submitIP) {
+        if(userDao.findCaiLiangIP(submitIP)>0){
+            return WebTools.returnData("此IP已提交过信息，请不要用此设备再次提交",1);
+        }
+        if(userDao.insertBasicmanagerImpl(basicmanager,submitIP)>0){
+            if(userDao.updateQDTJSql(basicmanager.getQdSource())>0){
+                return WebTools.returnData("成功",0);
+            }
+            return WebTools.returnData("渠道来源 未知",1);
         }
         return WebTools.returnData("提交失败",1);
     }
