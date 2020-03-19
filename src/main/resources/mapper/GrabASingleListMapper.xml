@@ -2,12 +2,73 @@
         <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.robbad.dao.UserDao">
 
-        <select id="GrabASingleListImpl" parameterType="com.robbad.model.SearchCondition" resultType="com.robbad.model.Basicmanager">
+        <select id="GrabASingleListImpl" resultType="com.robbad.model.Basicmanager">
                 select lg_shop_uid,qd_gm_pay,qd_fb_time,qd_sesame,qd_loanpay,qd_username,qd_region,qd_age,qd_professional,
                 qd_often,qd_social,qd_plicy,qd_assets,qd_income,qd_units,qd_fund,qd_time,qd_sex from
                 qd_basicmanager
-                        where
-                        qd_region like #{searchConditions.city}
+                        where  3>qd_gshop_status and TIMESTAMPDIFF(MINUTE,qd_fb_time, now())>=1 and
+            qd_sesame>=#{privatePersonalSubscriptionsModel.minSesame} and
+            #{privatePersonalSubscriptionsModel.maxSesame}>=qd_sesame and
+            qd_age>=#{privatePersonalSubscriptionsModel.minAge} and
+            #{privatePersonalSubscriptionsModel.maxAge}>=qd_age and
+            qd_loanpay>=#{privatePersonalSubscriptionsModel.minLimit} and
+            #{privatePersonalSubscriptionsModel.maxLimit}>=qd_loanpay
+
+            <if test="privatePersonalSubscriptionsModel.guarantee == 1">
+              and qd_plicy like "有保单"
+            </if>
+            <if test="privatePersonalSubscriptionsModel.guarantee == 2">
+                and qd_plicy like "无保单"
+            </if>
+            <if test="privatePersonalSubscriptionsModel.creditCard == 1">
+                and qd_credit like "有信用卡"
+            </if>
+            <if test="privatePersonalSubscriptionsModel.creditCard == 2">
+                and qd_credit like "无信用卡"
+            </if>
+            <if test="privatePersonalSubscriptionsModel.educationBackground == 1">
+                and (qd_often like "专科" OR  qd_often like "本科"
+                OR  qd_often like "大学" OR  qd_often like "博士"
+                OR  qd_often like "研究生")
+            </if>
+            <if test="privatePersonalSubscriptionsModel.educationBackground == 2">
+                and  (qd_often like "本科"
+                 OR  qd_often like "大学" OR  qd_often like "博士"
+                  OR  qd_often like "研究生")
+            </if>
+              <if test="searchConditions.city == '' and privatePersonalSubscriptionsModel.cityName != ''">
+                  and qd_region like concat(concat("%",#{privatePersonalSubscriptionsModel.cityName}),"%")
+            </if>
+            <if test="searchConditions.city != '' and privatePersonalSubscriptionsModel.cityName == ''">
+                and qd_region like concat(concat("%",#{searchConditions.city}),"%")
+            </if>
+            <if test="searchConditions.city != '' and privatePersonalSubscriptionsModel.cityName != ''">
+                and qd_region like concat(concat("%",#{searchConditions.city}),"%")
+            </if>
+            <if test="privatePersonalSubscriptionsModel.educationBackground == 2">
+                and (qd_social like "有社保" or qd_assets like "%有房%" or qd_assets like "%有车%" or qd_fund like "%有本地公积金%" )
+            </if>
+            <if test="privatePersonalSubscriptionsModel.educationBackground == 3">
+                and qd_fund like "%有本地公积金%"
+            </if>
+            <if test="privatePersonalSubscriptionsModel.educationBackground == 4">
+                and qd_assets like "%有车%"
+            </if>
+            <if test="privatePersonalSubscriptionsModel.educationBackground == 5">
+                and qd_assets like "%有房%"
+            </if>
+            <if test="privatePersonalSubscriptionsModel.educationBackground == 6">
+                and qd_social like "有社保" and qd_fund like "%有本地公积金%"
+            </if>
+            <if test="privatePersonalSubscriptionsModel.educationBackground == 7">
+                and qd_assets like "%有房%" and qd_assets like "%有车%"
+            </if>
+            <if test="privatePersonalSubscriptionsModel.educationBackground == 8">
+                and qd_social like "有社保" and qd_assets like "%有房%" and qd_assets like "%有车%" and qd_fund like "%有本地公积金%"
+            </if>
+            <if test="searchConditions.rank == 1">
+                ORDER BY   qd_loanpay desc
+            </if>
                 <if test="searchConditions.rank == 2">
                          ORDER BY   qd_loanpay desc
                 </if>
@@ -20,8 +81,9 @@
                 <if test="searchConditions.rank == 5">
                          ORDER BY  qd_sesame desc
                 </if>
-
+            LIMIT #{searchConditions.numberOfInitial},#{searchConditions.numberOfBranches}
         </select>
+
 
     <select id="BasicmanagerList" resultType="com.robbad.model.Basicmanager">
                 select lg_shop_uid,qd_gm_pay,qd_fb_time,qd_sesame,qd_loanpay,qd_username,qd_region,qd_age,qd_professional,
@@ -33,7 +95,7 @@
   <select id="purchaseList" parameterType="com.robbad.model.SearchCondition"  resultType="com.robbad.model.Basicmanager">
 
         select lg_shop_uid,qd_gm_pay,qd_fb_time,qd_sesame,qd_loanpay,qd_username,qd_region,qd_age,qd_professional,
-      qd_often,qd_social,qd_plicy,qd_assets,qd_income,qd_units,qd_fund,qd_time,qd_qq,qd_wechat,qd_phone,qd_sex from qd_basicmanager where qd_region like #{searchConditions.city}
+      qd_often,qd_social,qd_plicy,qd_assets,qd_income,qd_units,qd_fund,qd_time,qd_qq,qd_wechat,qd_phone,qd_sex from qd_basicmanager where qd_region like concat(concat("%",#{searchConditions.city}),"%")
       <if test="searchConditions.searchBox !='' and searchConditions.searchBox !=null">
          and qd_card like concat(concat("%",#{searchConditions.searchBox}),"%")
           or qd_username like concat(concat("%",#{searchConditions.searchBox}),"%")
@@ -42,6 +104,10 @@
       <if test="searchConditions.startTime != '' and searchConditions.stopTime != ''">
          and date(qd_fb_time) between #{searchConditions.startTime} and #{searchConditions.stopTime}
       </if>
+      <if test="searchConditions.rank == 1">
+          ORDER BY   qd_fb_time desc
+      </if>
+
                 <if test="searchConditions.rank == 2">
                          ORDER BY   qd_loanpay desc
                 </if>
@@ -55,25 +121,91 @@
                          ORDER BY  qd_sesame desc
                 </if>
 
+
         </select>
 
-  <select id="dicectDriveList" parameterType="com.robbad.model.SearchCondition"  resultType="com.robbad.model.Basicmanager">
+  <select id="dicectDriveList"  resultType="com.robbad.model.Basicmanager">
 
       select lg_shop_uid,qd_gm_pay,qd_fb_time,qd_sesame,qd_loanpay,qd_username,qd_region,qd_age,qd_professional,
       qd_often,qd_social,qd_plicy,qd_assets,qd_income,qd_units,qd_fund,qd_time,qd_qq,qd_wechat,qd_phone,qd_sex from
       qd_basicmanager
       <!--and jl.lg_phone=#{searchConditions.phone} and jl.lg_read = kh.lg_shop_uid-->
-      where
-      qd_region like #{searchConditions.city}
+      where qd_region like concat(concat("%",#{searchConditions.city}),"%")
+
       <if test="searchConditions.searchBox !='' and searchConditions.searchBox !=null">
-          and qd_card like concat(concat("%",#{searchConditions.searchBox}),"%")
+          and  qd_card like concat(concat("%",#{searchConditions.searchBox}),"%")
           or qd_username like concat(concat("%",#{searchConditions.searchBox}),"%")
           or qd_phone like concat(concat("%",#{searchConditions.searchBox}),"%")
 
       </if>
 
+      <if test="privatePersonalSubscriptionsModel!=null">
+      and qd_sesame>=#{privatePersonalSubscriptionsModel.minSesame} and
+      #{privatePersonalSubscriptionsModel.maxSesame}>=qd_sesame and
+      qd_age>=#{privatePersonalSubscriptionsModel.minAge} and
+      #{privatePersonalSubscriptionsModel.maxAge}>=qd_age and
+      qd_loanpay>=#{privatePersonalSubscriptionsModel.minLimit} and
+      #{privatePersonalSubscriptionsModel.maxLimit}>=qd_loanpay
+
+          <if test="searchConditions.city == '' and privatePersonalSubscriptionsModel.cityName != ''">
+              and qd_region like concat(concat("%",#{privatePersonalSubscriptionsModel.cityName}),"%")
+          </if>
+          <if test="searchConditions.city != '' and privatePersonalSubscriptionsModel.cityName == ''">
+              and qd_region like concat(concat("%",#{searchConditions.city}),"%")
+          </if>
+          <if test="searchConditions.city != '' and privatePersonalSubscriptionsModel.cityName != ''">
+              and qd_region like concat(concat("%",#{searchConditions.city}),"%")
+          </if>
+      <if test="privatePersonalSubscriptionsModel.guarantee == 1">
+          and qd_plicy like "有保单"
+      </if>
+      <if test="privatePersonalSubscriptionsModel.guarantee == 2">
+          and qd_plicy like "无保单"
+      </if>
+      <if test="privatePersonalSubscriptionsModel.creditCard == 1">
+          and qd_credit like "有信用卡"
+      </if>
+      <if test="privatePersonalSubscriptionsModel.creditCard == 2">
+          and qd_credit like "无信用卡"
+      </if>
+      <if test="privatePersonalSubscriptionsModel.educationBackground == 1">
+          and (qd_often like "专科" OR  qd_often like "本科"
+          OR  qd_often like "大学" OR  qd_often like "博士"
+          OR  qd_often like "研究生")
+      </if>
+      <if test="privatePersonalSubscriptionsModel.educationBackground == 2">
+          and  (qd_often like "本科"
+          OR  qd_often like "大学" OR  qd_often like "博士"
+          OR  qd_often like "研究生")
+      </if>
+
+      <if test="privatePersonalSubscriptionsModel.educationBackground == 2">
+          and (qd_social like "有社保" or qd_assets like "%有房%" or qd_assets like "%有车%" or qd_fund like "%有本地公积金%" )
+      </if>
+      <if test="privatePersonalSubscriptionsModel.educationBackground == 3">
+          and qd_fund like "%有本地公积金%"
+      </if>
+      <if test="privatePersonalSubscriptionsModel.educationBackground == 4">
+          and qd_assets like "%有车%"
+      </if>
+      <if test="privatePersonalSubscriptionsModel.educationBackground == 5">
+          and qd_assets like "%有房%"
+      </if>
+      <if test="privatePersonalSubscriptionsModel.educationBackground == 6">
+          and qd_social like "有社保" and qd_fund like "%有本地公积金%"
+      </if>
+      <if test="privatePersonalSubscriptionsModel.educationBackground == 7">
+          and qd_assets like "%有房%" and qd_assets like "%有车%"
+      </if>
+      <if test="privatePersonalSubscriptionsModel.educationBackground == 8">
+          and qd_social like "有社保" and qd_assets like "%有房%" and qd_assets like "%有车%" and qd_fund like "%有本地公积金%"
+      </if>
+      </if>
       <if test="searchConditions.startTime != '' and searchConditions.stopTime != ''">
          and date(qd_fb_time) between #{searchConditions.startTime} and #{searchConditions.stopTime}
+      </if>
+      <if test="searchConditions.rank == 1">
+          ORDER BY   qd_fb_time desc
       </if>
                 <if test="searchConditions.rank == 2">
                          ORDER BY   qd_loanpay desc

@@ -3,7 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title></title>
+    <link rel="icon" href="img/bitbug_favicon.ico" mce_href="/favicon.ico" type="image/x-icon">
+    <title>云借条-大数据信息平台</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="all,follow">
@@ -32,7 +33,14 @@
           <div class="row">
             <!-- Logo & Information Panel-->
             <div class="col-lg-6">
+              <div class="info d-flex align-items-center">
+                <div class="content">
+                  <div class="logo">
+                  <img style="width: 100%" src="img/yjtlogo.png">
+                  </div>
 
+                </div>
+              </div>
             </div>
             <!-- Form Panel    -->
             <div class="col-lg-6">
@@ -41,12 +49,12 @@
                   <form action="/loginUser" method="post"  class="form-validate mb-4">
                     <h3 th:text="${message}"></h3>
                     <div class="form-group">
-                      <input id="login-username" type="text" name="lgPhone" required data-msg="Please enter your username" class="input-material">
-                      <label for="login-username" class="label-material">手机号</label>
+                      <input id="login-username" type="text" name="lgPhone" th:value="${messagephone}" required data-msg="Please enter your phone" class="input-material">
+                      <label for="login-username" class="label-material active">手机号</label>
                     </div>
                     <div class="form-group">
                       <input id="login-password" type="password" name="lgPassword"  required data-msg="Please enter your password" class="input-material">
-                      <label for="login-password" class="label-material">密码</label>
+                      <label for="login-password" class="label-material active">密码</label>
                     </div>
                     <button type="submit" class="btn btn-primary" >登录账户</button>
                   </form><a href="/changePasswordym" class="forgot-pass">忘记密码?</a><br><small>没有账户? </small><a href="/registerym" class="signup">注册</a>
@@ -57,7 +65,7 @@
         </div>
       </div>
       <div class="copyrights text-center">
-        <p>微信小程序 - 善图 <a href="/register" class="external">www.cedar8.cn</a></p>
+        <p>云借条<a href="/login" class="external">qd.mayabox.cn</a></p>
       </div>
     </div>
     <!-- JavaScript files-->

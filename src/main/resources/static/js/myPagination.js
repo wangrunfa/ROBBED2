@@ -39,14 +39,18 @@ myPagination.prototype = {
             var li = document.createElement('li');
             if (item == that.curPage) {
                 li.className = 'active';
+
             } else {
                 li.onclick = function () {
+
                     that.curPage = parseInt(this.innerHTML);
+                    refresh(that.curPage);
                     that.init();
                     that.getPage(that.curPage);
                 };
             }
             li.innerHTML = item;
+
             that.ul.appendChild(li);
         });
         //下一页
@@ -73,6 +77,7 @@ myPagination.prototype = {
             var val = parseInt(1);
             that.curPage = val;
             that.getPage(that.curPage);
+            refresh(1);
             that.init();
         };
     },
@@ -80,12 +85,15 @@ myPagination.prototype = {
     lastPage: function lastPage() {
         var that = this;
         var li = document.createElement('li');
-        li.innerHTML = "<";
+        li.innerHTML = '<';
         if (parseInt(that.curPage) > 1) {
             li.onclick = function () {
+                refresh(that.curPage-1);
                 that.curPage = parseInt(that.curPage) - 1;
+
                 that.init();
                 that.getPage(that.curPage);
+
             };
         } else {
             li.className = 'disabled';
@@ -102,6 +110,7 @@ myPagination.prototype = {
                 while (i) {
                     pag.unshift(i--);
                 }
+
             } else {
                 //当前页数大于显示条数
                 var middle = this.curPage - Math.floor(this.pageSize / 2),
@@ -109,6 +118,7 @@ myPagination.prototype = {
                     i = this.pageSize;
                 if (middle > this.pageTotal - this.pageSize) {
                     middle = this.pageTotal - this.pageSize + 1;
+
                 }
                 while (i--) {
                     pag.push(middle++);
@@ -126,10 +136,12 @@ myPagination.prototype = {
     nextPage: function nextPage() {
         var that = this;
         var li = document.createElement('li');
-        li.innerHTML = ">";
+        li.innerHTML = '>';
         if (parseInt(that.curPage) < parseInt(that.pageTotal)) {
             li.onclick = function () {
+                refresh(that.curPage+ 1);
                 that.curPage = parseInt(that.curPage) + 1;
+
                 that.init();
                 that.getPage(that.curPage);
             };
@@ -147,6 +159,7 @@ myPagination.prototype = {
         li.onclick = function () {
             var yyfinalPage = that.pageTotal;
             var val = parseInt(yyfinalPage);
+            refresh(that.pageTotal);
             that.curPage = val;
             that.getPage(that.curPage);
             that.init();
@@ -168,6 +181,7 @@ myPagination.prototype = {
                 var val = parseInt(oEvent.target.value);
                 if (typeof val === 'number' && val <= that.pageTotal) {
                     that.curPage = val;
+                    refresh(val);
                     that.getPage(that.curPage);
                 }else{
                     alert("跳转页数不能大于总页数 !")

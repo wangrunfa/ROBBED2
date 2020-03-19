@@ -19,6 +19,10 @@ public class SearchCondition {
     private String startTime;//开始时间
     private String stopTime;//结束时间
     private String relation;//联系
+    //分页
+    private Integer numberOfBranches;//分页页数
+
+    private Integer numberOfInitial;//分页开始
 
 
 

@@ -1,9 +1,9 @@
-.paginationss ul {
+.pagination ul {
     list-style: none;
     padding-left: 0;
 }
 
-.paginationss ul li {
+.pagination ul li {
     padding: 0 10px;
     vertical-align: top;
     display: inline-block;
@@ -22,34 +22,34 @@
     height: 30px;
 }
 
-.paginationss ul li:hover {
+.pagination ul li:hover {
     transform: scale(1.1);
     background-color: #F4F6F8;
 }
 
-.paginationss  li.active {
+.pagination  li.active {
     background: #98A6AD;
     color: white;
     cursor: not-allowed;
 }
 
-.paginationss li.disabled {
+.pagination li.disabled {
     cursor: not-allowed;
 }
-.paginationss li.totalPage {
+.pagination li.totalPage {
     background: transparent;
     cursor: default;
     border: none;
     padding: 0 6px;
 }
 
-.paginationss li.totalPage:hover {
+.pagination li.totalPage:hover {
     transform: none;
     background-color: #ffffff;
 }
 
 
-.paginationss li input {
+.pagination li input {
     -webkit-appearance: none;
     background-color: #fff;
     background-image: none;
@@ -67,14 +67,14 @@
     margin: 0 6px;
 }
 
-.paginationss li input:focus{
+.pagination li input:focus{
     border-color: #98A6AD;
 }
-.paginationss{
+.pagination{
     user-select: none;
 }
 
-.paginationss ul:nth-child(2){
+.pagination ul:nth-child(2){
     border-radius: 6px;
 }
 

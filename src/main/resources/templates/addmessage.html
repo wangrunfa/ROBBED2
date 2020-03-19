@@ -6,7 +6,7 @@
 		<meta content="yes" name="apple-mobile-web-app-capable">
 		<meta content="black" name="apple-mobile-web-app-status-bar-style">
 		<meta content="telephone=no" name="format-detection">
-		<title></title>
+		<title>云借条-大数据信息平台</title>
 		<script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
 		<script src="js/addmessage.js"></script>
 		<link rel="stylesheet" href="css/addmessage.css" />		
@@ -14,9 +14,9 @@
 		<link rel="stylesheet" href="css/ydui.css" />		
 		<script src="js/ydui.flexible.js"></script>
 	</head>
-	<body>
+	<body style="background: white">
 		<div class="maxbox">
-			<div class="jiedaiming">优米借</div>
+			<div class="jiedaiming">好多鱼</div>
 	       <div class="inputmaxbox">
 		       <div class="inputminbox BorrowingInput">
 				   <div class="Sorting">1</div>
@@ -109,7 +109,12 @@
 								   <h3 style="padding: 10px 0;">芝麻分：</h3>
 								   <input type="text" class="inputStyle" id="ymjSesame" placeholder="您的支付宝芝麻分" />
 								   <h3 style="padding: 10px 0;">身份证号：</h3>
-								   <input type="text" class="inputStyle" id="ymjCard" placeholder="您的身份证号码" />
+								   <input type="text" class="inputStyle" id="ymjCard" placeholder="您的身份证号码"  style="margin-bottom: 15px"/>
+								   <input type="radio" value="男" name="sex" class="input-radios"
+										  style="width: 25px; height: 25px; float: left;">
+								   <div style="width: 30px;height: 25px;float: left;line-height: 25px">男</div>
+								   <input type="radio" value="女" name="sex"  class="input-radios" style="width: 25px; height: 25px; float: left;line-height: 25px">
+								   <div style="width: 30px;height: 25px;float: left">女</div>
 			   			 	   </div>
 			   							 
 			   							    <div class="xiayibu theFinalStepSbmit">提交</div>
@@ -261,7 +266,9 @@
 			 	    <div class="selectItems educationselect">
 					    <li value="初中">初中</li>
 					    <li value="高中">高中</li>
+						<li value="专科">专科</li>
 					    <li value="大学">大学</li>
+						<li value="本科">本科</li>
 						<li value="研究生">研究生</li>
 						<li value="博士">博士</li>
 				   </div>
@@ -280,40 +287,57 @@
 			    <div class="Borrowing">
 			   		<!-- Hint of 提示名 -->
 			   		<div class="HintOf">借贷额度</div>
-			   		<div class="selectItemsbox">
-			   			<div class="topboxinput">
-							<div class="startinputbox">
-								<li value="0">0 万</li>
-								<li value="1">1 万</li>
-								<li value="2">2 万</li>
-								<li value="3">3 万</li>
-								<li value="4">4 万</li>
-								<li value="5">5 万</li>
-								<li value="6">6 万</li>
-								<li value="7">7 万</li>
-								<li value="8">8 万</li>
-								<li value="9">9 万</li>
+
+
+							<div class="selectItems Borrowingselect">
+								<li value="1000">1000</li>
+								<li value="2000">2000</li>
+								<li value="5000">5000</li>
+								<li value="10000">10000</li>
+								<li value="20000">20000</li>
+
 							</div>
-							<div class="contentxian">
-								~
-							</div>
-							<div class="stopinputbox">
-								<li value="0">0 万</li>
-								<li value="1">1 万</li>
-								<li value="2">2 万</li>
-								<li value="3">3 万</li>
-								<li value="4">4 万</li>
-								<li value="5">5 万</li>
-								<li value="6">6 万</li>
-								<li value="7">7 万</li>
-								<li value="8">8 万</li>
-								<li value="9">9 万</li>
-							</div>
-						</div>
-						<h4 style="margin-left: 30px;">单位：万</h4>
-						 <div class="xiayibu Borrowingxiayibu">下一步</li>
-			   		</div>
-			    </div>
+
+
+
+			    <!--</div>&lt;!&ndash; Borrowing  借贷金额 &ndash;&gt;-->
+			    <!--<div class="Borrowing">-->
+			   		<!--&lt;!&ndash; Hint of 提示名 &ndash;&gt;-->
+			   		<!--<div class="HintOf">借贷额度</div>-->
+			   		<!--<div class="selectItemsbox">-->
+			   			<!--<div class="topboxinput">-->
+							<!--<div class="startinputbox">-->
+								<!--<li value="0">0 万</li>-->
+								<!--<li value="1">1 万</li>-->
+								<!--<li value="2">2 万</li>-->
+								<!--<li value="3">3 万</li>-->
+								<!--<li value="4">4 万</li>-->
+								<!--<li value="5">5 万</li>-->
+								<!--<li value="6">6 万</li>-->
+								<!--<li value="7">7 万</li>-->
+								<!--<li value="8">8 万</li>-->
+								<!--<li value="9">9 万</li>-->
+							<!--</div>-->
+							<!--<div class="contentxian">-->
+								<!--~-->
+							<!--</div>-->
+							<!--<div class="stopinputbox">-->
+								<!--<li value="0">0 万</li>-->
+								<!--<li value="1">1 万</li>-->
+								<!--<li value="2">2 万</li>-->
+								<!--<li value="3">3 万</li>-->
+								<!--<li value="4">4 万</li>-->
+								<!--<li value="5">5 万</li>-->
+								<!--<li value="6">6 万</li>-->
+								<!--<li value="7">7 万</li>-->
+								<!--<li value="8">8 万</li>-->
+								<!--<li value="9">9 万</li>-->
+							<!--</div>-->
+						<!--</div>-->
+						<!--<h4 style="margin-left: 30px;">单位：万</h4>-->
+						 <!--<div class="xiayibu Borrowingxiayibu">下一步</li>-->
+			   		<!--</div>-->
+			    <!--</div>-->
 		   </div>
 		</div>
 	</body>

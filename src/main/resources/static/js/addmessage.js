@@ -25,6 +25,7 @@ $(function() {
 	var ymjCard;//身份证号
 	var ymjRegion;//身份证号qd_region
 
+	var inputmaxboxheight=0;
 	//身份证正则
 	var Cardzz=/^[1-9][0-9]{5}(19|20)[0-9]{2}((01|03|05|07|08|10|12)(0[1-9]|[1-2][0-9]|31)|(04|06|09|11)(0[1-9]|[1-2][0-9]|30)|02(0[1-9]|[1-2][0-9]))[0-9]{3}([0-9]|x|X)$/
  var phonezz=/^1[3456789]\d{9}$/
@@ -32,73 +33,117 @@ $(function() {
 	//theFinalStep  最后一步
 		$(".theFinalStepSbmit").click(function() {
 				 ymjusername=$("#ymjusername").val();
-				 if (ymjusername!="") {
-					 ymjage = $("#ymjage").val();
-					 if (ymjage != "") {
-						 ymjphone = $("#ymjphone").val();
-						 if (phonezz.test(ymjphone)) {
-							 ymjQQ = $("#ymjQQ").val();
-							 if (ymjQQ != "") {
-								 ymjwechat = $("#ymjwechat").val();
-								 if (ymjwechat != "") {
-									 ymjSesame = $("#ymjSesame").val();
-									 if (ymjSesame != "") {
-										 ymjCard = $("#ymjCard").val();
-										 ymjRegion = linusericssonvalue.trim().split(" ")[0];
-										 if (Cardzz.test(ymjCard)) {
-											 $.ajax({
-												 url: "/insertBasicmanager",
-												 data: {
-													 "qdLoanpay": Borrowingnumber,
-													 "qdOften": educationvalue,
-													 "qdSocial": whethervalue,
-													 "qdPlicy": anywherevalue,
-													 "qdAssets": Assetsvalue,
-													 "qdMarriage": marriagevalue,
-													 "qdDress": linusericssonvalue,
-													 "qdFund": Professorvalue,
-													 "qdCredit": Northwesternvalue,
-													 "qdJobs": Professionalvalue,
-													 "qdUnits": unitsCurrencyvalue,
-													 "qdUnitsDress": AddressLocationvalue,
-													 "qdIncome": monthlyvalue,
-													 "qdSalary": paydayvalue,
-													 "qdAge": ymjage,
-													 "qdPhone": ymjphone,
-													 "qdQq": ymjQQ,
-													 "qdWechat": ymjwechat,
-													 "qdSesame": ymjSesame,
-													 "qdCard": ymjCard,
-													 "qdRegion": ymjRegion,
-													 "qdUsername": ymjusername,
-													 "qdSource": getUrlParam('sourceId')
-												 },
-												 type: "post",
-												 dataType: "json",
-												 success: function (result) {
-														 $(location).prop('href', '/login')
-												 },
-												 error: function (result) {
-													 console.log("error----");
-												 }
-											 })
-										 }
-										 else{alert("请正确填写身份证号")}
-									 }else{
-									 alert("请正确填写芝麻分") }
-								 }else{
-								 alert("请正确填写微信号") }
-							 }else{
-							 alert("请正确填写QQ号") }
-						 }else{
-						 alert("请正确填写手机号") }
-					 }else{
-					 alert("请正确填写年龄")
-				 }
+				 if (checkChinese(ymjusername)) {
+                     var firstName = ymjusername.substr(0, 1);
+                     if (checkbjx(firstName)) {
+                         ymjage = $("#ymjage").val();
+                         if (ymjage>18&&ymjage<70) {
+                             ymjphone = $("#ymjphone").val();
+                             if (phonezz.test(ymjphone)) {
+                                 ymjQQ = $("#ymjQQ").val();
+                                 if (ymjQQ != "") {
+                                     ymjwechat = $("#ymjwechat").val();
+                                     if (ymjwechat != "") {
+                                         ymjSesame = $("#ymjSesame").val();
+                                         if (ymjSesame != "") {
+                                             ymjCard = $("#ymjCard").val();
+                                             ymjRegion = linusericssonvalue.trim().split(" ")[0];
+                                             if (Cardzz.test(ymjCard)) {
+                                                 $.ajax({
+                                                     url: "/insertBasicmanager",
+                                                     data: {
+                                                         "qdLoanpay": Borrowingnumber,
+                                                         "qdOften": educationvalue,
+                                                         "qdSocial": whethervalue,
+                                                         "qdPlicy": anywherevalue,
+                                                         "qdAssets": Assetsvalue,
+                                                         "qdMarriage": marriagevalue,
+                                                         "qdDress": linusericssonvalue,
+                                                         "qdFund": Professorvalue,
+                                                         "qdCredit": Northwesternvalue,
+                                                         "qdJobs": Professionalvalue,
+                                                         "qdUnits": unitsCurrencyvalue,
+                                                         "qdUnitsDress": AddressLocationvalue,
+                                                         "qdIncome": monthlyvalue,
+                                                         "qdSalary": paydayvalue,
+                                                         "qdAge": ymjage,
+                                                         "qdPhone": ymjphone,
+                                                         "qdQq": ymjQQ,
+                                                         "qdWechat": ymjwechat,
+                                                         "qdSesame": ymjSesame,
+                                                         "qdCard": ymjCard,
+                                                         "qdRegion": ymjRegion,
+                                                         "qdUsername": ymjusername,
+														 "qdSex":$('input[name="sex"]:checked').val(),
+                                                         "qdSource": getUrlParam('sourceId')
+                                                     },
+                                                     type: "post",
+                                                     dataType: "json",
+                                                     success: function (result) {
+                                                         if (result.code==0) {
+                                                             alert("信息已提交完成，稍后将有工作人员联系您")
+                                                         }
+
+                                                         $(location).prop('href', result.data)
+                                                     },
+                                                     error: function (result) {
+                                                         console.log("error----");
+                                                     }
+                                                 })
+                                             } else {
+                                                 alert("请正确填写身份证号")
+                                             }
+                                         } else {
+                                             alert("请正确填写芝麻分")
+                                         }
+                                     } else {
+                                         alert("请正确填写微信号")
+                                     }
+                                 } else {
+                                     alert("请正确填写QQ号")
+                                 }
+                             } else {
+                                 alert("请正确填写手机号")
+                             }
+                         } else {
+                             alert("请正确填写年龄")
+                         }
+                     }else{
+                         alert("请输入正确中文姓名！");
+                     }
 				 }else{
-			alert("请正确填写用户名")
+                     alert("请输入正确中文姓名，并且长度为2-4位");
 				 }
 		})
+
+    //验证百家姓
+    function checkbjx(name) {
+        //js正则表达式  match
+        //为什么此时的match方法不对
+        if ("赵|钱|孙|李|周|吴|郑|王|冯|陈|楮|卫|蒋|沈|韩|杨|朱|秦|尤|许|何|吕|施|张|孔|曹|严|华|金|魏|陶|姜|戚|谢|邹|喻|柏|水|窦|章|云|苏|潘|葛|奚|范|彭|郎|鲁|韦|昌|马|苗|凤|花|方|俞|任|袁|柳|酆|鲍|史|唐|费|廉|岑|薛|雷|贺|倪|汤|滕|殷|罗|毕|郝|邬|安|常|乐|于|时|傅|皮|卞|齐|康|伍|余|元|卜|顾|孟|平|黄|和|穆|萧|尹|姚|邵|湛|汪|祁|毛|禹|狄|米|贝|明|臧|计|伏|成|戴|谈|宋|茅|庞|熊|纪|舒|屈|项|祝|董|梁|杜|阮|蓝|闽|席|季|麻|强|贾|路|娄|危|江|童|颜|郭|梅|盛|林|刁|锺|徐|丘|骆|高|夏|蔡|田|樊|胡|凌|霍|虞|万|支|柯|昝|管|卢|莫|经|房|裘|缪|干|解|应|宗|丁|宣|贲|邓|郁|单|杭|洪|包|诸|左|石|崔|吉|钮|龚|程|嵇|邢|滑|裴|陆|荣|翁|荀|羊|於|惠|甄|麹|家|封|芮|羿|储|靳|汲|邴|糜|松|井|段|富|巫|乌|焦|巴|弓|牧|隗|山|谷|车|侯|宓|蓬|全|郗|班|仰|秋|仲|伊|宫|宁|仇|栾|暴|甘|斜|厉|戎|祖|武|符|刘|景|詹|束|龙|叶|幸|司|韶|郜|黎|蓟|薄|印|宿|白|怀|蒲|邰|从|鄂|索|咸|籍|赖|卓|蔺|屠|蒙|池|乔|阴|郁|胥|能|苍|双|闻|莘|党|翟|谭|贡|劳|逄|姬|申|扶|堵|冉|宰|郦|雍|郤|璩|桑|桂|濮|牛|寿|通|边|扈|燕|冀|郏|浦|尚|农|温|别|庄|晏|柴|瞿|阎|充|慕|连|茹|习|宦|艾|鱼|容|向|古|易|慎|戈|廖|庾|终|暨|居|衡|步|都|耿|满|弘|匡|国|文|寇|广|禄|阙|东|欧|殳|沃|利|蔚|越|夔|隆|师|巩|厍|聂|晁|勾|敖|融|冷|訾|辛|阚|那|简|饶|空|曾|毋|沙|乜|养|鞠|须|丰|巢|关|蒯|相|查|后|荆|红|游|竺|权|逑|盖|益|桓|公|万俟|司马|上官|欧阳|夏侯|诸葛|闻人|东方|赫连|皇甫|尉迟|公羊|澹台|公冶|宗政|濮阳|淳于|单于|太叔|申屠|公孙|仲孙|轩辕|令狐|锺离|宇文|长孙|慕容|鲜于|闾丘|司徒|司空|丌官|司寇|仉|督|子车|颛孙|端木|巫马|公西|漆雕|乐正|壤驷|公良|拓拔|夹谷|宰父|谷梁|晋|楚|阎|法|汝|鄢|涂|钦|段干|百里|东郭|南门|呼延|归|海|羊舌|微生|岳|帅|缑|亢|况|后|有|琴|梁丘|左丘|东门|西门|商|牟|佘|佴|伯|赏|南宫|墨|哈|谯|笪|年|爱|阳|佟|第五|言|福".search(name) != -1
+        ) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    //校验只能输入汉字，并且长度为2-4
+    function checkChinese(name) {
+
+        reg = /^[\u4E00-\u9FA5]{2,4}$/;
+
+        if (reg.test(name)) {
+
+            return true;
+        } else {
+            return false;
+
+        }
+
+    }
+
 	function getUrlParam(name) {//封装方法
 		var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
 		var r = window.location.search.substr(1).match(reg); //匹配目标参数
@@ -115,6 +160,10 @@ $(function() {
 				  $(".anywhereInput>.prompting").html("有无保单"+anywherevalue);
 				 $(".anywhereInput").css({"display": "block"})
 				 $(".anywhere").css({"display": "none"})
+			if (inputmaxboxheight<=350){
+				inputmaxboxheight=inputmaxboxheight+35
+				$(".inputmaxbox").css({"height": inputmaxboxheight+"px"})
+			}
 		})
 		$(".anywhereInput>.ButtonThe").click(function() {
 				 zIndex=zIndex+100
@@ -123,10 +172,14 @@ $(function() {
 	//payday  发薪日
 		$(".paydayxiayibu").click(function() {
 				 paydayvalue=$("#paydayMessage").val();
-			if (paydayvalue!="") {
+			if (paydayvalue<=31) {
 				  $(".paydayInput>.prompting").html("现发薪日居地："+paydayvalue);
 				 $(".paydayInput").css({"display": "block"})
 				 $(".payday").css({"display": "none"})
+				if (inputmaxboxheight<=350){
+					inputmaxboxheight=inputmaxboxheight+35
+					$(".inputmaxbox").css({"height": inputmaxboxheight+"px"})
+				}
 		}else {
 				alert("请正确填写发薪日")
 			}
@@ -142,6 +195,10 @@ $(function() {
 			  $(".monthlyInput>.prompting").html("月收入："+monthlyvalue);
 			 $(".monthlyInput").css({"display": "block"})
 			 $(".monthly").css({"display": "none"})
+			if (inputmaxboxheight<=350){
+				inputmaxboxheight=inputmaxboxheight+35
+				$(".inputmaxbox").css({"height": inputmaxboxheight+"px"})
+			}
 		}else {
 			alert("请正确填写月收入")
 		}
@@ -157,6 +214,10 @@ $(function() {
 			  $(".AddressLocationInput>.prompting").html("单位地址："+AddressLocationvalue);
 			 $(".AddressLocationInput").css({"display": "block"})
 			 $(".AddressLocation").css({"display": "none"})
+			if (inputmaxboxheight<=350){
+				inputmaxboxheight=inputmaxboxheight+35
+				$(".inputmaxbox").css({"height": inputmaxboxheight+"px"})
+			}
 		}else {
 			alert("请正确填写单位地址")
 		}
@@ -172,6 +233,10 @@ $(function() {
 			$(".unitsCurrencyInput>.prompting").html("工作单位：" + unitsCurrencyvalue);
 			$(".unitsCurrencyInput").css({"display": "block"})
 			$(".unitsCurrency").css({"display": "none"})
+			if (inputmaxboxheight<=350){
+				inputmaxboxheight=inputmaxboxheight+35
+				$(".inputmaxbox").css({"height": inputmaxboxheight+"px"})
+			}
 		}else {
 			alert("请正确填写工作单位")
 		}
@@ -186,6 +251,10 @@ $(function() {
 			  $(".ProfessionalInput>.prompting").html("职业："+Professionalvalue);
 			 $(".ProfessionalInput").css({"display": "block"})
 			 $(".Professional").css({"display": "none"})
+		if (inputmaxboxheight<=350){
+			inputmaxboxheight=inputmaxboxheight+35
+			$(".inputmaxbox").css({"height": inputmaxboxheight+"px"})
+		}
 	})
 	$(".ProfessionalInput>.ButtonThe").click(function() {
 		 zIndex=zIndex+100
@@ -197,6 +266,10 @@ $(function() {
 			  $(".NorthwesternInput>.prompting").html("有无信用卡："+Northwesternvalue);
 			 $(".NorthwesternInput").css({"display": "block"})
 			 $(".Northwestern").css({"display": "none"})
+		if (inputmaxboxheight<=350){
+			inputmaxboxheight=inputmaxboxheight+35
+			$(".inputmaxbox").css({"height": inputmaxboxheight+"px"})
+		}
 	})
 	$(".NorthwesternInput>.ButtonThe").click(function() {
 		 zIndex=zIndex+100
@@ -209,6 +282,10 @@ $(function() {
 			  $(".ProfessorInput>.prompting").html("有无本地公积金："+Professorvalue);
 			 $(".ProfessorInput").css({"display": "block"})
 			 $(".Professor").css({"display": "none"})
+		if (inputmaxboxheight<=350){
+			inputmaxboxheight=inputmaxboxheight+35
+			$(".inputmaxbox").css({"height": inputmaxboxheight+"px"})
+		}
 	})
 	$(".ProfessorInput>.ButtonThe").click(function() {
 		 zIndex=zIndex+100
@@ -221,6 +298,10 @@ $(function() {
 				 $(".linusericssonInput>.prompting").html("现居地："+linusericssonvalue);
 				 $(".linusericssonInput").css({"display": "block"})
 				 $(".linusericsson").css({"display": "none"})
+				 if (inputmaxboxheight<=350){
+					 inputmaxboxheight=inputmaxboxheight+35
+					 $(".inputmaxbox").css({"height": inputmaxboxheight+"px"})
+				 }
 			 }else {
 				 alert("请正确填写现居地")
 			 }
@@ -236,51 +317,79 @@ $(function() {
 			  $(".marriageInput>.prompting").html("婚姻情况："+marriagevalue);
 			 $(".marriageInput").css({"display": "block"})
 			 $(".marriage").css({"display": "none"})
+		if (inputmaxboxheight<=350){
+			inputmaxboxheight=inputmaxboxheight+35
+			$(".inputmaxbox").css({"height": inputmaxboxheight+"px"})
+		}
 	})
 	$(".marriageInput>.ButtonThe").click(function() {
 		 zIndex=zIndex+100
 			 $(".marriage").css({"display": "block","z-index":zIndex})
 	})
 	
-	//Borrowing  借贷金额
-	$(".startinputbox li").click(function() {
-		$(".startinputbox li").css({
-			"background-color": "#007AFF"
-		});
-		$(this).css({
-			"background-color": "#163960"
-		});
-		startnumber=$(this).attr("value")
-	})
-	$(".stopinputbox li").click(function() {
-		$(".stopinputbox li").css({
-			"background-color": "#007AFF"
-		});
-		$(this).css({
-			"background-color": "#163960"
-		});
-		stopnumber=$(this).attr("value")
-	})
-	$(".Borrowingxiayibu").click(function() {
-		if(startnumber<stopnumber){
-			Borrowingnumber=startnumber+"-"+stopnumber+"万"
-		    $(".BorrowingInput>.prompting").html("借贷额度："+startnumber+"-"+stopnumber+"万");
-			 $(".BorrowingInput").css({"display": "block"})
-			 $(".Borrowing").css({"display": "none"})
-		}else{
-		alert("借贷 开始额度不能小于结束额度")
-		}
-	})
-	$(".BorrowingInput>.ButtonThe").click(function() {
-		 zIndex=zIndex+100
-			 $(".Borrowing").css({"display": "block","z-index":zIndex})
-	})
+	// //Borrowing  借贷金额
+	// $(".startinputbox li").click(function() {
+	// 	$(".startinputbox li").css({
+	// 		"background-color": "#007AFF"
+	// 	});
+	// 	$(this).css({
+	// 		"background-color": "#163960"
+	// 	});
+	// 	startnumber=$(this).attr("value")
+	// })
+	// $(".stopinputbox li").click(function() {
+	// 	$(".stopinputbox li").css({
+	// 		"background-color": "#007AFF"
+	// 	});
+	// 	$(this).css({
+	// 		"background-color": "#163960"
+	// 	});
+	// 	stopnumber=$(this).attr("value")
+	// })
+	// $(".Borrowingxiayibu").click(function() {
+	// 	if(startnumber<stopnumber){
+	// 		Borrowingnumber=startnumber+"-"+stopnumber+"万"
+	// 	    $(".BorrowingInput>.prompting").html("借贷额度："+startnumber+"-"+stopnumber+"万");
+	// 		 $(".BorrowingInput").css({"display": "block"})
+	// 		 $(".Borrowing").css({"display": "none"})
+	// 		if (inputmaxboxheight<=350){
+	// 			inputmaxboxheight=inputmaxboxheight+35
+	// 			$(".inputmaxbox").css({"height": inputmaxboxheight+"px"})
+	// 		}
+    //
+	// 	}else{
+	// 	alert("借贷 开始额度不能小于结束额度")
+	// 	}
+	// })
+	// $(".BorrowingInput>.ButtonThe").click(function() {
+	// 	 zIndex=zIndex+100
+	// 		 $(".Borrowing").css({"display": "block","z-index":zIndex})
+	// })
     //education  您的学历
 	$(".educationselect li").click(function() {
 			 educationvalue=$(this).attr("value")
 			  $(".educationInput>.prompting").html("您的学历："+educationvalue);
 			 $(".educationInput").css({"display": "block"})
 			 $(".education").css({"display": "none"})
+		if (inputmaxboxheight<=350){
+			inputmaxboxheight=inputmaxboxheight+35
+			$(".inputmaxbox").css({"height": inputmaxboxheight+"px"})
+		}
+	})
+	$(".educationInput>.ButtonThe").click(function() {
+		 zIndex=zIndex+100
+			 $(".education").css({"display": "block","z-index":zIndex})
+	})
+    //Borrowings 额度
+	$(".Borrowingselect li").click(function() {
+        Borrowingnumber=$(this).attr("value")
+			  $(".BorrowingInput>.prompting").html("贷款额度："+Borrowingnumber);
+			 $(".BorrowingInput").css({"display": "block"})
+			 $(".Borrowing").css({"display": "none"})
+		if (inputmaxboxheight<=350){
+			inputmaxboxheight=inputmaxboxheight+35
+			$(".inputmaxbox").css({"height": inputmaxboxheight+"px"})
+		}
 	})
 	$(".educationInput>.ButtonThe").click(function() {
 		 zIndex=zIndex+100
@@ -292,6 +401,10 @@ $(function() {
 			  $(".whetherInput>.prompting").html("您的社保："+whethervalue);
 			 $(".whetherInput").css({"display": "block"})
 			 $(".whether").css({"display": "none"})
+		if (inputmaxboxheight<=350){
+			inputmaxboxheight=inputmaxboxheight+35
+			$(".inputmaxbox").css({"height": inputmaxboxheight+"px"})
+		}
 	})
 	$(".whetherInput>.ButtonThe").click(function() {
 		 zIndex=zIndex+100
@@ -303,6 +416,10 @@ $(function() {
 			  $(".AssetsInput>.prompting").html("资产情况："+Assetsvalue);
 			 $(".AssetsInput").css({"display": "block"})
 			 $(".Assets").css({"display": "none"})
+		if (inputmaxboxheight<=350){
+			inputmaxboxheight=inputmaxboxheight+35
+			$(".inputmaxbox").css({"height": inputmaxboxheight+"px"})
+		}
 	})
 	$(".AssetsInput>.ButtonThe").click(function() {
 		 zIndex=zIndex+100

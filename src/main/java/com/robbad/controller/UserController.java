@@ -1,10 +1,7 @@
 package com.robbad.controller;
 
 
-import com.robbad.model.Basicmanager;
-import com.robbad.model.SearchCondition;
-import com.robbad.model.StraightPush;
-import com.robbad.model.User;
+import com.robbad.model.*;
 import com.robbad.service.UserService;
 import com.robbad.util.RedisUtil;
 import com.robbad.util.WebTools;
@@ -34,7 +31,11 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    //个人订阅
+    private PersonalSubscriptionsModel privatePersonalSubscriptionsModel;
 
+    //直推车订阅
+    private PersonalSubscriptionsModel privatePersonalZTCSubscriptionsModel;
 
     @GetMapping("/qdlogin")
     public String qdLogin() {
@@ -49,6 +50,7 @@ public class UserController {
     @RequestMapping("/loginUser")
     public String qclogin(Model model, User user, HttpServletRequest request) {
         model.addAttribute("message","用户名密码错误");
+        model.addAttribute("messagephone",user.getLgPhone());
         if (StringUtils.isEmpty(user.getLgPhone())) {
             return "login";
         }
@@ -75,7 +77,7 @@ public class UserController {
             } else {
                 return "login";
             }
-            return "grondstoffenlijst";
+            return "subscription";
         } catch (NullPointerException e) {
             System.out.println("NullPointerException---------");
             return "login";
@@ -99,7 +101,7 @@ public class UserController {
                 return WebTools.returnData("session未保持",1);
             }
             searchCondition.setPhone(phone);
-            return userService.GrabASingleList(searchCondition);
+            return userService.GrabASingleList(searchCondition,privatePersonalSubscriptionsModel);
         }catch (Exception e){
             return WebTools.returnData("异常",1);
         }
@@ -122,7 +124,7 @@ public class UserController {
         try{
             String phone=(String)session.getAttribute("lgPhone");
             searchCondition.setPhone(phone);
-            return userService.DicectDriveList(searchCondition);
+            return userService.DicectDriveList(searchCondition,privatePersonalZTCSubscriptionsModel);
         }catch (Exception e){
             return WebTools.returnData("异常",1);
         }
@@ -233,6 +235,7 @@ public class UserController {
         model.addAttribute("lgPhone", session.getAttribute("lgPhone"));
         model.addAttribute("lgBalance", session.getAttribute("lgBalance"));
         model.addAttribute("particularsMessages",userService.particularsMessage(particularsId,(String)session.getAttribute("lgPhone")));
+        model.addAttribute("biaojineirong",userService.rondstoffenlijstbiaoji(particularsId,(String)session.getAttribute("lgPhone")));
 
         return "DirectDriveParticulars";
     }
@@ -395,29 +398,152 @@ public class UserController {
      */
     @ResponseBody
     @RequestMapping("/insertBasicmanager")
-    public Object insertBasicmanager(Basicmanager basicmanager) {
-        String submitIP="";
-        try {
-            Enumeration<NetworkInterface> allNetInterfaces = NetworkInterface.getNetworkInterfaces();
-            InetAddress ip = null;
-            while (allNetInterfaces.hasMoreElements()) {
-                NetworkInterface netInterface = (NetworkInterface) allNetInterfaces.nextElement();
-                if (netInterface.isLoopback() || netInterface.isVirtual() || !netInterface.isUp()) {
-                    continue;
-                } else {
-                    Enumeration<InetAddress> addresses = netInterface.getInetAddresses();
-                    while (addresses.hasMoreElements()) {
-                        ip = addresses.nextElement();
-                        if (ip != null && ip instanceof Inet4Address) {
-                            submitIP= ip.getHostAddress();
-                        }
-                    }
-                }
-            }
-        } catch (Exception e) {
-            System.err.println("IP地址获取失败" + e.toString());
+    public Object insertBasicmanager(Basicmanager basicmanager,HttpServletRequest request) {
+//        String submitIP="";
+//        try {
+//            Enumeration<NetworkInterface> allNetInterfaces = NetworkInterface.getNetworkInterfaces();
+//            InetAddress ip = null;
+//            while (allNetInterfaces.hasMoreElements()) {
+//                NetworkInterface netInterface = (NetworkInterface) allNetInterfaces.nextElement();
+//                if (netInterface.isLoopback() || netInterface.isVirtual() || !netInterface.isUp()) {
+//                    continue;
+//                } else {
+//                    Enumeration<InetAddress> addresses = netInterface.getInetAddresses();
+//                    while (addresses.hasMoreElements()) {
+//                        ip = addresses.nextElement();
+//                        if (ip != null && ip instanceof Inet4Address) {
+//                            submitIP= ip.getHostAddress();
+//                        }
+//                    }
+//                }
+//            }
+//        } catch (Exception e) {
+//            System.err.println("IP地址获取失败" + e.toString());
+//        }
+
+        System.out.println(getRemortIP(request));
+        System.out.println(getIpAddr(request));
+                return userService.insertBasicmanager(basicmanager,getIpAddr(request));
+    }
+    public String getRemortIP(HttpServletRequest request) {
+        if (request.getHeader("x-forwarded-for") == null) {
+            return request.getRemoteAddr();
         }
-        return userService.insertBasicmanager(basicmanager,submitIP);
+        return request.getHeader("x-forwarded-for");
+    }
+    public String getIpAddr(HttpServletRequest request) {
+        String ip = request.getHeader("x-forwarded-for");
+        if(ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("Proxy-Client-IP");
+        }
+        if(ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("WL-Proxy-Client-IP");
+        }
+        if(ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getRemoteAddr();
+        }
+        return ip;
+    }
+    /**
+     * 个人订阅
+     * @param
+     * @param
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/PersonalSubscriptions")
+    public Object PersonalSubscriptions(PersonalSubscriptionsModel personalSubscriptionsModelEnter) {
+        privatePersonalSubscriptionsModel=personalSubscriptionsModelEnter;
+        return WebTools.returnData("成功",0);
     }
 
+    /**
+     * 直推车订阅
+     * @param
+     * @param
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/PersonalZTCSubscriptions")
+    public Object PersonalZTCSubscriptions(PersonalSubscriptionsModel personalSubscriptionsModelEnter) {
+        privatePersonalZTCSubscriptionsModel=personalSubscriptionsModelEnter;
+        return WebTools.returnData("成功",0);
+    }
+    /**
+     *提交限时限量
+     * @param
+     * @param
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/submitxsxl")
+    public Object submitxsxl(QdXsxl qdXsxl,HttpServletRequest request) {
+
+        HttpSession session = request.getSession();
+        qdXsxl.setLgPhone((String)session.getAttribute("lgPhone"));
+        return userService.insertSubmitXsxl(qdXsxl);
+    }
+
+    /**
+     *查询限时限量
+     * @param
+     * @param
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/findsubmitxsxl")
+    public Object findxsxl(HttpServletRequest request) {
+
+        HttpSession session = request.getSession();
+
+        return userService.findxsxls((String)session.getAttribute("lgPhone"));
+    }
+    /**
+     *
+     * @param
+     * @param
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/submitBiaoji")
+    public Object submitBiaoji(Integer gmid,String biaoji,HttpServletRequest request) {
+
+        HttpSession session = request.getSession();
+
+        return userService.updatepowerbiaoji(gmid,biaoji,(String)session.getAttribute("lgPhone"));
+    }
+    /**
+     *
+     * @param
+     * @param
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/chongzhiannsss")
+    public void chongzhiannsss(Integer gmid,String biaoji,HttpServletRequest request) {
+        privatePersonalZTCSubscriptionsModel=null;
+    }
+
+    /**
+     *
+     * @param
+     * @param
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/ztctongji")
+    public Object ztctongji(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+       return userService.ztctongji((String)session.getAttribute("lgPhone"));
+    }
+    @RequestMapping("/DirectDriveDatajiluTable")
+    public String DirectDriveDatajiluTable(HttpServletRequest request,Model model) {
+
+        HttpSession session = request.getSession();
+        model.addAttribute("lgUsername", session.getAttribute("lgUsername"));
+        model.addAttribute("lgPhone", session.getAttribute("lgPhone"));
+        model.addAttribute("lgBalance", session.getAttribute("lgBalance"));
+
+        return "DirectDriveDatajiluTable";
+    }
 }

@@ -1,9 +1,6 @@
 package com.robbad.service;
 
-import com.robbad.model.Basicmanager;
-import com.robbad.model.SearchCondition;
-import com.robbad.model.StraightPush;
-import com.robbad.model.User;
+import com.robbad.model.*;
 
 import java.util.Map;
 
@@ -21,13 +18,13 @@ public interface UserService {
 
     Object changePassword(User user);
 
-    Object GrabASingleList(SearchCondition searchCondition);
+    Object GrabASingleList(SearchCondition searchCondition, PersonalSubscriptionsModel privatePersonalSubscriptionsModel);
 
     Object particularsMessage(Integer particularsId, String lgPhone);
 
     Object purchaseList(SearchCondition searchCondition);
 
-    Object DicectDriveList(SearchCondition searchCondition);
+    Object DicectDriveList(SearchCondition searchCondition,PersonalSubscriptionsModel privatePersonalZTCSubscriptionsModel);
 
     Object purchaseInformation(Integer gmid,String lgPhone);
 
@@ -40,4 +37,17 @@ public interface UserService {
     Integer whetherPushExcessiveDao(int uid);
 
     Object insertBasicmanager(Basicmanager basicmanager,String submitIP);
+
+    Object insertSubmitXsxl(QdXsxl qdXsxl);
+
+
+    Object rondstoffenlijstbiaoji(Integer particularsId, String lgPhone);
+
+    Object updatepowerbiaoji(Integer gmid, String biaoji, String lgPhone);
+
+    Object ztctongji(String lgPhone);
+
+    Object findLgBalance(String lgPhone);
+
+    Object findxsxls(String lgPhone);
 }

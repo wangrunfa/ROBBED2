@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+	<head>
+
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<link rel="icon" href="img/bitbug_favicon.ico" mce_href="/favicon.ico" type="image/x-icon">
+		<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="keywords" content="">
+		<meta name="description" content="">
+		<link rel="icon" type="image/ico" href="favicon.ico">
+		<title>云借条-大数据信息平台</title>
+		<script src="js/public.js"></script>
+
+		<link rel="stylesheet" href="css/public.css">
+		<link rel="stylesheet" href="css/ion.rangeSlider.css">
+		<link rel="stylesheet" href="css/index.css">
+		<style>
+			.visibilityHiden{
+	        visibility: hidden;
+	    }
+	</style>
+		<link href="css/login.css" rel="stylesheet">
+	</head>
+	<body>
+		<div id="app">
+			<div class="af-page">
+				<div class="page-header">
+					<div class="container"><a href="javascript:;" class="pull-left logo"><img src="img/yjtlogo.png" alt=""></a>
+						</div>
+					<!---->
+					<!---->
+				</div>
+				<div class="subscribe-wrapper onesubscription">
+					<div class="sub-title text-center">订阅目标客户</div>
+					<div class="subscribe-step">
+
+
+						<!-- 主内容区 -->
+						<div class="bigBox" style="margin-top: 50px;">
+							<!-- 导航栏 -->
+							<div class="navBigBox ">
+								<div class="navBox clearfix">
+
+
+									<!-- 左右滑动 -->
+									<div class="moveBox">
+										<div class="moveTitle clearfix">
+											<p class="fl">芝麻分(分)
+											</p>
+											<p class="changeNum bxyc1 fr"></p>
+										</div>
+										<div class="moveContent">
+											<input type="text" value="1111" class="range_1" />
+
+										</div>
+									</div>
+
+									<!-- 左右滑动 -->
+									<div class="moveBox">
+										<div class="moveTitle clearfix">
+											<p class="fl">年龄(岁)
+											</p>
+											<p class="changeNum bxyc2 fr"></p>
+										</div>
+										<div class="moveContent">
+											<input type="text" value="1111" class="range_2" />
+
+										</div>
+									</div>
+
+
+									<!-- 左右滑动 -->
+									<div class="moveBox">
+										<div class="moveTitle clearfix">
+											<p class="fl">金额(元)</p>
+											<p class="changeNum bxyc3 fr"></p>
+										</div>
+										<div class="moveContent">
+											<input type="text" value="1111" class="range_3" />
+
+										</div>
+									</div>
+									<!-- 确定 -->
+
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="w100 next-step"><button class="oneNextStep">下一步</button></div>
+				</div>
+				<!---->
+				<div class="subscribe-wrapper twosubscription">
+					<div class="w100 subscribe-step">
+						<div class="sub-title text-center">订阅目标客户</div>
+						<div class="w100 sub-level">
+							<div class="sl-title">人寿保单</div>
+							<div class="sl-item-list">
+								<div value="0" class="sl-item insure active">无要求</div>
+								<div value="1" class="sl-item insure">有保单</div>
+								<div value="2" class="sl-item insure">无保单</div>
+							</div>
+						</div>
+						<div class="w100 sub-level">
+							<div class="sl-title">信用卡</div>
+							<div class="sl-item-list">
+								<div value="0" class="sl-item card active">无要求</div>
+								<div value="1" class="sl-item card">有信用卡</div>
+								<div value="2" class="sl-item card">无信用卡</div>
+							</div>
+						</div>
+						<div class="w100 sub-level">
+							<div class="sl-title">文化程度</div>
+							<div class="sl-item-list">
+								<div value="0" class="sl-item edu active">无要求</div>
+								<div value="1" class="sl-item edu">专科及以上</div>
+								<div value="2" class="sl-item edu">本科及以上</div>
+							</div>
+						</div>
+						<div class="w100 sub-level">
+							<div class="sl-title">社保公积金房车</div>
+							<div class="sl-item-list">
+								<div value="1" class="sl-item car active" >无要求</div>
+								<div value="2" class="sl-item car">有一即可</div>
+								<div value="3" class="sl-item car">必有公积金</div>
+								<div value="4" class="sl-item car">只看车产</div>
+								<div value="5" class="sl-item car">只看房产</div>
+								<div value="6" class="sl-item car">社公齐全</div>
+								<div value="7" class="sl-item car">房车都有</div>
+								<div value="8" class="sl-item car">全部需要</div>
+							</div>
+						</div>
+						<div class="w100 next-step"><button class="twoNextStep">下一步</button></div>
+					</div>
+				</div>
+				<!---->
+				<div class="subscribe-wrapper threesubscription">
+					<div class="w100 subscribe-step">
+						<div class="sub-title text-center">订阅目标客户</div>
+						<h2 id="cityxhuanzhe">城市选择 - 全国</h2>
+						<div class="w100 sub-level" id="cityminboxtopssss">
+						</div>
+						<div class="w100 next-step"><button class="subscriptionSubmit">完成</button></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		</div>
+
+		<script src="js/jquery-1.7.2.min.js"></script>
+		<script src="js/ion.rangeSlider.js"></script>
+		<script>
+
+
+			var minSesame=550;//最小芝麻分
+			var maxSesame=950;//最大芝麻分
+
+			var minAge=22;//最小年龄
+			var maxAge=45;//最大年龄
+
+			var minLimit=1000 ;//最小额度
+			var maxLimit=50000 ;//最大额度
+
+			var guarantee=0;//保单
+			var creditCard=0;//信用卡
+			var educationBackground=0;//学历
+			var multipleConditions=0;//社保公积金房车
+
+			var cityName="";//地址
+
+			$('.subscriptionSubmit').on('click', function () {
+				$.ajax({
+					url: "/PersonalZTCSubscriptions",
+					type: "get",
+					data:{"minSesame":minSesame,"maxSesame":maxSesame,
+						"minAge":minAge,"maxAge":maxAge,
+						"minLimit":minLimit,"maxLimit":maxLimit,
+						"guarantee":guarantee,"creditCard":creditCard,
+						"educationBackground":educationBackground,
+						"multipleConditions":multipleConditions,
+						"cityName":cityName,
+					},
+					dataType: "json",
+					success: function (result) {
+						$(location).prop('href', '/DirectDrive')
+
+					},
+					error: function (result) {
+						console.log("error----");
+					}
+				})
+			});
+			//月供滑动
+			$(".range_1").ionRangeSlider({
+				min: 550, //最小值
+				max: 950, //最大值
+				from: 0, //默认从哪个值开始选
+				to: 6000, //默认选到哪个值
+				type: 'double', //设置类型
+				step: 1,
+				prefix: "", //设置数值前缀
+				postfix: "分", //设置数值后缀
+				prettify: true,
+				hasGrid: true,
+				onChange: function (data) {//数据变化时触发
+					console.log(data)
+					moveSliderRange1(data.from, data.to);
+				},
+			});
+			var sliderRange2 = $(".range_1").data("ionRangeSlider");
+
+			function moveSliderRange1(leftNum, rightNum) {
+				minSesame=leftNum;
+				maxSesame=rightNum;
+				$('.bxyc1').text(leftNum + '-' + rightNum + '分');
+				$('.bxyc1').attr("data-leftNum", leftNum);
+				$('.bxyc1').attr("data-rightNum", rightNum);
+
+			}
+
+
+			//月供滑动
+			$(".range_2").ionRangeSlider({
+				min: 22, //最小值
+				max: 45, //最大值
+				from: 22, //默认从哪个值开始选
+				to: 45, //默认选到哪个值
+				type: 'double', //设置类型
+				step: 1,
+				prefix: "", //设置数值前缀
+				postfix: "岁", //设置数值后缀
+				prettify: true,
+				hasGrid: true,
+				onChange: function (data) {//数据变化时触发
+					console.log(data)
+					moveSliderRange2(data.from, data.to);
+				},
+			});
+			var sliderRange2 = $(".range_2").data("ionRangeSlider");
+
+			function moveSliderRange2(leftNum, rightNum) {
+				minAge=leftNum;
+				maxAge=rightNum;
+				$('.bxyc2').text(leftNum + '-' + rightNum + '岁');
+				$('.bxyc2').attr("data-leftNum", leftNum);
+				$('.bxyc2').attr("data-rightNum", rightNum);
+
+			}
+
+
+
+			//月供滑动
+			$(".range_3").ionRangeSlider({
+				min: 1000, //最小值
+				max: 50000, //最大值
+				from: 1000, //默认从哪个值开始选
+				to: 50000, //默认选到哪个值
+				type: 'double', //设置类型
+				step: 1,
+				prefix: "", //设置数值前缀
+				postfix: "元", //设置数值后缀
+				prettify: true,
+				hasGrid: true,
+				onChange: function (data) {//数据变化时触发
+					console.log(data)
+					moveSliderRange3(data.from, data.to);
+				},
+			});
+			var sliderRange2 = $(".range_3").data("ionRangeSlider");
+
+			function moveSliderRange3(leftNum, rightNum) {
+				minLimit=leftNum;
+				maxLimit=rightNum;
+				$('.bxyc3').text(leftNum + '-' + rightNum + '元');
+				$('.bxyc3').attr("data-leftNum", leftNum);
+				$('.bxyc3').attr("data-rightNum", rightNum);
+			}
+			$('.oneNextStep').on('click', function () {
+				$(".onesubscription").css({"display":"none"})
+				$(".twosubscription").css({"display":"block"})
+			});
+			$('.sl-item-list .insure').on('click', function () {
+				guarantee=$(this).attr("value")
+				$(".sl-item-list .insure").css({"background":"#F0F0F0","color":"#999"})
+				$(this).css({"background":"#ff6701","color":"#fff"})
+
+			});
+			$('.sl-item-list .card').on('click', function () {
+
+				creditCard=$(this).attr("value")
+				$(".sl-item-list .card").css({"background":"#F0F0F0","color":"#999"})
+				$(this).css({"background":"#ff6701","color":"#fff"})
+
+			});
+			$('.sl-item-list .edu').on('click', function () {
+
+				educationBackground= $(this).attr("value")
+				$(".sl-item-list .edu").css({"background":"#F0F0F0","color":"#999"})
+				$(this).css({"background":"#ff6701","color":"#fff"})
+
+			});
+			$('.sl-item-list .car').on('click', function () {
+
+				multipleConditions=$(this).attr("value")
+				$(".sl-item-list .car").css({"background":"#F0F0F0","color":"#999"})
+				$(this).css({"background":"#ff6701","color":"#fff"})
+
+			});
+
+			$('.twoNextStep').on('click', function () {
+				$(".twosubscription").css({"display":"none"})
+				$(".threesubscription").css({"display":"block"})
+			});
+
+			window.onload = function(){
+
+				this.cityInitialMessage();
+
+			};
+
+			function cityInitialMessage() {
+				var cityhtml="<li onclick=\"citySelect('全国')\">全国</li>";
+				console.log("进入----");
+				$.ajax({
+					url: "/cityInfo",
+					type: "get",
+					dataType: "json",
+					success: function (result) {
+						for (i = 0; i < result.length; i++) {
+							cityhtml += "<li onclick=\"citySelect('"+result[i].sfCity+"')\">"+result[i].sfCity+"</li>"
+						}
+						$("#cityminboxtopssss").html(cityhtml);
+					},
+					error: function (result) {
+						console.log("error----");
+					}
+				})
+			}
+			function citySelect(value) {
+				if (value!='全国') {
+					cityName=value;
+					var cname="城市选择 - "+value
+					$("#cityxhuanzhe").html(cname)
+
+				}else{
+					cityName='';
+					var cname="城市选择 - 全国"
+					$("#cityxhuanzhe").html(cname)
+				}
+
+
+			}
+		</script>
+
+	</body>
+</html>

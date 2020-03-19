@@ -1579,7 +1579,7 @@ nav#sidebar.shrinked a[aria-expanded="true"]::after {
   height: 100%;
   display: block;
   z-index: -1;
-  background: url(../img/bg.jpeg);
+  background: url(../img/login.8f1f80a.jpeg);
   background-size: cover;
   position: absolute;
   top: 0;
@@ -1601,7 +1601,7 @@ nav#sidebar.shrinked a[aria-expanded="true"]::after {
 
 .login-page .form-holder .info,
 .login-page .form-holder .form {
-  min-height: 70vh;
+  min-height: 40vh;
   padding: 40px;
   height: 100%;
 }
@@ -1611,7 +1611,7 @@ nav#sidebar.shrinked a[aria-expanded="true"]::after {
 }
 
 .login-page .form-holder .info {
-  background: rgba(54, 55, 55, 0.75);
+  /*background: rgba(54, 55, 55, 0.75);*/
   color: #fff;
 }
 
@@ -1625,7 +1625,7 @@ nav#sidebar.shrinked a[aria-expanded="true"]::after {
 }
 
 .login-page .form-holder .form {
-  background: rgba(255, 255, 255, 1);
+  background:rgb(255, 230, 182);
 }
 
 .login-page .form-holder .form .form-group {

@@ -68,6 +68,51 @@ to {
   -webkit-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2);
           box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2);
 }
+.wrpage{
+    display: inline-block;
+    background: skyblue;
+    margin-left: 4px;
+    height: 24px;
+    line-height: 24px;
+    border: 1px solid skyblue;
+    padding: 5px 10px 5px 10px;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 3px;
+}
+a.wrpage:hover{
+    background: #FFFFFF;
+    color: black;
+}
+a {
+    text-decoration:none;
+    color: white;
+}
+#refreshthml{
+    min-height: 850px;
+}
+.wrpage_number{
+
+    width: 24px;
+    font-size: 16px;
+    text-align: center;
+}
+.wr_dotted{
+    height: 24px;
+    line-height: 24px;
+    display: inline-block;
+}
+.curwrpage{
+    background: #FFFFFF;
+
+    border: 1px solid skyblue;
+
+
+}
+.fenyebox{
+    width: 100%;
+    height: 50px;padding-top: 20px;
+}
 .cov-picker-box[data-v-d6f65baa] {
   background: #fff;
   width: 100%;

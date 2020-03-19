@@ -30,6 +30,7 @@ public class PageController {
     public String DirectDriveApplyForTable() {
         return "DirectDriveApplyForTable";
     }
+
     @RequestMapping("/DirectDriveNoDredge")
     public String DirectDriveNoDredge() {
         return "DirectDriveNoDredge";
@@ -49,4 +50,14 @@ public class PageController {
         return "addmessage";
     }
 
+    @RequestMapping("/subscription")
+    public String subscription() {
+        return "subscription";
+    }
+
+
+    @RequestMapping("/ztcsubscription")
+    public String ztcsubscription() {
+        return "ztcsubscription";
+    }
 }

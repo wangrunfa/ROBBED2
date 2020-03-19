@@ -1,374 +1,831 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-	<head>
-		<meta charset="utf-8">
-		<title></title>
-		<link rel="stylesheet" href="css/login.css" />
-		<script src="vendor/jquery/jquery.min.js"></script>
-		<script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
-		<script src="laydate/laydate.js"></script> <!-- 改成你的路径 -->
-		<script>
+<head>
+    <meta charset="utf-8">
+    <link rel="icon" href="img/bitbug_favicon.ico" mce_href="/favicon.ico" type="image/x-icon">
+    <title>云借条-大数据信息平台</title>
 
-			//时间选择器
-			laydate.render({
-				elem: '#startTime'
-				,type: 'date'
-			});
-			laydate.render({
-				elem: '#stopTime'
-				,type: 'date'
-			});
+    <link rel="stylesheet" href="css/login.css"/>
 
-		</script>
-	</head>
-	<body>
-		<div id="app">
-			<div class="af-page">
-				<div class="page-header"><a href="#/" class="pull-left logo router-link-exact-active router-link-active"><img src="img/haoduoyu.png"
-						 alt=""></a>
-					<div class="pull-right header-nav">
-						<ul>
-							<li class="d-relative fore1"><a href="#/subscribe" class="full-cover-link"></a>
-								个人订阅设置
-							</li>
-							<li class="fore3">
-								微信客服
-								<div class="qrcode-box"><img src="img/haoduoyu.png" alt="">
-									<p>客服二维码</p>
-								</div>
-							</li>
-							<li class="d-relative fore1">
-								修改密码
-							</li>
-							<a href="/outLogin" style="color: #333;">
-							<li class="fore4">
-								退出
-							</li>
-							</a>
-						</ul>
-					</div>
-					<!---->
-					<!---->
-					<!---->
-					<!---->
-				</div>
-				<div class="aside-nav" style="z-index: 999999;">
-					<div class="avatar-box"><img src="http://api.jbd.melonmobile.cn/cdn/resource/usr_ico_default.png" alt="">
-						<div class="username text-overflow" th:text="${lgUsername}"></div>
-						<div class="user-id text-overflow"><p th:text="'Tel：'+${lgPhone}"></p></div>
-						<div class="user-id text-overflow"><p th:text="'余额：'+${lgBalance}"></p></div>
-					</div>
-					<div class="nav"><a href="/grondstoffenlijst" class="fore1">
-						<div class="line"></div>
-						抢单列表
-					</a>
-						<!---->
-						<!----> <a href="/DirectDrive" class="fore2 router-link-exact-active router-link-active">
-							<div class="line"></div>
-							优米借直推
-						</a>
-						<!----> <a href="/purchase" class="fore3">
-							<div class="line"></div>
-							已购的客户
-						</a> <a href="/ToBuyCurrency" class="fore4">
-							<div class="line"></div>
-							购买生财币
-						</a></div>
-				</div>
-				<div class="content-box">
-
-					<div class="w100 select-item-wrapper"><div class="pull-left date-wrapper">
-						<div class="pull-left read-wrapper" style="margin-right: 5px;">
-							<ul><li value="0"  class="active">全部</li> <li value="1"  class="">未联系</li></ul>
-						</div> <input id="" type="text" placeholder="姓名/联系方式/身份证号" class="text">
-						<div data-v-d6f65baa="" class="cov-vue-date"><div data-v-d6f65baa="" class="datepickbox">
-							<input data-v-d6f65baa=""  type="text" class="demo-input" placeholder="开始时间"  id="startTime">
-							<input data-v-d6f65baa="" type="text" placeholder="结束时间" id="stopTime" class="cov-datepicker"></div>
-							<!----></div> <div data-v-d6f65baa="" class="cov-vue-date"><div data-v-d6f65baa="" class="datepickbox">
-						</div>
-						<!----></div> <button id="searchButton">搜索</button>
-						<button class="chongzhiann"  style="background: rgb(202, 202, 198); border: 1px solid rgb(202, 202, 198);">重置</button>
-						<!----></div> <div class="pull-right filter-wrapper"><ul><li   onclick="cityAnn()" class="fore1">
-						<img src="data:image/jpeg;base64,/9j/4QAYRXhpZgAASUkqAAgAAAAAAAAAAAAAAP/sABFEdWNreQABAAQAAABQAAD/4QMsaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLwA8P3hwYWNrZXQgYmVnaW49Iu+7vyIgaWQ9Ilc1TTBNcENlaGlIenJlU3pOVGN6a2M5ZCI/PiA8eDp4bXBtZXRhIHhtbG5zOng9ImFkb2JlOm5zOm1ldGEvIiB4OnhtcHRrPSJBZG9iZSBYTVAgQ29yZSA1LjYtYzE0MCA3OS4xNjA0NTEsIDIwMTcvMDUvMDYtMDE6MDg6MjEgICAgICAgICI+IDxyZGY6UkRGIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyI+IDxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PSIiIHhtbG5zOnhtcD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLyIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bXA6Q3JlYXRvclRvb2w9IkFkb2JlIFBob3Rvc2hvcCBDQyAoTWFjaW50b3NoKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDpBNkU0RDlGRjNFNUExMUU4QjQ2NkIwNTlGQ0ZCNUYwRSIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDpBNkU0REEwMDNFNUExMUU4QjQ2NkIwNTlGQ0ZCNUYwRSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkE2REU3RkZBM0U1QTExRThCNDY2QjA1OUZDRkI1RjBFIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOkE2RTREOUZFM0U1QTExRThCNDY2QjA1OUZDRkI1RjBFIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+/+4ADkFkb2JlAGTAAAAAAf/bAIQAAgICAgICAgICAgMCAgIDBAMCAgMEBQQEBAQEBQYFBQUFBQUGBgcHCAcHBgkJCgoJCQwMDAwMDAwMDAwMDAwMDAEDAwMFBAUJBgYJDQsJCw0PDg4ODg8PDAwMDAwPDwwMDAwMDA8MDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwM/8AAEQgAEgAPAwERAAIRAQMRAf/EAGUAAQADAAAAAAAAAAAAAAAAAAQFBwkBAQAAAAAAAAAAAAAAAAAAAAAQAAEEAAMGBAcAAAAAAAAAAAIBAwQFABE0ITFBEjIGUWETNYFCUmIzFTYRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/ANq7i4kzZNiRWUuspKuWlcDdeOcyXMVEVQAuCDgBtXMiCwBjZWdlSWavV7jbwp+zhzBBcgEtmZrwz44BV3Wx62wkhY+qPbt7KCUM5kuRyDPzy9Tm+VDz3rsTADiVkC1VxuM+9H7VpCekyLgzydlTSBeaQLq70bTbzJgLC7i9ittPpj1XRuXq8/DzwEfF/jD0Xtjv4tJ0Fv8At+r44D//2Q==" alt=""> <p id="cityname">城市</p> <img src="data:image/jpeg;base64,/9j/4QAYRXhpZgAASUkqAAgAAAAAAAAAAAAAAP/sABFEdWNreQABAAQAAABQAAD/4QMsaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLwA8P3hwYWNrZXQgYmVnaW49Iu+7vyIgaWQ9Ilc1TTBNcENlaGlIenJlU3pOVGN6a2M5ZCI/PiA8eDp4bXBtZXRhIHhtbG5zOng9ImFkb2JlOm5zOm1ldGEvIiB4OnhtcHRrPSJBZG9iZSBYTVAgQ29yZSA1LjYtYzE0MCA3OS4xNjA0NTEsIDIwMTcvMDUvMDYtMDE6MDg6MjEgICAgICAgICI+IDxyZGY6UkRGIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyI+IDxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PSIiIHhtbG5zOnhtcD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLyIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bXA6Q3JlYXRvclRvb2w9IkFkb2JlIFBob3Rvc2hvcCBDQyAoTWFjaW50b3NoKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDpGM0QyQTFEMzNFNjMxMUU4QjQ2NkIwNTlGQ0ZCNUYwRSIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDpGM0QyQTFENDNFNjMxMUU4QjQ2NkIwNTlGQ0ZCNUYwRSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkYzRDJBMUQxM0U2MzExRThCNDY2QjA1OUZDRkI1RjBFIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOkYzRDJBMUQyM0U2MzExRThCNDY2QjA1OUZDRkI1RjBFIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+/+4ADkFkb2JlAGTAAAAAAf/bAIQAAgICAgICAgICAgMCAgIDBAMCAgMEBQQEBAQEBQYFBQUFBQUGBgcHCAcHBgkJCgoJCQwMDAwMDAwMDAwMDAwMDAEDAwMFBAUJBgYJDQsJCw0PDg4ODg8PDAwMDAwPDwwMDAwMDA8MDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwM/8AAEQgABgAKAwERAAIRAQMRAf/EAGAAAQEAAAAAAAAAAAAAAAAAAAgJAQEAAAAAAAAAAAAAAAAAAAAAEAAABAMECwAAAAAAAAAAAAACAwUGAQQHESESNAAxUSIyU6QVRRY2EQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCh1TWesKlUClFDq5VlstUcwZ7k30tLeUyWAwuELe0nSsmZLxAdG7dFgBxF4rgQBWYUHmOz5ezzuQ26s/1mgf/Z" alt=""></li> <li class="fore2">排序
-						<img src="data:image/jpeg;base64,/9j/4QAYRXhpZgAASUkqAAgAAAAAAAAAAAAAAP/sABFEdWNreQABAAQAAABQAAD/4QMsaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLwA8P3hwYWNrZXQgYmVnaW49Iu+7vyIgaWQ9Ilc1TTBNcENlaGlIenJlU3pOVGN6a2M5ZCI/PiA8eDp4bXBtZXRhIHhtbG5zOng9ImFkb2JlOm5zOm1ldGEvIiB4OnhtcHRrPSJBZG9iZSBYTVAgQ29yZSA1LjYtYzE0MCA3OS4xNjA0NTEsIDIwMTcvMDUvMDYtMDE6MDg6MjEgICAgICAgICI+IDxyZGY6UkRGIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyI+IDxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PSIiIHhtbG5zOnhtcD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLyIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bXA6Q3JlYXRvclRvb2w9IkFkb2JlIFBob3Rvc2hvcCBDQyAoTWFjaW50b3NoKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDpGM0QyQTFEMzNFNjMxMUU4QjQ2NkIwNTlGQ0ZCNUYwRSIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDpGM0QyQTFENDNFNjMxMUU4QjQ2NkIwNTlGQ0ZCNUYwRSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkYzRDJBMUQxM0U2MzExRThCNDY2QjA1OUZDRkI1RjBFIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOkYzRDJBMUQyM0U2MzExRThCNDY2QjA1OUZDRkI1RjBFIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+/+4ADkFkb2JlAGTAAAAAAf/bAIQAAgICAgICAgICAgMCAgIDBAMCAgMEBQQEBAQEBQYFBQUFBQUGBgcHCAcHBgkJCgoJCQwMDAwMDAwMDAwMDAwMDAEDAwMFBAUJBgYJDQsJCw0PDg4ODg8PDAwMDAwPDwwMDAwMDA8MDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwM/8AAEQgABgAKAwERAAIRAQMRAf/EAGAAAQEAAAAAAAAAAAAAAAAAAAgJAQEAAAAAAAAAAAAAAAAAAAAAEAAABAMECwAAAAAAAAAAAAACAwUGAQQHESESNAAxUSIyU6QVRRY2EQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCh1TWesKlUClFDq5VlstUcwZ7k30tLeUyWAwuELe0nSsmZLxAdG7dFgBxF4rgQBWYUHmOz5ezzuQ26s/1mgf/Z" class="fore1"> <img src="data:image/jpeg;base64,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DGNyb3BSZWN0TGVmdGxvbmcAAAAAAAAADWNyb3BSZWN0UmlnaHRsb25nAAAAAAAAAAtjcm9wUmVjdFRvcGxvbmcAAAAAADhCSU0D7QAAAAAAEABIAAAAAQACAEgAAAABAAI4QklNBCYAAAAAAA4AAAAAAAAAAAAAP4AAADhCSU0EDQAAAAAABP///2o4QklNBBkAAAAAAAQAAAAeOEJJTQPzAAAAAAAJAAAAAAAAAAABADhCSU0nEAAAAAAACgABAAAAAAAAAAI4QklNA/UAAAAAAEgAL2ZmAAEAbGZmAAYAAAAAAAEAL2ZmAAEAoZmaAAYAAAAAAAEAMgAAAAEAWgAAAAYAAAAAAAEANQAAAAEALQAAAAYAAAAAAAE4QklNA/gAAAAAAHAAAP////////////////////////////8D6AAAAAD/////////////////////////////A+gAAAAA/////////////////////////////wPoAAAAAP////////////////////////////8D6AAAOEJJTQQIAAAAAAAQAAAAAQAAAkAAAAJAAAAAADhCSU0EHgAAAAAABAAAAAA4QklNBBoAAAAAA0MAAAAGAAAAAAAAAAAAAAAGAAAACgAAAAcAaQBfADAAMQBfAHUAcAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAACgAAAAYAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAQAAAAAAAG51bGwAAAACAAAABmJvdW5kc09iamMAAAABAAAAAAAAUmN0MQAAAAQAAAAAVG9wIGxvbmcAAAAAAAAAAExlZnRsb25nAAAAAAAAAABCdG9tbG9uZwAAAAYAAAAAUmdodGxvbmcAAAAKAAAABnNsaWNlc1ZsTHMAAAABT2JqYwAAAAEAAAAAAAVzbGljZQAAABIAAAAHc2xpY2VJRGxvbmcAAAAAAAAAB2dyb3VwSURsb25nAAAAAAAAAAZvcmlnaW5lbnVtAAAADEVTbGljZU9yaWdpbgAAAA1hdXRvR2VuZXJhdGVkAAAAAFR5cGVlbnVtAAAACkVTbGljZVR5cGUAAAAASW1nIAAAAAZib3VuZHNPYmpjAAAAAQAAAAAAAFJjdDEAAAAEAAAAAFRvcCBsb25nAAAA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IHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIChNYWNpbnRvc2gpIiB4bXA6Q3JlYXRlRGF0ZT0iMjAxOC0wNC0yMlQyMzoxMjo0NSswODowMCIgeG1wOk1vZGlmeURhdGU9IjIwMTgtMDQtMjVUMDg6Mzc6NDArMDg6MDAiIHhtcDpNZXRhZGF0YURhdGU9IjIwMTgtMDQtMjVUMDg6Mzc6NDArMDg6MDAiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6NDJmYjQxOTAtZjBiNS00YTQ3LWFkZmQtNmFkZGVlMzI0NzkwIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOkYzRDJBMUQ0M0U2MzExRThCNDY2QjA1OUZDRkI1RjBFIiB4bXBNTTpPcmlnaW5hbERvY3VtZW50SUQ9InhtcC5kaWQ6RjNEMkExRDQzRTYzMTFFOEI0NjZCMDU5RkNGQjVGMEUiIGRjOmZvcm1hdD0iaW1hZ2UvanBlZyIgcGhvdG9zaG9wOkNvbG9yTW9kZT0iMyIgcGhvdG9zaG9wOklDQ1Byb2ZpbGU9IiI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkYzRDJBMUQxM0U2MzExRThCNDY2QjA1OUZDRkI1RjBFIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOkYzRDJBMUQyM0U2MzExRThCNDY2QjA1OUZDRkI1RjBFIi8+IDx4bXBNTTpIaXN0b3J5PiA8cmRmOlNlcT4gPHJkZjpsaSBzdEV2dDphY3Rpb249InNhdmVkIiBzdEV2dDppbnN0YW5jZUlEPSJ4bXAuaWlkOjQyZmI0MTkwLWYwYjUtNGE0Ny1hZGZkLTZhZGRlZTMyNDc5MCIgc3RFdnQ6d2hlbj0iMjAxOC0wNC0yNVQwODozNzo0MCswODowMCIgc3RFdnQ6c29mdHdhcmVBZ2VudD0iQWRvYmUgUGhvdG9zaG9wIENDIChNYWNpbnRvc2gpIiBzdEV2dDpjaGFuZ2VkPSIvIi8+IDwvcmRmOlNlcT4gPC94bXBNTTpIaXN0b3J5PiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA8P3hwYWNrZXQgZW5kPSJ3Ij8+/+4ADkFkb2JlAGRAAAAAAf/bAIQAAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQICAgICAgICAgICAwMDAwMDAwMDAwEBAQEBAQEBAQEBAgIBAgIDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMD/8AAEQgABgAKAwERAAIRAQMRAf/dAAQAAv/EAFsAAQEAAAAAAAAAAAAAAAAAAAkKAQEAAAAAAAAAAAAAAAAAAAAAEAAABQIGAwEAAAAAAAAAAAADBAUGBwECFGU2VjcIABI0CREBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEQMRAD8Ap/7HM79O17tEwHNDUowixoyRVJesY0cDCzest55pRAiXGXzU7Lbbg9VaKIquEnW8NOAPqIVieLT1SRjByhge4Eqx0r7XYGjcfrt28l7V464/z/68n8D/2Q==" class="fore2">
-						<div class="select-item"><ul><li type="1">默认排序</li>
-							<li type="2">额度最大</li> <li type="3">周期最短</li>
-							<li type="4">额度最小</li> <li type="5">芝麻分最高</li></ul></div></li> <li class="fore3" id="refreshButton">刷新
-						<!----></li></ul></div></div>
-					<div class="w100 user-list-box" id="refreshthml">
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <!--时间css start-->
+    <link href="css/bootstrap-datetimepicker.css" rel="stylesheet">
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" media="screen" href="css/bootstrap.min.css" />
+    <!--时间css end-->
+    <link href="css/animate.min.css" rel="stylesheet">
+    <link href="css/prettify-1.0.css" rel="stylesheet">
+    <link href="css/base.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/default.css">
+    <script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <!--时间js start-->
+    <script src="js/moment-with-locales.js"></script>
+    <script src="js/bootstrap-datetimepicker.js"></script>
 
 
 
-					</div>
-				</div>
-				<!---->
-				<!---->
-			</div>
-		</div>
 
-		<script>
+    <link rel="stylesheet" href="css/myPagination.css"/>
+    <script src="js/myPagination.js"></script>
+    <!-- <script src="laydate/laydate.js"></script> 改成你的路径 -->
+    <!--<script>-->
 
-			var number=0;  // 开始加载条数
-			var orderColumn=2; //  已读未读
-			var region="重庆";   // 地区
-			var selectItemSort="1";//排序
-			var thmladd = "";
-			window.onload = function(){
-				console.log("------------+");
-				this.refresh();
-this.cityInitialMessage();
-			};
-			$(".read-wrapper li").click(function () {
-				$(".read-wrapper li").removeClass("active");
-				 orderColumn = $(this).attr("value");
-				$(this).addClass("active");
-				thmladd = "";
-				$("#refreshthml").html(thmladd);
-				refresh();
-			})
-			$("#searchButton").click(function () {
+    <!--//时间选择器-->
+    <!--laydate.render({-->
+    <!--elem: '#startTime'-->
+    <!--,type: 'date'-->
+    <!--});-->
+    <!--laydate.render({-->
+    <!--elem: '#stopTime'-->
+    <!--,type: 'date'-->
+    <!--});-->
+    <!--//时间选择器-->
+    <!--laydate.render({-->
+    <!--elem: '#startTime01'-->
+    <!--,type: 'time'-->
+    <!--});-->
+    <!--//时间选择器-->
+    <!--laydate.render({-->
+    <!--elem: '#stopTime01'-->
+    <!--,type: 'time'-->
+    <!--});-->
+    <!--</script>-->
+</head>
+<body onload="refresh()">
+<div id="app">
+    <div class="af-page">
+        <div class="page-header"><a href="#/" class="pull-left logo router-link-exact-active router-link-active"><img
+                src="img/yjtlogo.png"></a>
+            <div class="pull-right header-nav">
+                <ul>
+                    <li class="d-relative fore1"><a href="/subscription" class="full-cover-link"></a>
+                        个人订阅设置
+                    </li>
+                    <li class="fore3">
+                        微信客服
+                        <div class="qrcode-box"><img src="/javaimg/ewm.png" alt="">
+                            <p>客服二维码</p>
+                        </div>
+                    </li>
 
-				thmladd = "";
-				$("#refreshthml").html(thmladd);
-				refresh();
-			})
-			$("#refreshButton").click(function () {
-
-				thmladd = "";
-				$("#refreshthml").html(thmladd);
-				refresh();
-			})
-			$(".select-item li").click(function () {
-				 selectItemSort = $(this).attr("type");
-				thmladd = "";
-				$("#refreshthml").html(thmladd);
-				refresh();
-			})
-
-			$("#refreshthml").on("scroll",function(){
-				var scrollHeight = this.scrollHeight;
-				var scrollTop = this.scrollTop;
-				var clientHeight = this.clientHeight;
-
-				// 注意：下面这种写法是无效的：
-				// var clientHeight = $('要监听的对象').clientHeight;
-
-
-				if(scrollTop == 0){
-					alert('触顶');
-				}
-
-				if(scrollTop + clientHeight == scrollHeight){
-					alert('下拉到底了');
-				}
-			})
-
-            $(".shuaxingann").click(function () {
-                thmladd="";
-                refresh();
-            })
-            $(".chongzhiann").click(function () {
-                 number=0;  // 开始加载条数
-                 orderColumn=2; //  已读未读
-                 region="重庆";   // 地区
-                 selectItemSort="1";//排序
-                $("#startTime").val('')
-                $("#stopTime").val('')
-                $("#searchBox").val('')
-                thmladd="";
-                refresh();
-            })
-            function cityGuanbi(){
-                $(".citymaxbox").hide()
-                $(".citybox").hide()
-            }
-
-            function cityQueding(){
-                $(".citymaxbox").hide()
-                $(".citybox").hide()
-                thmladd=""
-                refresh()
-            }
-
-
-            function cityAnn() {
-                $(".citymaxbox").show()
-                $(".citybox").show()
-
-            }
-
-            function cityInitialMessage() {
-                var cityhtml="";
-
-                console.log("进入----");
-                $.ajax({
-                    url: "/cityInfo",
-                    type: "get",
-                    dataType: "json",
-                    success: function (result) {
-                        for (i = 0; i < result.length; i++) {
-                            cityhtml += "<li onclick=\"citySelect('"+result[i].sfCity+"')\">"+result[i].sfCity+"</li>"
-                        }
-                        $("#cityminboxtops").html(cityhtml);
-                    },
-                    error: function (result) {
-                        console.log("error----");
-                    }
-                })
-            }
-            function citySelect(value) {
-                region=value;
-                var cname="城市选择     "+value
-                $("#cityxhuanzhe").html(cname)
-
-            }
-            function clickContact(goumaiid) {
-                $.ajax({
-                    url: "/clickContact",
-                    data:{"gmid":goumaiid},
-                    type: "get",
-                    dataType: "json",
-                    success: function (result) {
-                        if (result.code==0){
-                            $(location).prop('href', '/DirectDriveParticularsParticularsRequest?particularsId='+goumaiid)
-                        }
-                        var message=result.message
-                        $(".tanchuminboxtop").html(message)
-
-                    },
-                    error: function (result) {
-                        console.log("error----");
-                    }
-                })
-            }
-			function refresh() {
-                $("#cityname").html(region)
-				 console.log("进入----");
-				$.ajax({
-					url: "/DicectDriveList",
-					data:{"searchBox":$("#searchBox").val(),"startTime":$("#startTime").val(),"stopTime":$("#stopTime").val(),"haveReadUnread":orderColumn,"number":number,"city":region,"rank":selectItemSort},
-					type: "get",
-					dataType: "json",
-					success: function (result) {
-
-
-							for (i = 0; i < result.length; i++) {
-                                var liianxianniu;
-								var qbtime=result[i].qdFbTime.split("T");//以空格分割为数组
-                                 if (result[i].whetherContact==0) {
-									 liianxianniu="<div class=\"buy\" style=\"background: #ffbd36\" onclick=\"clickContact("+result[i].lgShopUid+")\">点击联系</div>"
-								 }else {
-									 liianxianniu="<div class=\"buy\" style=\"background: #2f72ff\">已被联系</div>"
-								 }
-								var shortName = result[i].qdUsername.substring(0,1);
-
-                                 if (result[i].qdSex==0){
-									 shortName=shortName+'先生'
-								 }else if (result[i].qdSex==1) {
-									 shortName=shortName+'女士'
-								 }else{
-									 shortName=shortName+'先生'
-								 }
-								thmladd += "<div class=\"w100 user-list\">\n" +
-										"\t\t\t\t\t\t\t<!---->\n" +
-										"\t\t\t\t\t\t\t<div class=\"user-item\">\n" +
-										"\t\t\t\t\t\t\t\t<div class=\"d-relative pull-left user-avatar\"><a href=\"/DirectDriveParticularsParticularsRequest?particularsId="+result[i].lgShopUid+"\" "+
-										"\t\t\t\t\t\t\t\t\t class=\"full-cover-link\"></a> <img src=\"http://api.jbd.melonmobile.cn/cdn/resource/usr_ico_default.png\" alt=\"\"></div>\n" +
-										"\t\t\t\t\t\t\t\t<div class=\"d-relative pull-left user-data user-data1\"\n" +
-										"\t\t\t\t\t\t\t\t\t class=\"full-cover-link\"></a>\n" +
-										"\t\t\t\t\t\t\t\t\t<div class=\"user-name-wrapper\">\n" +
-										"\t\t\t\t\t\t\t\t\t\t<div class=\"pull-left username\">"+shortName+"</div>\n" +
-										"\t\t\t\t\t\t\t\t\t\t<div class=\"pull-left tag tag1\"><img src=\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAABQElEQVQ4T3XSv6uOYRgH8M+XzqB0LEdOYjiTwUAGOfIHSFInzJLFolhMRCHJYGGTgdVmQCIGWQxSymJmUUqZDpfut+fW6+l97/F6rs9z/7i+MVpVtYAbOI11vMalJF+mWzMDXsWVUf0n1pK87PX/YFVtxTPsG/8Qv7Ca5GP79g9W1VlswgkcnAFb6T0OJPk9gVW1E5/xBq9wew5s5VNJHnZ4B+fxB0dxE3vm4OdJDnfYdts1NF7HPTzF3hn4e5KlDtuzb8TdJOeG4y/iBfaP8HqShQ7bi23AcpIfvbGq2nE/jODXJNs7fIeVJMvTTVW1Dd9G8EmSYx1exC0cSvJ2asczuD+CJ5M87nAz2mC34PJwvFVcG2bbbQvHkSQ1HYDdQ2p2zBlDy2yL3eQNxpFbwgUcb3dGy+gnPMCjJG3Ok/UXLXtrD5W+ae4AAAAASUVORK5CYII=\"\n" +
-										"\t\t\t\t\t\t\t\t\t\t\t alt=\"\">"+result[i].qdSesame+"</div><div class=\"pull-left tag man\">"+result[i].qdAge+"</div>\n" +
-										"\t\t\t\t\t\t\t\t\t\t<div class=\"pull-left tag tag3\">"+result[i].qdProfessional+"</div>\n" +
-										"\t\t\t\t\t\t\t\t\t</div>\n" +
-										"\t\t\t\t\t\t\t\t\t<div class=\"user-salary-wrapper\">\n" +
-										"\t\t\t\t\t\t\t\t\t\t<div class=\"pull-left salary\"><strong>￥"+result[i].qdLoanpay+"</strong><span>"+result[i].qdTime+"</span></div>\n" +
-										"\t\t\t\t\t\t\t\t\t\t<div class=\"pull-right location\"><img src=\"data:image/jpeg;base64,/9j/4QAYRXhpZgAASUkqAAgAAAAAAAAAAAAAAP/sABFEdWNreQABAAQAAABQAAD/4QMsaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLwA8P3hwYWNrZXQgYmVnaW49Iu+7vyIgaWQ9Ilc1TTBNcENlaGlIenJlU3pOVGN6a2M5ZCI/PiA8eDp4bXBtZXRhIHhtbG5zOng9ImFkb2JlOm5zOm1ldGEvIiB4OnhtcHRrPSJBZG9iZSBYTVAgQ29yZSA1LjYtYzE0MCA3OS4xNjA0NTEsIDIwMTcvMDUvMDYtMDE6MDg6MjEgICAgICAgICI+IDxyZGY6UkRGIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyI+IDxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PSIiIHhtbG5zOnhtcD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLyIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bXA6Q3JlYXRvclRvb2w9IkFkb2JlIFBob3Rvc2hvcCBDQyAoTWFjaW50b3NoKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDpBNkU0RDlGRjNFNUExMUU4QjQ2NkIwNTlGQ0ZCNUYwRSIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDpBNkU0REEwMDNFNUExMUU4QjQ2NkIwNTlGQ0ZCNUYwRSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkE2REU3RkZBM0U1QTExRThCNDY2QjA1OUZDRkI1RjBFIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOkE2RTREOUZFM0U1QTExRThCNDY2QjA1OUZDRkI1RjBFIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+/+4ADkFkb2JlAGTAAAAAAf/bAIQAAgICAgICAgICAgMCAgIDBAMCAgMEBQQEBAQEBQYFBQUFBQUGBgcHCAcHBgkJCgoJCQwMDAwMDAwMDAwMDAwMDAEDAwMFBAUJBgYJDQsJCw0PDg4ODg8PDAwMDAwPDwwMDAwMDA8MDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwM/8AAEQgAEgAPAwERAAIRAQMRAf/EAGUAAQADAAAAAAAAAAAAAAAAAAQFBwkBAQAAAAAAAAAAAAAAAAAAAAAQAAEEAAMGBAcAAAAAAAAAAAIBAwQFABE0ITFBEjIGUWETNYFCUmIzFTYRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/ANq7i4kzZNiRWUuspKuWlcDdeOcyXMVEVQAuCDgBtXMiCwBjZWdlSWavV7jbwp+zhzBBcgEtmZrwz44BV3Wx62wkhY+qPbt7KCUM5kuRyDPzy9Tm+VDz3rsTADiVkC1VxuM+9H7VpCekyLgzydlTSBeaQLq70bTbzJgLC7i9ittPpj1XRuXq8/DzwEfF/jD0Xtjv4tJ0Fv8At+r44D//2Q==\"\n" +
-										"\t\t\t\t\t\t\t\t\t\t\t alt=\"\">\n" +
-										"\t\t\t\t\t\t\t\t\t\t\t<p>"+result[i].qdRegion+"</p>\n" +
-										"\t\t\t\t\t\t\t\t\t\t</div>\n" +
-										"\t\t\t\t\t\t\t\t\t</div>\n" +
-										"\t\t\t\t\t\t\t\t</div>\n" +
-										"\t\t\t\t\t\t\t\t<div class=\"pull-left d-relative user-data user-data2\"><a href=\"\"\n" +
-										"\t\t\t\t\t\t\t\t\t class=\"full-cover-link\"></a>\n" +
-										"\t\t\t\t\t\t\t\t\t<ul class=\"fore1\">\n" +
-										"\t\t\t\t\t\t\t\t\t\t<li>工作单位：<span>"+result[i].qdUnits+"</span></li>\n" +
-										"\t\t\t\t\t\t\t\t\t\t<li>月收入：<span>"+result[i].qdIncome+"以上</span></li>\n" +
-										"\t\t\t\t\t\t\t\t\t\t<li>资产情况：<span>"+result[i].qdPlicy+"</span></li>\n" +
-										"\t\t\t\t\t\t\t\t\t</ul>\n" +
-										"\t\t\t\t\t\t\t\t\t<ul class=\"fore2 last\">\n" +
-										"\t\t\t\t\t\t\t\t\t\t<li>学历状况：<span>"+result[i].qdOften+"</span></li>\n" +
-										"\t\t\t\t\t\t\t\t\t\t<li>社保：<span>"+result[i].qdOften+"</span></li>\n" +
-										"\t\t\t\t\t\t\t\t\t\t<li>公积金：<span>"+result[i].qdFund+"</span></li>\n" +
-										"\t\t\t\t\t\t\t\t\t</ul>\n" +
-										"\t\t\t\t\t\t\t\t</div>\n" +
-										"\t\t\t\t\t\t\t\t<div class=\"pull-left d-relative user-data user-data3 last\"><a href=\"\"\n" +
-										"\t\t\t\t\t\t\t\t\t class=\"full-cover-link\"></a>\n" +
-										"\t\t\t\t\t\t\t\t\t<ul class=\"fore1 last\">\n" +
-										"\t\t\t\t\t\t\t\t\t\t<li>电话：\n" +
-										"\n" +
-										"\t\t\t\t\t\t\t\t\t\t\t<span>购买后显示</span></li>\n" +
-										"\t\t\t\t\t\t\t\t\t\t<li>微信：\n" +
-										"\n" +
-										"\t\t\t\t\t\t\t\t\t\t\t<span>购买后显示</span></li>\n" +
-										"\t\t\t\t\t\t\t\t\t\t<li>QQ：\n" +
-										"\n" +
-										"\t\t\t\t\t\t\t\t\t\t\t<span>购买后显示</span></li>\n" +
-										"\t\t\t\t\t\t\t\t\t</ul>\n" +
-										"\t\t\t\t\t\t\t\t</div>\n" +
-										"\t\t\t\t\t\t\t\t<div class=\"pull-right buy-wrapper\">\n" +
-										"\t\t\t\t\t\t\t\t\t<div class=\"time\">"+qbtime[0]+"</div>\n" +
-										""+liianxianniu+""+
-										"\t\t\t\t\t\t\t\t\t<!---->\n" +
-										"\t\t\t\t\t\t\t\t</div>\n" +
-										"\t\t\t\t\t\t\t</div>\n" +
-										"\t\t\t\t\t\t\t\n" +
-										"\t\t\t\t\t\t\t<!---->\n" +
-										"\t\t\t\t\t\t\t<!---->\n" +
-										"\t\t\t\t\t\t</div>"
-							}
-
-
-
-						$("#refreshthml").html(thmladd);
-
-					},
-					error: function (result) {
-						console.log("error----");
-					}
-				})
-			}
-
-		</script>
-        <div class="citymaxbox">
-        </div>
-        <div class="citybox">
-            <h2 id="cityxhuanzhe">城市选择</h2>
-            <div class="cityminboxtop" id="cityminboxtops">
-
+                    <a href="/outLogin" style="color: #333;">
+                        <li class="fore4">
+                            退出
+                        </li>
+                    </a>
+                </ul>
             </div>
-            <div class="cityminboxbuttom">
-                <div class="cityqunding" onclick="cityQueding()">确定</div>
-                <div class="cityquxiao" onclick="cityGuanbi()">关闭</div>
+            <!---->
+            <!---->
+            <!---->
+            <!---->
+        </div>
+        <div class="aside-nav" style="z-index: 999999;">
+            <div class="avatar-box"><img src="http://api.jbd.melonmobile.cn/cdn/resource/usr_ico_default.png" alt="">
+                <div class="username text-overflow" th:text="${lgUsername}"></div>
+                <div class="user-id text-overflow"><p th:text="'Tel：'+${lgPhone}"></p></div>
+                <div class="user-id text-overflow"><p th:text="'余额：'+${lgBalance}"></p></div>
+            </div>
+            <div class="nav"><a href="/grondstoffenlijst" class="fore1">
+                <div class="line"></div>
+                抢单列表
+            </a>
+                <!---->
+                <!----> <a href="/DirectDrive" class="fore2 router-link-exact-active router-link-active">
+                    <div class="line"></div>
+                    云借条直推
+                </a>
+                <!----> <a href="/purchase" class="fore3">
+                    <div class="line"></div>
+                    已购的客户
+                </a> <a href="/ToBuyCurrency" class="fore4">
+                    <div class="line"></div>
+                    购买生财币
+                </a></div>
+        </div>
+        <div class="content-box">
+            <div class="w100 content-top">
+                <div class="pull-right d-relative ct-item"><a href="/DirectDriveDatajiluTable"
+                                                              class="full-cover-link"></a>
+                    数据统计
+                </div>
+                <div class="pull-right ct-item dispalyblockxlxs">限量限时</div>
+                <a href="/ztcsubscription" style="color: black">
+                    <div class="pull-right d-relative ct-item">
+                        直推车订阅
+                    </div>
+                </a></div>
+            <div class="w100 select-item-wrapper">
+
+                    <div class="pull-left read-wrapper" style="margin-right: 5px;">
+                        <ul>
+                            <li value="0" class="active">全部</li>
+                            <li value="1" class="">未联系</li>
+                        </ul>
+                    </div>
+                    <input type="text" style="width: 210px" placeholder="姓名/联系方式/身份证号" id="searchBox" class="text ztcsrks">
+
+                            <div class='input-group date ztcsrks'>
+                                <input data-v-d6f65baa="" style="width: 150px" type="text" class="demo-input ztcsrks" placeholder="开始时间"
+                                       id="startTime">
+                            </div>
+                            <script type="text/javascript">
+                                $(function () {
+                                    $('#startTime').datetimepicker({
+                                        locale: 'zh-cn',
+                                        viewMode: 'days',
+                                        format: 'YYYY-MM-DD'
+                                    });
+                                });
+                            </script>
+                            <div class='input-group date ztcsrks'>
+                                <input data-v-d6f65baa="" style="width: 150px"  type="text" placeholder="结束时间" id="stopTime"
+                                       class="cov-datepicker ztcsrks">
+                            </div>
+
+
+                            <script type="text/javascript">
+                                $(function () {
+                                    $('#stopTime').datetimepicker({
+                                        locale: 'zh-cn',
+                                        viewMode: 'days',
+                                        format: 'YYYY-MM-DD'
+                                    });
+                                });
+                            </script>
+
+                                <button id="searchButton" class="ztcbuttonschen">搜索</button>
+                                <button class="chongzhiann ztcbuttonshui"
+                                        style="background: rgb(202, 202, 198); border: 1px solid rgb(202, 202, 198);">重置
+                                </button>
+
+
+
+                    <div class="pull-right filter-wrapper">
+                        <ul>
+                            <li onclick="cityAnn()" class="fore1">
+                                <img src="data:image/jpeg;base64,/9j/4QAYRXhpZgAASUkqAAgAAAAAAAAAAAAAAP/sABFEdWNreQABAAQAAABQAAD/4QMsaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLwA8P3hwYWNrZXQgYmVnaW49Iu+7vyIgaWQ9Ilc1TTBNcENlaGlIenJlU3pOVGN6a2M5ZCI/PiA8eDp4bXBtZXRhIHhtbG5zOng9ImFkb2JlOm5zOm1ldGEvIiB4OnhtcHRrPSJBZG9iZSBYTVAgQ29yZSA1LjYtYzE0MCA3OS4xNjA0NTEsIDIwMTcvMDUvMDYtMDE6MDg6MjEgICAgICAgICI+IDxyZGY6UkRGIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyI+IDxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PSIiIHhtbG5zOnhtcD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLyIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bXA6Q3JlYXRvclRvb2w9IkFkb2JlIFBob3Rvc2hvcCBDQyAoTWFjaW50b3NoKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDpBNkU0RDlGRjNFNUExMUU4QjQ2NkIwNTlGQ0ZCNUYwRSIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDpBNkU0REEwMDNFNUExMUU4QjQ2NkIwNTlGQ0ZCNUYwRSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkE2REU3RkZBM0U1QTExRThCNDY2QjA1OUZDRkI1RjBFIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOkE2RTREOUZFM0U1QTExRThCNDY2QjA1OUZDRkI1RjBFIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+/+4ADkFkb2JlAGTAAAAAAf/bAIQAAgICAgICAgICAgMCAgIDBAMCAgMEBQQEBAQEBQYFBQUFBQUGBgcHCAcHBgkJCgoJCQwMDAwMDAwMDAwMDAwMDAEDAwMFBAUJBgYJDQsJCw0PDg4ODg8PDAwMDAwPDwwMDAwMDA8MDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwM/8AAEQgAEgAPAwERAAIRAQMRAf/EAGUAAQADAAAAAAAAAAAAAAAAAAQFBwkBAQAAAAAAAAAAAAAAAAAAAAAQAAEEAAMGBAcAAAAAAAAAAAIBAwQFABE0ITFBEjIGUWETNYFCUmIzFTYRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/ANq7i4kzZNiRWUuspKuWlcDdeOcyXMVEVQAuCDgBtXMiCwBjZWdlSWavV7jbwp+zhzBBcgEtmZrwz44BV3Wx62wkhY+qPbt7KCUM5kuRyDPzy9Tm+VDz3rsTADiVkC1VxuM+9H7VpCekyLgzydlTSBeaQLq70bTbzJgLC7i9ittPpj1XRuXq8/DzwEfF/jD0Xtjv4tJ0Fv8At+r44D//2Q=="
+                                     alt="">
+                                <p id="cityname">城市</p> <img
+                                    src="data:image/jpeg;base64,/9j/4QAYRXhpZgAASUkqAAgAAAAAAAAAAAAAAP/sABFEdWNreQABAAQAAABQAAD/4QMsaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLwA8P3hwYWNrZXQgYmVnaW49Iu+7vyIgaWQ9Ilc1TTBNcENlaGlIenJlU3pOVGN6a2M5ZCI/PiA8eDp4bXBtZXRhIHhtbG5zOng9ImFkb2JlOm5zOm1ldGEvIiB4OnhtcHRrPSJBZG9iZSBYTVAgQ29yZSA1LjYtYzE0MCA3OS4xNjA0NTEsIDIwMTcvMDUvMDYtMDE6MDg6MjEgICAgICAgICI+IDxyZGY6UkRGIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyI+IDxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PSIiIHhtbG5zOnhtcD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLyIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bXA6Q3JlYXRvclRvb2w9IkFkb2JlIFBob3Rvc2hvcCBDQyAoTWFjaW50b3NoKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDpGM0QyQTFEMzNFNjMxMUU4QjQ2NkIwNTlGQ0ZCNUYwRSIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDpGM0QyQTFENDNFNjMxMUU4QjQ2NkIwNTlGQ0ZCNUYwRSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkYzRDJBMUQxM0U2MzExRThCNDY2QjA1OUZDRkI1RjBFIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOkYzRDJBMUQyM0U2MzExRThCNDY2QjA1OUZDRkI1RjBFIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+/+4ADkFkb2JlAGTAAAAAAf/bAIQAAgICAgICAgICAgMCAgIDBAMCAgMEBQQEBAQEBQYFBQUFBQUGBgcHCAcHBgkJCgoJCQwMDAwMDAwMDAwMDAwMDAEDAwMFBAUJBgYJDQsJCw0PDg4ODg8PDAwMDAwPDwwMDAwMDA8MDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwM/8AAEQgABgAKAwERAAIRAQMRAf/EAGAAAQEAAAAAAAAAAAAAAAAAAAgJAQEAAAAAAAAAAAAAAAAAAAAAEAAABAMECwAAAAAAAAAAAAACAwUGAQQHESESNAAxUSIyU6QVRRY2EQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCh1TWesKlUClFDq5VlstUcwZ7k30tLeUyWAwuELe0nSsmZLxAdG7dFgBxF4rgQBWYUHmOz5ezzuQ26s/1mgf/Z"
+                                    alt=""></li>
+                            <li class="fore2">排序
+                                <img src="data:image/jpeg;base64,/9j/4QAYRXhpZgAASUkqAAgAAAAAAAAAAAAAAP/sABFEdWNreQABAAQAAABQAAD/4QMsaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLwA8P3hwYWNrZXQgYmVnaW49Iu+7vyIgaWQ9Ilc1TTBNcENlaGlIenJlU3pOVGN6a2M5ZCI/PiA8eDp4bXBtZXRhIHhtbG5zOng9ImFkb2JlOm5zOm1ldGEvIiB4OnhtcHRrPSJBZG9iZSBYTVAgQ29yZSA1LjYtYzE0MCA3OS4xNjA0NTEsIDIwMTcvMDUvMDYtMDE6MDg6MjEgICAgICAgICI+IDxyZGY6UkRGIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyI+IDxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PSIiIHhtbG5zOnhtcD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLyIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bXA6Q3JlYXRvclRvb2w9IkFkb2JlIFBob3Rvc2hvcCBDQyAoTWFjaW50b3NoKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDpGM0QyQTFEMzNFNjMxMUU4QjQ2NkIwNTlGQ0ZCNUYwRSIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDpGM0QyQTFENDNFNjMxMUU4QjQ2NkIwNTlGQ0ZCNUYwRSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkYzRDJBMUQxM0U2MzExRThCNDY2QjA1OUZDRkI1RjBFIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOkYzRDJBMUQyM0U2MzExRThCNDY2QjA1OUZDRkI1RjBFIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+/+4ADkFkb2JlAGTAAAAAAf/bAIQAAgICAgICAgICAgMCAgIDBAMCAgMEBQQEBAQEBQYFBQUFBQUGBgcHCAcHBgkJCgoJCQwMDAwMDAwMDAwMDAwMDAEDAwMFBAUJBgYJDQsJCw0PDg4ODg8PDAwMDAwPDwwMDAwMDA8MDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwM/8AAEQgABgAKAwERAAIRAQMRAf/EAGAAAQEAAAAAAAAAAAAAAAAAAAgJAQEAAAAAAAAAAAAAAAAAAAAAEAAABAMECwAAAAAAAAAAAAACAwUGAQQHESESNAAxUSIyU6QVRRY2EQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCh1TWesKlUClFDq5VlstUcwZ7k30tLeUyWAwuELe0nSsmZLxAdG7dFgBxF4rgQBWYUHmOz5ezzuQ26s/1mgf/Z"
+                                     class="fore1"> <img
+                                        src="data:image/jpeg;base64,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DGNyb3BSZWN0TGVmdGxvbmcAAAAAAAAADWNyb3BSZWN0UmlnaHRsb25nAAAAAAAAAAtjcm9wUmVjdFRvcGxvbmcAAAAAADhCSU0D7QAAAAAAEABIAAAAAQACAEgAAAABAAI4QklNBCYAAAAAAA4AAAAAAAAAAAAAP4AAADhCSU0EDQAAAAAABP///2o4QklNBBkAAAAAAAQAAAAeOEJJTQPzAAAAAAAJAAAAAAAAAAABADhCSU0nEAAAAAAACgABAAAAAAAAAAI4QklNA/UAAAAAAEgAL2ZmAAEAbGZmAAYAAAAAAAEAL2ZmAAEAoZmaAAYAAAAAAAEAMgAAAAEAWgAAAAYAAAAAAAEANQAAAAEALQAAAAYAAAAAAAE4QklNA/gAAAAAAHAAAP////////////////////////////8D6AAAAAD/////////////////////////////A+gAAAAA/////////////////////////////wPoAAAAAP////////////////////////////8D6AAAOEJJTQQIAAAAAAAQAAAAAQAAAkAAAAJAAAAAADhCSU0EHgAAAAAABAAAAAA4QklNBBoAAAAAA0MAAAAGAAAAAAAAAAAAAAAGAAAACgAAAAcAaQBfADAAMQBfAHUAcAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAACgAAAAYAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAQAAAAAAAG51bGwAAAACAAAABmJvdW5kc09iamMAAAABAAAAAAAAUmN0MQAAAAQAAAAAVG9wIGxvbmcAAAAAAAAAAExlZnRsb25nAAAAAAAAAABCdG9tbG9uZwAAAAYAAAAAUmdodGxvbmcAAAAKAAAABnNsaWNlc1ZsTHMAAAABT2JqYwAAAAEAAAAAAAVzbGljZQAAABIAAAAHc2xpY2VJRGxvbmcAAAAAAAAAB2dyb3VwSURsb25nAAAAAAAAAAZvcmlnaW5lbnVtAAAADEVTbGljZU9yaWdpbgAAAA1hdXRvR2VuZXJhdGVkAAAAAFR5cGVlbnVtAAAACkVTbGljZVR5cGUAAAAASW1nIAAAAAZib3VuZHNPYmpjAAAAAQAAAAAAAFJjdDEAAAAEAAAAAFRvcCBsb25nAAAA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IHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIChNYWNpbnRvc2gpIiB4bXA6Q3JlYXRlRGF0ZT0iMjAxOC0wNC0yMlQyMzoxMjo0NSswODowMCIgeG1wOk1vZGlmeURhdGU9IjIwMTgtMDQtMjVUMDg6Mzc6NDArMDg6MDAiIHhtcDpNZXRhZGF0YURhdGU9IjIwMTgtMDQtMjVUMDg6Mzc6NDArMDg6MDAiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6NDJmYjQxOTAtZjBiNS00YTQ3LWFkZmQtNmFkZGVlMzI0NzkwIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOkYzRDJBMUQ0M0U2MzExRThCNDY2QjA1OUZDRkI1RjBFIiB4bXBNTTpPcmlnaW5hbERvY3VtZW50SUQ9InhtcC5kaWQ6RjNEMkExRDQzRTYzMTFFOEI0NjZCMDU5RkNGQjVGMEUiIGRjOmZvcm1hdD0iaW1hZ2UvanBlZyIgcGhvdG9zaG9wOkNvbG9yTW9kZT0iMyIgcGhvdG9zaG9wOklDQ1Byb2ZpbGU9IiI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkYzRDJBMUQxM0U2MzExRThCNDY2QjA1OUZDRkI1RjBFIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOkYzRDJBMUQyM0U2MzExRThCNDY2QjA1OUZDRkI1RjBFIi8+IDx4bXBNTTpIaXN0b3J5PiA8cmRmOlNlcT4gPHJkZjpsaSBzdEV2dDphY3Rpb249InNhdmVkIiBzdEV2dDppbnN0YW5jZUlEPSJ4bXAuaWlkOjQyZmI0MTkwLWYwYjUtNGE0Ny1hZGZkLTZhZGRlZTMyNDc5MCIgc3RFdnQ6d2hlbj0iMjAxOC0wNC0yNVQwODozNzo0MCswODowMCIgc3RFdnQ6c29mdHdhcmVBZ2VudD0iQWRvYmUgUGhvdG9zaG9wIENDIChNYWNpbnRvc2gpIiBzdEV2dDpjaGFuZ2VkPSIvIi8+IDwvcmRmOlNlcT4gPC94bXBNTTpIaXN0b3J5PiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA8P3hwYWNrZXQgZW5kPSJ3Ij8+/+4ADkFkb2JlAGRAAAAAAf/bAIQAAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQICAgICAgICAgICAwMDAwMDAwMDAwEBAQEBAQEBAQEBAgIBAgIDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMD/8AAEQgABgAKAwERAAIRAQMRAf/dAAQAAv/EAFsAAQEAAAAAAAAAAAAAAAAAAAkKAQEAAAAAAAAAAAAAAAAAAAAAEAAABQIGAwEAAAAAAAAAAAADBAUGBwECFGU2VjcIABI0CREBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEQMRAD8Ap/7HM79O17tEwHNDUowixoyRVJesY0cDCzest55pRAiXGXzU7Lbbg9VaKIquEnW8NOAPqIVieLT1SRjByhge4Eqx0r7XYGjcfrt28l7V464/z/68n8D/2Q=="
+                                        class="fore2">
+                                <div class="select-item">
+                                    <ul>
+                                        <li type="1">默认排序</li>
+                                        <li type="2">额度最大</li>
+                                        <li type="3">周期最短</li>
+                                        <li type="4">额度最小</li>
+                                        <li type="5">芝麻分最高</li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="fore3" id="refreshButton">刷新
+                                <!----></li>
+                        </ul>
+                    </div>
+
+
+
+
+                <!---->
+                <!---->
+            </div>
+            <div class="w100 user-list-box" id="refreshthml">
+            </div>
+            <div class="fenyebox">
+                <div id="pagination" class="pagination" style="padding-bottom: 50px;"></div>
             </div>
         </div>
+
+        <div class="layer-mask displaynonelayer-masks"></div>
+        <div class="dialog-box acc-dialog-box acc-set-dialog limit-set-dialog displaynonedialog-box">
+            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAkCAIAAABjfH+IAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyFpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNS1jMDE0IDc5LjE1MTQ4MSwgMjAxMy8wMy8xMy0xMjowOToxNSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIChXaW5kb3dzKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDpEMzZGNjM2RDhDNDMxMUU4ODY2NkQ3MjBEQkM3MTkzQSIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDpEMzZGNjM2RThDNDMxMUU4ODY2NkQ3MjBEQkM3MTkzQSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkQzNDU2Q0E4OEM0MzExRTg4NjY2RDcyMERCQzcxOTNBIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOkQzNDU2Q0E5OEM0MzExRTg4NjY2RDcyMERCQzcxOTNBIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+t/kNogAAA2ZJREFUeNq0l8tPIkEQxpfOqmB8oBGiBj2I8QAajeHCw4te5a/ljBeVi8ZHVA5EPShRggaiEB6awP6gTcvSM8Ps4NZhaGZqvm+qprrqG1e73f71/801kKZerz8+Pj49PZXL5Uql8vHxwcnR0dHJycmZmZnFxcVAIDA+Pu6cplAoXFxc5PP5VqtlBeFyLS0tbW1tzc/P/xvN+/t7JpN5eHhgLYQIdM3n801NTREHJ4kJn5eXl3zX5HMsLy/HYjF8bNHc3t4eHR0BBOJ619xut3VWb25urq+v5S2JRGJ1dXUAzdnZ2enpKYuVlRUebWDSldVqNRJwf3/POhKJbG9vm9Kcn5+fnJyQawjC4bCDiiIsyMDsY/qmIVcHBwdw7O3tEYrj2iWgdDoN7O7ursqekD9U6uHhIQviGIZDZZsFgMD+RXN8fPz5+YmHs1z1GSBAAQjsNw37g9qlSORT/IjF43EAgQX8i+by8pLjxsaGXlfFYpHibjQaZnBcwgG3vvMejwdABS5kL2EPGqYrl8tls9lUKmXIxEku4YCbYeqABRyKzg97mE1uuAepSxoX3UxnkhxcwgE3/V4AgQW8EwY9kVP8N8wJrvv7+zpTLwcOZm1CwkIhcGU1Nzdnln2y3MfUx4GD2b20QY54/pal7fV6LcoGoGQyKaE5yjsHcmDT09NyUwqqW84P6wIlLTDJmGxyKFhaqnA8PWlL9p2FIrT2630fZrWnmxq1glnL6u3tzSZHsms2mSTsxMSE4AZWzEGbHO6u2WR6fX3lODs7K9AMrBi0Njn0irBgYmNyXFhYEKgFWgI0hq5MUp1DZ5IDV39EYAFHIwiKUrYEBp/uura2FgqFdI5eJhxwM5ykso1B0enQaB+OV1dX9Lg+V7/fj4SwkBxcwgE3XYcAqMA7NOgr4qL41BQa3oACEFgp3r6mJwNtZGSEMW6YOgfCAygA1Zz8okHD7ezssFAiaBjJAQgLAJU0FOoyKoSxQe9BlziOiRulrAGqVxSaysFgMBiNRu3LQd45Qdzd3Q2Wg0qwoX3o3PQi5jmz1lrcsj8IgrrinfM+yNVgcWsh1alaGuDY2Bgnm80mUwSl4VyqK3t+fkaX0DCsh4X88Njc3KSpDPUZRVhQlkqlarWqejt9l54INBxDfUb9oP0RYAAwSJZ0ndEEqwAAAABJRU5ErkJggg=="
+                 alt="" class="close closedisplaynonedialog-box">
+            <div class="text-center dialog-title">限量限时</div>
+            <div class="apply-form">
+                <div class="in">
+                    <div class="in-left">每日限量</div>
+                    <div class="d-relative in-right">
+                        <input type="text" placeholder="" maxlength="4" class="text DailyLimited">
+                        <label class="d-absolute">单</label>
+                    </div>
+                </div>
+                <div class="in" style="height: 70px">
+                    <div class="in-left">推单时间</div>
+                    <div class="in-right">
+
+                        <div class='input-group date' >
+                            <input type='text' class="form-control pushStartTime" id='startTime01'/>
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+                </span>
+                        </div>
+
+                        <div class='input-group date' >
+                            <input type='text' class="form-control pushStopTime" id='stopTime01'/>
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+                </span>
+                        </div>
+
+
+
+                        <script type="text/javascript">
+                            $(function () {
+                                $('#startTime01').datetimepicker({locale: 'zh-cn', viewMode: 'days', format: 'HH:mm:ss'});
+                                $('#stopTime01').datetimepicker({locale: 'zh-cn', viewMode: 'days', format: 'HH:mm:ss'});
+                                $("#startTime01").on("dp.change",function (e) {
+                                    $('#stopTime01').data("DateTimePicker").minDate(e.date);
+                                });
+                                $("#stopTime01").on("dp.change",function (e) {
+                                    $('#startTime01').data("DateTimePicker").maxDate(e.date);
+                                });
+                            });
+                        </script>
+
+
+                        <!--<div class='input-group date ztcsrks'>-->
+                            <!--<input data-v-d6f65baa="" style="width: 150px" type="text" class="demo-input ztcsrks" placeholder="推单开始时间"-->
+                                   <!--id="startTime01">-->
+                        <!--</div>-->
+                        <!--<script type="text/javascript">-->
+                            <!--$(function () {-->
+                                <!--$('#startTime01').datetimepicker({-->
+                                    <!--locale: 'zh-cn',-->
+                                    <!--viewMode: 'days',-->
+                                    <!--format: 'HH:mm:ss'-->
+                                <!--});-->
+                            <!--});-->
+                        <!--</script>-->
+                        <!--<div class='input-group date ztcsrks'>-->
+                            <!--<input data-v-d6f65baa="" style="width: 150px"  type="text" placeholder="推单结束时间" id="stopTime01"-->
+                                   <!--class="cov-datepicker ztcsrks">-->
+                        <!--</div>-->
+
+
+                        <!--<script type="text/javascript">-->
+                            <!--$(function () {-->
+                                <!--$('#stopTime01').datetimepicker({-->
+                                    <!--locale: 'zh-cn',-->
+                                    <!--viewMode: 'days',-->
+                                    <!--format: 'HH:mm:ss'-->
+                                <!--});-->
+                            <!--});-->
+                        <!--</script>-->
+                        <!--<input type="text" placeholder="推单开始时间" id="startTime01"-->
+                               <!--class="text text-half pull-left pushStartTime">-->
+                        <!--<input type="text" placeholder="推单结束时间" id="stopTime01"-->
+                               <!--class="text text-half pull-right pushStopTime">-->
+                    </div>
+                </div>
+                <div class="in">
+                    <div class="in-left">工作日</div>
+                    <div class="d-relative in-right">
+                        <div class="text select text-overflow dispalyblocktext-overflow">星期一,星期二,星期三</div>
+                        <div class="week-day-box displaynones">
+                            <ul class="week-day-list">
+                                <li class="active" value="1">
+                                    星期一
+                                </li>
+                                <li class="active" value="2">
+                                    星期二
+                                </li>
+                                <li class="active" value="3">
+                                    星期三
+                                </li>
+                                <li class="" value="4">
+                                    星期四
+                                </li>
+                                <li class="" value="5">
+                                    星期五
+                                </li>
+                                <li class="" value="6">
+                                    星期六
+                                </li>
+                                <li class="" value="7">
+                                    星期日
+                                </li>
+                            </ul>
+                            <div class="week-day-confirm">确定</div>
+                        </div>
+                        <!---->
+                    </div>
+                </div>
+                <div class="in">
+                    <div class="in-left">推单模式</div>
+                    <div class="in-right"><select class="select RetreatASingleMode">
+                        <option value="1">抢单</option>
+                        <option value="2">分配</option>
+                    </select></div>
+                </div>
+                <div class="in">
+                    <div class="in-left"></div>
+                    <div class="in-right apply-submit">
+                        <div class="submit-btn confirm submitxsxl">确定</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="load">
+        <div class="loader" title="2">
+            <svg version="1.1" id="loader-1"  x="0px" y="0px" width="100px" height="100px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+			<path fill="#000" d="M43.935,25.145c0-10.318-8.364-18.683-18.683-18.683c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615c8.072,0,14.615,6.543,14.615,14.615H43.935z">
+				<animateTransform attributeType="xml" attributeName="transform" type="rotate" from="0 25 25" to="360 25 25" dur="0.6s" repeatCount="indefinite" />
+			</path>
+		</svg>
+            <div class="load-msg"> 加载中,请稍后....</div>
+        </div>
+    </div>
+
     <style>
-        .citymaxbox{
+        .displaynones {
+            display: none;
+        }
+
+        .displaynonelayer-masks {
+            display: none;
+        }
+
+        .displaynonedialog-box {
+            display: none;
+        }
+    </style>
+    <script>
+
+        var number = 0;  // 开始加载条数
+        var orderColumn = 0; //  已读未读
+        var region = "";   // 地区
+        var selectItemSort = "1";//排序
+        var thmladd = "";
+
+        var DailyLimited;//每日限量
+        var pushStartTime;//推单时间开始
+        var pushStopTime;//推单时间结束
+        var pushWorkday = "1,2,3";//推单工作日
+        var RetreatASingleMode;//推单模式
+
+        var numberOfPages = 5;//分页页数
+        var numberOfBranches = 10;//分页条数
+        var numberOfInitial = 1;//分页开始
+        var numberOfInitialasdsadasd;
+
+        window.onload = function () {
+            console.log("------------+");
+            this.refresh(1);
+
+            this.cityInitialMessage();
+        };
+        $(".read-wrapper li").click(function () {
+            $(".read-wrapper li").removeClass("active");
+            orderColumn = $(this).attr("value");
+            $(this).addClass("active");
+            thmladd = "";
+            $("#refreshthml").html(thmladd);
+            refresh(1);
+        })
+        $("#searchButton").click(function () {
+
+            thmladd = "";
+            $("#refreshthml").html(thmladd);
+            refresh(1);
+        })
+        $("#refreshButton").click(function () {
+
+            thmladd = "";
+            $("#refreshthml").html(thmladd);
+            refresh(1);
+        })
+        $(".select-item li").click(function () {
+            selectItemSort = $(this).attr("type");
+            thmladd = "";
+            $("#refreshthml").html(thmladd);
+            refresh(1);
+        })
+        $(".submitxsxl").click(function () {
+            if ($(".DailyLimited").val() == null || $(".DailyLimited").val() == '') {
+                alert("请填写直推单的数量,不能为空  为0则停止推单")
+                e.stopPropagation();
+            }
+            if ($(".pushStartTime").val() == null || $(".pushStartTime").val() == '') {
+                alert("请选择开始时间")
+                e.stopPropagation();
+            }
+            if ($(".pushStopTime").val() == null || $(".pushStopTime").val() == '') {
+                alert("请选择结束时间")
+                e.stopPropagation();
+            }
+            var StartendArr = $(".pushStartTime").val().split(':');
+            var StopendArr = $(".pushStopTime").val().split(':');
+            if (StartendArr[0] == 00 && StartendArr[1] == 00 && StartendArr[2] == 00) {
+                alert("开始时间请选择 00:00:01 以上")
+                e.stopPropagation();
+            }
+            if (StartendArr[0] >= StopendArr[0]) {
+                if (StartendArr[1] >= StopendArr[1]) {
+                    if (StartendArr[2] >= StopendArr[2]) {
+
+                        alert("开始时间 不能大于 且 不能等于 结束时间")
+                        e.stopPropagation();
+                    }
+                }
+            }
+
+
+            $.ajax({
+                url: "/submitxsxl",
+                data: {
+                    "dailyLimited": $(".DailyLimited").val(), "pushStartTime": $(".pushStartTime").val(),
+                    "pushStopTime": $(".pushStopTime").val(), "pushWorkday": pushWorkday.toString(),
+                    "pushMode": $(".RetreatASingleMode option:selected").attr("value")
+                },
+                type: "post",
+                dataType: "json",
+                success: function (result) {
+                    if (result.code == 0) {
+                        alert(result.data)
+                        $(".displaynonelayer-masks").css({"display": "none"})
+                        $(".displaynonedialog-box").css({"display": "none"})
+                    } else {
+                        alert(result.message)
+                    }
+
+                },
+                error: function (result) {
+                    console.log("error----");
+                }
+            })
+
+        })
+
+        $(".dispalyblockxlxs").click(function () {
+
+            $.ajax({
+                url: "/findsubmitxsxl",
+                type: "get",
+                dataType: "json",
+                success: function (result) {
+                    if (result != '' && result != null) {
+                        $(".DailyLimited").val(result.dailyLimited);
+                        $(".pushStartTime").val(result.pushStartTime);
+                        $(".pushStopTime").val(result.pushStopTime);
+                        var pushWorkdayList = result.pushWorkday.split(',');
+                        $(".week-day-list li").removeClass("active")
+
+                        for (j = 0; j < pushWorkdayList.length; j++) {
+                            if (1 == pushWorkdayList[j]) {
+                                $(".week-day-list li:nth-child(1)").addClass("active");
+                            }
+                            if (2 == pushWorkdayList[j]) {
+                                $(".week-day-list li:nth-child(2)").addClass("active");
+                            }
+                            if (3 == pushWorkdayList[j]) {
+                                $(".week-day-list li:nth-child(3)").addClass("active");
+                            }
+                            if (4 == pushWorkdayList[j]) {
+                                $(".week-day-list li:nth-child(4)").addClass("active");
+                            }
+                            if (5 == pushWorkdayList[j]) {
+                                $(".week-day-list li:nth-child(5)").addClass("active");
+                            }
+                            if (6 == pushWorkdayList[j]) {
+                                $(".week-day-list li:nth-child(6)").addClass("active");
+                            }
+                            if (7 == pushWorkdayList[j]) {
+                                $(".week-day-list li:nth-child(7)").addClass("active");
+                            }
+
+                        }
+                        pushWorkday = new Array();
+                        var pushWorkdayss = new Array();
+                        $('.displaynones .active').each(function (key, value) {
+
+                            pushWorkday[key] = $(this).attr("value");      //如果是其他标签 用 html();
+                            pushWorkdayss[key] = $(this).html();      //如果是其他标签 用 html();
+                            // 或btn[key] = $(value).val();
+
+                        });
+                        $(".dispalyblocktext-overflow").html(pushWorkdayss.toString())
+                    }
+
+                },
+                error: function (result) {
+                    console.log("error----");
+                }
+            })
+
+
+            $(".displaynonelayer-masks").css({"display": "block"})
+            $(".displaynonedialog-box").css({"display": "block"})
+        })
+        $(".dispalyblocktext-overflow").click(function () {
+            $(".displaynones").css({"display": "block"})
+
+        })
+        $(".closedisplaynonedialog-box").click(function () {
+            $(".displaynonelayer-masks").css({"display": "none"})
+            $(".displaynonedialog-box").css({"display": "none"})
+        })
+
+
+        $(".week-day-confirm").click(function () {
+            pushWorkday = new Array();
+            var pushWorkdayss = new Array();
+            $('.displaynones .active').each(function (key, value) {
+
+                pushWorkday[key] = $(this).attr("value");      //如果是其他标签 用 html();
+                pushWorkdayss[key] = $(this).html();      //如果是其他标签 用 html();
+                // 或btn[key] = $(value).val();
+
+            });
+
+            $(".dispalyblocktext-overflow").html(pushWorkdayss.toString())
+            $(".displaynones").css({"display": "none"})
+
+
+        })
+        $(".week-day-list li").click(function () {
+
+            if ($(this).attr("class") == "") {
+                $(this).addClass("active")
+            } else {
+                $(this).removeClass("active")
+            }
+
+
+        })
+
+
+        $("#refreshthml").on("scroll", function () {
+            var scrollHeight = this.scrollHeight;
+            var scrollTop = this.scrollTop;
+            var clientHeight = this.clientHeight;
+
+            // 注意：下面这种写法是无效的：
+            // var clientHeight = $('要监听的对象').clientHeight;
+
+
+            if (scrollTop == 0) {
+                alert('触顶');
+            }
+
+            if (scrollTop + clientHeight == scrollHeight) {
+                alert('下拉到底了');
+            }
+        })
+
+        $(".shuaxingann").click(function () {
+            thmladd = "";
+            refresh(1);
+        })
+        $(".chongzhiann").click(function () {
+            number = 0;  // 开始加载条数
+            orderColumn = 2; //  已读未读
+            region = "";   // 地区
+            selectItemSort = "1";//排序
+            $.ajax({
+                url: "/chongzhiannsss",
+                type: "get",
+                dataType: "json",
+                success: function (result) {
+
+                },
+                error: function (result) {
+
+                }
+            })
+            $("#startTime").val('')
+            $("#stopTime").val('')
+            $("#searchBox").val('')
+            thmladd = "";
+            refresh(1);
+        })
+
+        function cityGuanbi() {
+            $(".citymaxbox").hide()
+            $(".citybox").hide()
+        }
+
+        function cityQueding() {
+            $(".citymaxbox").hide()
+            $(".citybox").hide()
+            thmladd = ""
+            $("#cityname").html(region)
+            refresh(1);
+        }
+
+
+        function cityAnn() {
+            $(".citymaxbox").show()
+            $(".citybox").show()
+
+        }
+
+        function cityInitialMessage() {
+            var cityhtml = "";
+
+            console.log("进入----");
+            $.ajax({
+                url: "/cityInfo",
+                type: "get",
+                dataType: "json",
+                success: function (result) {
+                    for (i = 0; i < result.length; i++) {
+                        cityhtml += "<li onclick=\"citySelect('" + result[i].sfCity + "')\">" + result[i].sfCity + "</li>"
+                    }
+                    $("#cityminboxtops").html(cityhtml);
+                },
+                error: function (result) {
+                    console.log("error----");
+                }
+            })
+        }
+
+        function citySelect(value) {
+            region = value;
+            var cname = "城市选择     " + value
+            $("#cityxhuanzhe").html(cname)
+
+        }
+
+        function clickContact(goumaiid) {
+            $.ajax({
+                url: "/clickContact",
+                data: {"gmid": goumaiid},
+                type: "get",
+                dataType: "json",
+                success: function (result) {
+                    if (result.code == 0) {
+                        $(location).prop('href', '/DirectDriveParticularsParticularsRequest?particularsId=' + goumaiid)
+                    }
+                    var message = result.message
+                    $(".tanchuminboxtop").html(message)
+
+                },
+                error: function (result) {
+                    console.log("error----");
+                }
+            })
+        }
+
+        function refresh(fenyenumber) {
+            console.log("进入----");
+            thmladd = "";
+            $.ajax({
+                url: "/DicectDriveList",
+                data: {
+                    "searchBox": $("#searchBox").val(),
+                    "startTime": $("#startTime").val(),
+                    "stopTime": $("#stopTime").val(),
+                    "haveReadUnread": orderColumn,
+                    "number": number,
+                    "city": region,
+                    "rank": selectItemSort,
+                    "numberOfInitial": numberOfBranches * (fenyenumber - 1),
+                    "numberOfBranches": numberOfBranches
+                },
+                type: "get",
+                dataType: "json",
+                success: function (result) {
+                    numberOfInitialasdsadasd = result.zongshu;
+                    numberOfPages = Math.ceil(result.zongshu / numberOfBranches)
+
+                    for (i = 0; i < result.ArrayList.length; i++) {
+
+                        var liianxianniu;
+                        var qbtime = result.ArrayList[i].qdFbTime.split("T");//以空格分割为数组
+                        if (result.ArrayList[i].whetherContact == 0) {
+                            liianxianniu = "<div class=\"buy\" style=\"background: #ffbd36\" onclick=\"clickContact(" + result.ArrayList[i].lgShopUid + ")\">点击联系</div>"
+                        } else {
+                            liianxianniu = "<div class=\"buy\" style=\"background: #2f72ff\">已被联系</div>"
+                        }
+                        var shortName = result.ArrayList[i].qdUsername.substring(0, 1);
+
+                        if (result.ArrayList[i].qdSex == '男') {
+                            shortName = shortName + '先生'
+                        } else if (result.ArrayList[i].qdSex == '女') {
+                            shortName = shortName + '女士'
+                        }
+                        thmladd += "<div class=\"w100 user-list\">\n" +
+                            "\t\t\t\t\t\t\t<!---->\n" +
+                            "\t\t\t\t\t\t\t<div class=\"user-item\">\n" +
+                            "\t\t\t\t\t\t\t\t<div class=\"d-relative pull-left user-avatar\"><a href=\"/DirectDriveParticularsParticularsRequest?particularsId=" + result.ArrayList[i].lgShopUid + "\" " +
+                            "\t\t\t\t\t\t\t\t\t class=\"full-cover-link\"></a> <img src=\"http://api.jbd.melonmobile.cn/cdn/resource/usr_ico_default.png\" alt=\"\"></div>\n" +
+                            "\t\t\t\t\t\t\t\t<div class=\"d-relative pull-left user-data user-data1\"\n" +
+                            "\t\t\t\t\t\t\t\t\t class=\"full-cover-link\"></a>\n" +
+                            "\t\t\t\t\t\t\t\t\t<div class=\"user-name-wrapper\">\n" +
+                            "\t\t\t\t\t\t\t\t\t\t<div class=\"pull-left username\">" + shortName + "</div>\n" +
+                            "\t\t\t\t\t\t\t\t\t\t<div class=\"pull-left tag tag1\"><img src=\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAABQElEQVQ4T3XSv6uOYRgH8M+XzqB0LEdOYjiTwUAGOfIHSFInzJLFolhMRCHJYGGTgdVmQCIGWQxSymJmUUqZDpfut+fW6+l97/F6rs9z/7i+MVpVtYAbOI11vMalJF+mWzMDXsWVUf0n1pK87PX/YFVtxTPsG/8Qv7Ca5GP79g9W1VlswgkcnAFb6T0OJPk9gVW1E5/xBq9wew5s5VNJHnZ4B+fxB0dxE3vm4OdJDnfYdts1NF7HPTzF3hn4e5KlDtuzb8TdJOeG4y/iBfaP8HqShQ7bi23AcpIfvbGq2nE/jODXJNs7fIeVJMvTTVW1Dd9G8EmSYx1exC0cSvJ2asczuD+CJ5M87nAz2mC34PJwvFVcG2bbbQvHkSQ1HYDdQ2p2zBlDy2yL3eQNxpFbwgUcb3dGy+gnPMCjJG3Ok/UXLXtrD5W+ae4AAAAASUVORK5CYII=\"\n" +
+                            "\t\t\t\t\t\t\t\t\t\t\t alt=\"\">" + result.ArrayList[i].qdSesame + "</div><div class=\"pull-left tag man\">" + result.ArrayList[i].qdAge + "</div>\n" +
+                            "\t\t\t\t\t\t\t\t\t\t<div class=\"pull-left tag tag3\">" + result.ArrayList[i].qdProfessional + "</div>\n" +
+                            "\t\t\t\t\t\t\t\t\t</div>\n" +
+                            "\t\t\t\t\t\t\t\t\t<div class=\"user-salary-wrapper\">\n" +
+                            "\t\t\t\t\t\t\t\t\t\t<div class=\"pull-left salary\"><strong>￥" + result.ArrayList[i].qdLoanpay + "</strong><span>" + result.ArrayList[i].qdTime + "</span></div>\n" +
+                            "\t\t\t\t\t\t\t\t\t\t<div class=\"pull-right location\"><img src=\"data:image/jpeg;base64,/9j/4QAYRXhpZgAASUkqAAgAAAAAAAAAAAAAAP/sABFEdWNreQABAAQAAABQAAD/4QMsaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLwA8P3hwYWNrZXQgYmVnaW49Iu+7vyIgaWQ9Ilc1TTBNcENlaGlIenJlU3pOVGN6a2M5ZCI/PiA8eDp4bXBtZXRhIHhtbG5zOng9ImFkb2JlOm5zOm1ldGEvIiB4OnhtcHRrPSJBZG9iZSBYTVAgQ29yZSA1LjYtYzE0MCA3OS4xNjA0NTEsIDIwMTcvMDUvMDYtMDE6MDg6MjEgICAgICAgICI+IDxyZGY6UkRGIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyI+IDxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PSIiIHhtbG5zOnhtcD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLyIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bXA6Q3JlYXRvclRvb2w9IkFkb2JlIFBob3Rvc2hvcCBDQyAoTWFjaW50b3NoKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDpBNkU0RDlGRjNFNUExMUU4QjQ2NkIwNTlGQ0ZCNUYwRSIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDpBNkU0REEwMDNFNUExMUU4QjQ2NkIwNTlGQ0ZCNUYwRSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkE2REU3RkZBM0U1QTExRThCNDY2QjA1OUZDRkI1RjBFIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOkE2RTREOUZFM0U1QTExRThCNDY2QjA1OUZDRkI1RjBFIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+/+4ADkFkb2JlAGTAAAAAAf/bAIQAAgICAgICAgICAgMCAgIDBAMCAgMEBQQEBAQEBQYFBQUFBQUGBgcHCAcHBgkJCgoJCQwMDAwMDAwMDAwMDAwMDAEDAwMFBAUJBgYJDQsJCw0PDg4ODg8PDAwMDAwPDwwMDAwMDA8MDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwM/8AAEQgAEgAPAwERAAIRAQMRAf/EAGUAAQADAAAAAAAAAAAAAAAAAAQFBwkBAQAAAAAAAAAAAAAAAAAAAAAQAAEEAAMGBAcAAAAAAAAAAAIBAwQFABE0ITFBEjIGUWETNYFCUmIzFTYRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/ANq7i4kzZNiRWUuspKuWlcDdeOcyXMVEVQAuCDgBtXMiCwBjZWdlSWavV7jbwp+zhzBBcgEtmZrwz44BV3Wx62wkhY+qPbt7KCUM5kuRyDPzy9Tm+VDz3rsTADiVkC1VxuM+9H7VpCekyLgzydlTSBeaQLq70bTbzJgLC7i9ittPpj1XRuXq8/DzwEfF/jD0Xtjv4tJ0Fv8At+r44D//2Q==\"\n" +
+                            "\t\t\t\t\t\t\t\t\t\t\t alt=\"\">\n" +
+                            "\t\t\t\t\t\t\t\t\t\t\t<p>" + result.ArrayList[i].qdRegion + "</p>\n" +
+                            "\t\t\t\t\t\t\t\t\t\t</div>\n" +
+                            "\t\t\t\t\t\t\t\t\t</div>\n" +
+                            "\t\t\t\t\t\t\t\t</div>\n" +
+                            "\t\t\t\t\t\t\t\t<div class=\"pull-left d-relative user-data user-data2\"><a href=\"\"\n" +
+                            "\t\t\t\t\t\t\t\t\t class=\"full-cover-link\"></a>\n" +
+                            "\t\t\t\t\t\t\t\t\t<ul class=\"fore1\">\n" +
+                            "\t\t\t\t\t\t\t\t\t\t<li>工作单位：<span>" + result.ArrayList[i].qdUnits + "</span></li>\n" +
+                            "\t\t\t\t\t\t\t\t\t\t<li>月收入：<span>" + result.ArrayList[i].qdIncome + "以上</span></li>\n" +
+                            "\t\t\t\t\t\t\t\t\t\t<li>资产情况：<span>" + result.ArrayList[i].qdAssets + "</span></li>\n" +
+                            "\t\t\t\t\t\t\t\t\t</ul>\n" +
+                            "\t\t\t\t\t\t\t\t\t<ul class=\"fore2 last\">\n" +
+                            "\t\t\t\t\t\t\t\t\t\t<li>学历状况：<span>" + result.ArrayList[i].qdOften + "</span></li>\n" +
+                            "\t\t\t\t\t\t\t\t\t\t<li>社保：<span>" + result.ArrayList[i].qdSocial + "</span></li>\n" +
+                            "\t\t\t\t\t\t\t\t\t\t<li>公积金：<span>" + result.ArrayList[i].qdFund + "</span></li>\n" +
+                            "\t\t\t\t\t\t\t\t\t</ul>\n" +
+                            "\t\t\t\t\t\t\t\t</div>\n" +
+                            "\t\t\t\t\t\t\t\t<div class=\"pull-left d-relative user-data user-data3 last\"><a href=\"\"\n" +
+                            "\t\t\t\t\t\t\t\t\t class=\"full-cover-link\"></a>\n" +
+                            "\t\t\t\t\t\t\t\t\t<ul class=\"fore1 last\">\n" +
+                            "\t\t\t\t\t\t\t\t\t\t<li>电话：\n" +
+                            "\n" +
+                            "\t\t\t\t\t\t\t\t\t\t\t<span>" + result.ArrayList[i].qdPhone + "</span></li>\n" +
+                            "\t\t\t\t\t\t\t\t\t\t<li>微信：\n" +
+                            "\n" +
+                            "\t\t\t\t\t\t\t\t\t\t\t<span>" + result.ArrayList[i].qdWechat + "</span></li>\n" +
+                            "\t\t\t\t\t\t\t\t\t\t<li>QQ：\n" +
+                            "\n" +
+                            "\t\t\t\t\t\t\t\t\t\t\t<span>" + result.ArrayList[i].qdQq + "</span></li>\n" +
+                            "\t\t\t\t\t\t\t\t\t</ul>\n" +
+                            "\t\t\t\t\t\t\t\t</div>\n" +
+                            "\t\t\t\t\t\t\t\t<div class=\"pull-right buy-wrapper\">\n" +
+                            "\t\t\t\t\t\t\t\t\t<div class=\"time\">" + qbtime[0] + "</div>\n" +
+                            "" + liianxianniu + "" +
+                            "\t\t\t\t\t\t\t\t\t<!---->\n" +
+                            "\t\t\t\t\t\t\t\t</div>\n" +
+                            "\t\t\t\t\t\t\t</div>\n" +
+                            "\t\t\t\t\t\t\t\n" +
+                            "\t\t\t\t\t\t\t<!---->\n" +
+                            "\t\t\t\t\t\t\t<!---->\n" +
+                            "\t\t\t\t\t\t</div>"
+                    }
+
+
+                    $("#refreshthml").html(thmladd);
+
+                    $("#refreshthml").css({"background-color":"#dddddd"});
+                    new myPagination({
+                        id: 'pagination',
+                        curPage: fenyenumber, //初始页码
+                        pageTotal: numberOfPages, //总页数
+                        pageAmount: numberOfBranches,  //每页多少条
+                        dataTotal: numberOfInitialasdsadasd, //总共多少条数据
+                        pageSize: 3, //可选,分页个数
+                        showPageTotalFlag: true, //是否显示数据统计
+                        showSkipInputFlag: true, //是否支持跳转
+                        getPage: function (page) {
+                            //获取当前页数
+                            console.log(page);
+                        }
+                    })
+                },
+                error: function (result) {
+                    console.log("error----");
+                }
+            })
+        }
+
+    </script>
+    <div class="citymaxbox">
+    </div>
+    <div class="citybox">
+        <h2 id="cityxhuanzhe">城市选择</h2>
+        <div class="cityminboxtop" id="cityminboxtops">
+
+        </div>
+        <div class="cityminboxbuttom">
+            <div class="cityqunding" onclick="cityQueding()">确定</div>
+            <div class="cityquxiao" onclick="cityGuanbi()">关闭</div>
+        </div>
+    </div>
+    <style>
+        .citymaxbox {
             width: 100%;
-            height:2000px;
+            height: 2000px;
             position: fixed;
-            background: rgba(50,50,50,0.5);
+            background: rgba(50, 50, 50, 0.5);
             z-index: 1000000;
             display: none;
         }
-        .cityminboxtop{
+
+        .cityminboxtop {
             height: auto;
             margin-bottom: 30px;
             font-size: 20px;
             height: 220px;
         }
-        .cityminboxtop li{
+
+        .cityminboxtop li {
             padding: 3px 10px;
             margin: 10px 15px 10px 0;
             border: 1px solid #e3dada;
@@ -376,12 +833,14 @@ this.cityInitialMessage();
             font-size: 18px;
             float: left;
         }
-        .cityminboxtop li:hover{
+
+        .cityminboxtop li:hover {
             background: #ffb00a;
             color: white;
             cursor: pointer;
         }
-        .cityqunding{
+
+        .cityqunding {
             width: 120px;
             height: 50px;
             line-height: 50px;
@@ -392,7 +851,8 @@ this.cityInitialMessage();
             font-size: 16px;
             font-weight: bold;
         }
-        .cityquxiao{
+
+        .cityquxiao {
             width: 120px;
             height: 50px;
             line-height: 50px;
@@ -405,10 +865,12 @@ this.cityInitialMessage();
             font-size: 16px;
 
         }
-        .cityminboxbuttom{
+
+        .cityminboxbuttom {
             height: 70px;
         }
-        .citybox{
+
+        .citybox {
             display: none;
             position: relative;
             left: 50%;
@@ -421,14 +883,87 @@ this.cityInitialMessage();
 
             background: #FFF;
         }
-        .cityqunding:hover{
+
+        .cityqunding:hover {
             cursor: pointer;
             background: #ffdb19;
         }
-        .cityquxiao:hover{
+
+        .cityquxiao:hover {
             cursor: pointer;
             background: #7d7d7d;
         }
+        .ztcsrks{
+            border: 1px solid #eaeaea;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+            height: 32px;
+            display: block;
+            float: left;
+            margin-right: 10px;
+        }
+        .ztcbuttonschen{
+            width: 96px;
+            height: 32px;
+            background: #ff6701;
+            text-align: center;
+            line-height: 30px;
+            color: #fff;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+            border: 1px solid #ff6701;
+            float: left;
+        }
+        .ztcbuttonshui{
+            background: rgb(202, 202, 198);
+            border: 1px solid rgb(202, 202, 198);
+            width: 96px;
+            height: 32px;
+
+            text-align: center;
+            line-height: 30px;
+            color: #fff;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+
+            float: left;
+        }
+        .load{
+            width: 100%;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            z-index: -10;
+        //display: none;
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+        .loader{
+            width: 140px;
+            height: 140px;
+            /* border: 1px solid red; */
+            text-align: center;
+            position: absolute;
+            top: calc(50% - 70px);
+            left: calc(50% - 70px);
+            padding-top: 15px;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 5px;
+            margin-left: 50px;
+        }
+        #loader-1{
+            width: 60px;
+            height: 60px;
+        }
+        .load-msg{
+            height: 50px;
+            line-height: 50px;
+            color: #fff;
+            font-size: 13px;
+            /* margin-top: 20px; */
+        }
+        svg path, svg rect {
+            fill: #17a085;
+        }
     </style>
-	</body>
+</body>
 </html>

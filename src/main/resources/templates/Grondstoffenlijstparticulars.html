@@ -2,7 +2,8 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 	<head>
 		<meta charset="utf-8">
-		<title></title>
+		<link rel="icon" href="img/bitbug_favicon.ico" mce_href="/favicon.ico" type="image/x-icon">
+		<title>云借条-大数据信息平台</title>
 		<link rel="stylesheet" href="css/login.css" />
 		<script src="vendor/jquery/jquery.min.js"></script>
 		<script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
@@ -10,25 +11,24 @@
 	<body>
 		<div id="app">
 			<div class="af-page">
-				<div class="page-header"><a href="#/" class="pull-left logo router-link-exact-active router-link-active"><img src="img/haoduoyu.png"
-						 alt=""></a>
+				<div class="page-header"><a href="#/" class="pull-left logo router-link-exact-active router-link-active"><img src="img/yjtlogo.png"></a>
 					<div class="pull-right header-nav">
 						<ul>
-							<li class="d-relative fore1"><a href="#/subscribe" class="full-cover-link"></a>
+							<li class="d-relative fore1"><a href="/subscription" class="full-cover-link"></a>
 								个人订阅设置
 							</li>
 							<li class="fore3">
 								微信客服
-								<div class="qrcode-box"><img src="img/haoduoyu.png" alt="">
+								<div class="qrcode-box"><img src="/javaimg/ewm.png" alt="">
 									<p>客服二维码</p>
 								</div>
 							</li>
-							<li class="d-relative fore1">
-								修改密码
-							</li>
+
+							<a href="/outLogin" style="color: #333;">
 							<li class="fore4">
 								退出
 							</li>
+							</a>
 						</ul>
 					</div>
 					<!---->
@@ -49,7 +49,7 @@
 						<!---->
 						<!----> <a href="/DirectDrive" class="fore2">
 							<div class="line"></div>
-							优米借直推
+							云借条直推
 						</a>
 						<!----> <a href="/purchase" class="fore3">
 							<div class="line"></div>
@@ -71,8 +71,8 @@
 									<div class="user-name-wrapper">
 										<div class="pull-left username">
 											<b  th:text="${#strings.substring(particularsMessages.qdUsername,0,1)}"></b>
-											<b th:if="${particularsMessages.qdSex} eq 0">先生</b>
-											<b th:if="${particularsMessages.qdSex} eq 1">女士</b>
+											<b th:if="${particularsMessages.qdSex} eq '男'">先生</b>
+											<b th:if="${particularsMessages.qdSex} eq '女'">女士</b>
 										</div>
 										<div class="pull-left tag tag1"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAABQElEQVQ4T3XSv6uOYRgH8M+XzqB0LEdOYjiTwUAGOfIHSFInzJLFolhMRCHJYGGTgdVmQCIGWQxSymJmUUqZDpfut+fW6+l97/F6rs9z/7i+MVpVtYAbOI11vMalJF+mWzMDXsWVUf0n1pK87PX/YFVtxTPsG/8Qv7Ca5GP79g9W1VlswgkcnAFb6T0OJPk9gVW1E5/xBq9wew5s5VNJHnZ4B+fxB0dxE3vm4OdJDnfYdts1NF7HPTzF3hn4e5KlDtuzb8TdJOeG4y/iBfaP8HqShQ7bi23AcpIfvbGq2nE/jODXJNs7fIeVJMvTTVW1Dd9G8EmSYx1exC0cSvJ2asczuD+CJ5M87nAz2mC34PJwvFVcG2bbbQvHkSQ1HYDdQ2p2zBlDy2yL3eQNxpFbwgUcb3dGy+gnPMCjJG3Ok/UXLXtrD5W+ae4AAAAASUVORK5CYII="
 											 alt="" th:text="${particularsMessages.qdSesame}">
@@ -111,7 +111,7 @@
 								</div>
 								<div class="pull-right buy-wrapper">
 									<div class="time" th:text="${particularsMessages.qdFbTime}">7个小时之前</div>
-									<div class="buy"  th:onclick="'purchasess('+${particularsMessages.lgShopUid}+')'"><p th:text="'价格-'+${particularsMessages.qdGmPay}+'币'"></p></div>
+									<div class="buy" style="background: #ff7d23"  th:onclick="'purchasess('+${particularsMessages.lgShopUid}+')'" ><p th:text="'价格-'+${particularsMessages.qdGmPay}+'币'"></p></div>
 									<!---->
 									<!---->
 									<!---->
@@ -126,7 +126,7 @@
 								<div class="ud-item-content">
 									<ul>
 										<li>姓名：<span th:text="${particularsMessages.qdUsername}">王*祥</span></li>
-										<li>年龄：<span th:text="${particularsMessages.qdSex}">31岁</span></li>
+										<li>年龄：<span th:text="${particularsMessages.qdAge}">31岁</span></li>
 										<li>学历：<span th:text="${particularsMessages.qdOften}">本科</span></li>
 										<li>有无本地社保：<span th:text="${particularsMessages.qdSocial}">有，连续缴纳半年及以上</span></li>
 										<li>有无保单：<span th:text="${particularsMessages.qdPlicy}">无</span></li>
@@ -136,7 +136,7 @@
 
 										<li>有无本地公积金：<span th:text="${particularsMessages.qdFund}">有，连续缴纳半年及以上</span></li>
 										<li>有无信用卡：<span th:text="${particularsMessages.qdCredit}">有，半年无逾期</span></li>
-										<li>用户来源渠道：<span th:text="${particularsMessages.qdSource}" style="color: rgb(245, 106, 3);">001</span></li>
+										<li>用户来源渠道：<span th:text="${particularsMessages.qdSourceName}" style="color: rgb(245, 106, 3);">001</span></li>
 									</ul>
 								</div>
 							</div>
@@ -162,7 +162,105 @@
 				<!---->
 			</div>
 		</div>
+		<style>
+			.citymaxbox{
+				width: 100%;
+				height:2000px;
+				position: fixed;
+				background: rgba(50,50,50,0.5);
+				z-index: 1000000;
+				display: none;
+			}
+			.cityminboxtop{
+				height: auto;
+				margin-bottom: 30px;
+				font-size: 20px;
+				height: 220px;
+			}
+			.cityminboxtop li{
+				padding: 3px 10px;
+				margin: 10px 15px 10px 0;
+				border: 1px solid #e3dada;
+				list-style: none;
+				font-size: 18px;
+				float: left;
+			}
+			.cityminboxtop li:hover{
+				background: #ffb00a;
+				color: white;
+				cursor: pointer;
+			}
+			.cityqunding{
+				width: 120px;
+				height: 50px;
+				line-height: 50px;
+				text-align: center;
+				float: right;
+				background: orange;
+				color: #fff;
+				font-size: 16px;
+				font-weight: bold;
+			}
+			.cityquxiao{
+				width: 120px;
+				height: 50px;
+				line-height: 50px;
+				text-align: center;
+				float: right;
+				background: #999;
+				margin-right: 30px;
+				font-weight: bold;
+				color: #fff;
+				font-size: 16px;
+
+			}
+			.cityminboxbuttom{
+				height: 70px;
+			}
+			.citybox{
+				display: none;
+				position: relative;
+				left: 50%;
+				margin-left: -405px;
+				top: 200px;
+				padding: 30px;
+				z-index: 1000001;
+				width: 700px;
+				height: 370px;
+
+				background: #FFF;
+			}
+			.cityqunding:hover{
+				cursor: pointer;
+				background: #ffdb19;
+			}
+			.cityquxiao:hover{
+				cursor: pointer;
+				background: #7d7d7d;
+			}
+
+		</style>
+		<div class="citymaxbox">
+		</div>
+		<div class="citybox">
+			<h2 id="cityxhuanzhe">城市选择</h2>
+			<textarea class="cityminboxtop" id="cityminboxtops" th:text="${biaojineirong}">
+
+			</textarea>
+			<div class="cityminboxbuttom">
+				<div class="cityqunding"  th:onclick="'submitBiaoji('+${particularsMessages.lgShopUid}+')'">确定</div>
+				<div class="cityquxiao" onclick="cityGuanbi()">关闭</div>
+			</div>
+		</div>
 <script>
+	function dakaishurukuang(){
+		$(".citymaxbox").show()
+		$(".citybox").show()
+	}
+	function cityGuanbi(){
+		$(".citymaxbox").hide()
+		$(".citybox").hide()
+	}
 
 	function purchasess(id) {
 		$.ajax({
@@ -172,7 +270,7 @@
 			dataType: "json",
 			success: function (result) {
 				if (result.code==0){
-					$(location).prop('href', '/grondstoffenlijstParticularsRequest?particularsId='+id)
+					$(location).prop('href', '/PurchaseParticularsParticularsRequest?particularsId='+id)
 				}
 				var message=result.message
 				$(".tanchuminboxtop").html(message)

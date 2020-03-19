@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8">
+		<link rel="icon" href="img/bitbug_favicon.ico" mce_href="/favicon.ico" type="image/x-icon">
+		<title>云借条-大数据信息平台</title>
+		<link rel="stylesheet" href="css/login.css" />
+		<script src="vendor/jquery/jquery.min.js"></script>
+		<script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+
+	</head>
+	<body>
+		<div id="app">
+			<div class="af-page">
+				<div class="page-header"><a href="#/" class="pull-left logo router-link-exact-active router-link-active"><img src="img/yjtlogo.png"></a>
+					<div class="pull-right header-nav">
+						<ul>
+							<li class="d-relative fore1"><a href="/subscription" class="full-cover-link"></a>
+								个人订阅设置
+							</li>
+							<li class="fore3">
+								微信客服
+								<div class="qrcode-box"><img src="/javaimg/ewm.png" alt="">
+									<p>客服二维码</p>
+								</div>
+							</li>
+
+							<a href="/outLogin" style="color: #333;">
+							<li class="fore4">
+								退出
+							</li>
+							</a>
+						</ul>
+					</div>
+					<!---->
+					<!---->
+					<!---->
+					<!---->
+				</div>
+				<div class="aside-nav" style="z-index: 999999;">
+					<div class="avatar-box"><img src="http://api.jbd.melonmobile.cn/cdn/resource/usr_ico_default.png" alt="">
+						<div class="username text-overflow" th:text="${lgUsername}"></div>
+						<div class="user-id text-overflow"><p th:text="'Tel：'+${lgPhone}"></p></div>
+						<div class="user-id text-overflow"><p th:text="'余额：'+${lgBalance}"></p></div>
+					</div>
+					<div class="nav"><a href="/grondstoffenlijst" class="fore1">
+						<div class="line"></div>
+						抢单列表
+					</a>
+						<!---->
+						<!----> <a href="/DirectDrive" class="fore2 router-link-exact-active router-link-active">
+							<div class="line"></div>
+							云借条直推
+						</a>
+						<!----> <a href="/purchase" class="fore3">
+							<div class="line"></div>
+							已购的客户
+						</a> <a href="/ToBuyCurrency" class="fore4">
+							<div class="line"></div>
+							购买生财币
+						</a></div>
+				</div>
+				<div class="content-box"><div class="d-relative select-item-wrapper"><div class="select-item-nav">
+					直推单 <span> &gt;&gt; </span> 数据统计
+				</div></div> <div class="sta-tab"><ul><li class="active"><a href="javascript:;" class="full-cover-link"></a>
+					直推车统计
+				</li></ul></div> <div class="push-box account-box" style="height: 871px;"><!---->
+					<div class="w100 account-table"><div class="at-head"><ul class="at-tr">
+						<li class="fore1">序号</li> <li class="fore2">日期</li>
+						<li class="fore4">推单量</li> <li class="fore4">消耗币</li>
+					</ul></div> <div class="at-body htmlboxss"><ul class="at-tr"><li class="fore1">1</li>
+						<li class="fore2">20200317</li> <li class="fore4">11</li> <li class="fore4">284</li>
+					</ul></div></div> <!----> <!----></div></div>
+				<!---->
+				<!---->
+			</div>
+		</div>
+<script>
+	window.onload = function(){
+		console.log("------------+");
+		this.zhitiusubmit();
+
+	};
+	function zhitiusubmit() {
+		$.ajax({
+			url: "/ztctongji",
+			type: "get",
+			dataType: "json",
+			success: function (result) {
+              var htmladdss=""
+				for (i=0;i<result.length;i++){
+					htmladdss+="<ul class=\"at-tr\"><li class=\"fore1\">"+i+1+"</li>\n" +
+							"\t\t\t\t\t\t<li class=\"fore2\">"+result[i].time+"</li> " +
+							"<li class=\"fore4\">"+result[i].zongshu+"</li> " +
+							"<li class=\"fore4\">"+result[i].zongjia+"</li>\n" +
+							"\t\t\t\t\t</ul>"
+				}
+
+                $(".htmlboxss").html(htmladdss);
+
+
+			},
+			error: function (result) {
+				console.log("error----");
+			}
+		})
+	}
+</script>
+
+	</body>
+</html>

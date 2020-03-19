@@ -52,6 +52,16 @@ public class WxWebMvcConfig implements WebMvcConfigurer {
        .addPathPatterns("/purchaseList")
        .addPathPatterns("/DicectDriveList")
        .addPathPatterns("/GrabASingleList")
+       .addPathPatterns("/subscription")
+       .addPathPatterns("/PersonalSubscriptions")
+       .addPathPatterns("/ztcsubscription")
+       .addPathPatterns("/subscription")
+       .addPathPatterns("/submitBiaoji")
+       .addPathPatterns("/submitxsxl")
+       .addPathPatterns("/chongzhiannsss")
+       .addPathPatterns("/ztctongji")
+       .addPathPatterns("/DirectDriveDatajiluTable")
+       .addPathPatterns("/chongzhiannsss")
        .excludePathPatterns("/login");
 
 
