@@ -104,25 +104,37 @@ public class UserServiceImpl implements UserService {
         List<Basicmanager> GrabASingleLists=userDao.GrabASingleListImpl(searchCondition,privatePersonalSubscriptionsModel);
         List<Basicmanager> GrabASingleArrayList=new ArrayList<>();
         int zongshu=0;
+        int NumberOfBranches=searchCondition.getNumberOfBranches();
         Integer price=userDao.inquirePricesss();
         for(Basicmanager GrabASingleList:GrabASingleLists){
             GrabASingleList.setQdGmPay(price);
          if(userDao.whetherPurchase(searchCondition.getPhone(),GrabASingleList.getLgShopUid())==0){
             if(searchCondition.getHaveReadUnread()==0){
-                zongshu++;
+
                if(userDao.whetherYidu(searchCondition.getPhone(),GrabASingleList.getLgShopUid())==0){
-                   GrabASingleArrayList.add(GrabASingleList);
+                   zongshu++;
+                   if(searchCondition.getNumberOfInitial()<zongshu&&NumberOfBranches!=0) {
+                       GrabASingleArrayList.add(GrabASingleList);
+                       NumberOfBranches--;
+                   }
                }
             }
             if(searchCondition.getHaveReadUnread()==1){
-                zongshu++;
+
                 if(userDao.whetherYidu(searchCondition.getPhone(),GrabASingleList.getLgShopUid())!=0){
+                    zongshu++;
+                    if(searchCondition.getNumberOfInitial()<zongshu&&NumberOfBranches!=0) {
                     GrabASingleArrayList.add(GrabASingleList);
+                        NumberOfBranches--;
+                    }
                 }
             }
             if(searchCondition.getHaveReadUnread()==2){
                 zongshu++;
+                if(searchCondition.getNumberOfInitial()<zongshu&&NumberOfBranches!=0) {
                     GrabASingleArrayList.add(GrabASingleList);
+                    NumberOfBranches--;
+                }
             }
          }
         }
@@ -269,7 +281,7 @@ public class UserServiceImpl implements UserService {
     public Object purchaseInformation(Integer gmid,String lgPhone) {
 
         Integer price=userDao.inquirePricesss();
-        userDao.updateBalancejiage(userDao.inquirePricesss());
+//        userDao.updateBalancejiage(userDao.inquirePricesss());
         if(price>0){
             Integer balancec=userDao.inquireBalance(lgPhone);
             if(balancec<price){return WebTools.returnData("余额不足，请联系客服！",1);}
@@ -326,18 +338,26 @@ public class UserServiceImpl implements UserService {
     @Override
     public Object insertBasicmanager(Basicmanager basicmanager,String submitIP) {
         String SubmitSkipUrl=userDao.findSubmitSkipUrl();
+        try{
         if(userDao.findCaiLiangIP(submitIP)>0){
 //            return WebTools.returnData("此IP已提交过信息，请不要用此设备再次提交",1);
             return WebTools.returnData(SubmitSkipUrl,0);
         }
+            String SourceName="云借条主渠道";
         Integer ztcgmpay=userDao.inquirePricesssztc();
-        String SourceName=userDao.findQdSourceName(basicmanager.getQdSource());
-        QdTj QdTjTable=userDao.findQdTj(basicmanager.getQdSource());
-        userDao.updateBalancejiage(ztcgmpay);
+        if(basicmanager.getQdSource()!=null){
+            SourceName=userDao.findQdSourceName(basicmanager.getQdSource());
+            QdTj QdTjTable=userDao.findQdTj(basicmanager.getQdSource());
+            userDao.updateQDTJSql(basicmanager.getQdSource(),(int)(Math.floor((double)QdTjTable.getQdSql()*(double)QdTjTable.getQdKlbfb())/100));
+        }
+
+
+
+//        userDao.updateBalancejiage(ztcgmpay);
         basicmanager.setQdSourceName(SourceName);
 
         if(userDao.insertBasicmanagerImpl(basicmanager,submitIP)>0){
-            if(userDao.updateQDTJSql(basicmanager.getQdSource(),(int)(Math.floor((double)QdTjTable.getQdSql()*(double)QdTjTable.getQdKlbfb())/100))>0){
+
                 Basicmanager basicmanagersss=userDao.findQdBasicmanagerOneData(basicmanager,submitIP);
 //                QdXsxl Xsxlzs=userDao.findSubmitXsxlzs();//Xsxlzs 总数
                 List<QdXsxl> QdXsxlTimeIds=userDao.findQdXsxlLatestTime();
@@ -364,14 +384,11 @@ public class UserServiceImpl implements UserService {
              }
                 }
 
-//                return WebTools.returnData("成功",0);
-                return WebTools.returnData(SubmitSkipUrl,0);
-            }
-//            return WebTools.returnData("渠道来源 未知",1);
+        }
+        return WebTools.returnData(SubmitSkipUrl,0);
+        }catch (Exception e){
             return WebTools.returnData(SubmitSkipUrl,0);
         }
-//        return WebTools.returnData("提交失败",1);
-        return WebTools.returnData(SubmitSkipUrl,0);
     }
 
     @Override
@@ -400,6 +417,22 @@ public class UserServiceImpl implements UserService {
         }
         return WebTools.returnData("失败",1);
     }
+    @Override
+    public Object updatepowerbeizhu(Integer gmid, String beizhu, String lgPhone) {
+        if(userDao.updatepowerbeizhuimpl(gmid,beizhu,lgPhone)>0){
+            return WebTools.returnData("成功",0);
+        }
+        return WebTools.returnData("失败",1);
+    }
+
+    @Override
+    public Object findqdmessagedataajaxs(String loginusername, String loginpassword) {
+        QdTj qdTj=userDao.findqdmessagedataajaxsImpl(loginusername,loginpassword);
+        if(qdTj!=null){
+            return WebTools.returnData(qdTj,0);
+        }
+        return WebTools.returnData("未查到信息",1);
+    }
 
     @Override
     public Object ztctongji(String lgPhone) {
@@ -414,6 +447,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public Object findxsxls(String lgPhone) {
         return userDao.findxsxlsimpl(lgPhone);
+    }
+
+    @Override
+    public Object rondstoffenlijstbeizhu(Integer particularsId, String lgPhone) {
+        return userDao.rondstoffenlijstbeizhuImpl(particularsId,lgPhone);
     }
 
 

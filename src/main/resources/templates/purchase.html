@@ -2,11 +2,11 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
-    <link rel="icon" href="img/bitbug_favicon.ico" mce_href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="img/favicon.ico" mce_href="/favicon.ico" type="image/x-icon">
     <title>云借条-大数据信息平台</title>
     <link rel="stylesheet" href="css/login.css"/>
     <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <script src="js/jquery.min.js"></script>
     <link rel="stylesheet" href="css/myPagination.css"/>
     <script src="js/myPagination.js"></script>
     <script src="laydate/laydate.js"></script> <!-- 改成你的路径 -->
@@ -42,7 +42,7 @@
                     </li>
                     <li class="fore3">
                         微信客服
-                        <div class="qrcode-box"><img src="/javaimg/ewm.png" alt="">
+                        <div class="qrcode-box"><img src="img/ewm.jpg" alt="">
                             <p>客服二维码</p>
                         </div>
                     </li>
@@ -60,7 +60,7 @@
             <!---->
         </div>
         <div class="aside-nav" style="z-index: 999999;">
-            <div class="avatar-box"><img src="http://api.jbd.melonmobile.cn/cdn/resource/usr_ico_default.png" alt="">
+            <div class="avatar-box"><img src="img/usr_ico_default.png" alt="">
                 <div class="username text-overflow" th:text="${lgUsername}"></div>
                 <div class="user-id text-overflow"><p th:text="'Tel：'+${lgPhone}"></p></div>
                 <div class="user-id text-overflow"><p th:text="'余额：'+${lgBalance}"></p></div>
@@ -160,7 +160,8 @@
                                 </ul>
                             </div>
                         </li>
-                        <li class="fore3 shuaxingannssss"><b onclick="shuaxingann()" class="shuaxingann">刷新</b>
+                        <li class="fore3 shuaxingannssss">
+                            <b onclick="shuaxingann()" class="shuaxingann">刷新</b>
                             <!---->
                         </li>
                     </ul>
@@ -389,7 +390,7 @@
                         "\t\t\t\t\t\t\t<!---->\n" +
                         "\t\t\t\t\t\t\t<div class=\"user-item\">\n" +
                         "\t\t\t\t\t\t\t\t<div class=\"d-relative pull-left user-avatar\"><a href=\"/PurchaseParticularsParticularsRequest?particularsId=" + result.ArrayLists[i].lgShopUid + "\" " +
-                        "\t\t\t\t\t\t\t\t\t class=\"full-cover-link\"></a> <img src=\"http://api.jbd.melonmobile.cn/cdn/resource/usr_ico_default.png\" alt=\"\"></div>\n" +
+                        "\t\t\t\t\t\t\t\t\t class=\"full-cover-link\"></a> <img src=\"img/usr_ico_default.png\" alt=\"\"></div>\n" +
                         "\t\t\t\t\t\t\t\t<div class=\"d-relative pull-left user-data user-data1\"\n" +
                         "\t\t\t\t\t\t\t\t\t class=\"full-cover-link\"></a>\n" +
                         "\t\t\t\t\t\t\t\t\t<div class=\"user-name-wrapper\">\n" +
@@ -553,7 +554,7 @@
         padding: 30px;
         z-index: 1000001;
         width: 700px;
-        height: 370px;
+        height:430px;
 
         background: #FFF;
     }

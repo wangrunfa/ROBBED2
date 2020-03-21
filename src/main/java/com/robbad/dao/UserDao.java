@@ -170,8 +170,8 @@ Basicmanager particularsMessage(@Param("particularsId")Integer particularsId);
     @Update("update qd_basicmanager set qd_gshop_status=qd_gshop_status+1 where lg_shop_uid=#{LgShopUid}")
     int ztcUpdateBasicmanager(@Param("LgShopUid")Integer LgShopUid);
 
-    @Update("update qd_basicmanager set qd_gm_pay=#{pays}")
-    void updateBalancejiage(@Param("pays")Integer pays);
+//    @Update("update qd_basicmanager set qd_gm_pay=#{pays}")
+//    void updateBalancejiage(@Param("pays")Integer pays);
     @Select("select lg_biaoji from qd_lg_power where lg_ztc_id=#{particularsId} and lg_phone=#{lgPhone}")
     Object rondstoffenlijstbiaoji(@Param("particularsId")Integer particularsId, @Param("lgPhone")String lgPhone);
     @Update("update qd_lg_power set lg_biaoji=#{biaoji} where lg_phone=#{lgPhone} and lg_ztc_id=#{gmid}")
@@ -189,4 +189,11 @@ Basicmanager particularsMessage(@Param("particularsId")Integer particularsId);
     @Select("select * from qd_xsxl where lg_phone=#{lgPhone} Limit 1")
     QdXsxl findxsxlsimpl(String lgPhone);
 
+    @Select("select lg_gm_beizhu from qd_lg_power where lg_ztc_id=#{particularsId} and lg_phone=#{lgPhone}")
+    Object rondstoffenlijstbeizhuImpl(@Param("particularsId")Integer particularsId, @Param("lgPhone")String lgPhone);
+
+    @Update("update qd_lg_power set lg_gm_beizhu=#{beizhu} where lg_phone=#{lgPhone} and lg_ztc_id=#{gmid}")
+    Integer updatepowerbeizhuimpl(@Param("gmid")Integer gmid,@Param("beizhu") String beizhu, @Param("lgPhone")String lgPhone);
+    @Select("select qd_qdname,qd_qdurl,qd_addvartime,qd_klsql from qd_qdtj where login_name=#{loginusername} and login_password=#{loginpassword} LIMIT 1")
+    QdTj findqdmessagedataajaxsImpl(@Param("loginusername")String loginusername,@Param("loginpassword") String loginpassword);
 }

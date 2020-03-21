@@ -2,104 +2,137 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 	<head>
 		<meta charset="utf-8">
+		<link rel="icon" href="img/favicon.ico" mce_href="/favicon.ico" type="image/x-icon">
 		<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport">
 		<meta content="yes" name="apple-mobile-web-app-capable">
 		<meta content="black" name="apple-mobile-web-app-status-bar-style">
 		<meta content="telephone=no" name="format-detection">
 		<title>云借条-大数据信息平台</title>
-		<script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+		<script src="js/jquery.min.js"></script>
 		<script src="js/addmessage.js"></script>
 		<link rel="stylesheet" href="css/addmessage.css" />		
 		<link rel="stylesheet" href="css/demo.css" />		
 		<link rel="stylesheet" href="css/ydui.css" />		
 		<script src="js/ydui.flexible.js"></script>
+		<!--<script src="js/scriptsss.js"></script>-->
 	</head>
 	<body style="background: white">
 		<div class="maxbox">
-			<div class="jiedaiming">好多鱼</div>
+			<div class="jiedaiming"><img src="img/yjtlogo.png" style="width: 70px;float: left"><div class="jiashiann"></div></div>
 	       <div class="inputmaxbox">
-		       <div class="inputminbox BorrowingInput">
+			   <div class="inputminbox theFinalStepInput">
 				   <div class="Sorting">1</div>
-				   <div class="prompting">借贷额度：3-5万</div>
+				   <div class="prompting"></div>
+				   <div class="ButtonThe">我要修改</div>
+			   </div>
+			   <div class="inputminbox BorrowingInput">
+				   <div class="Sorting">2</div>
+				   <div class="prompting"></div>
 				   <div class="ButtonThe">我要修改</div>
 			   </div>
 			   <div class="inputminbox educationInput">
-			   				   <div class="Sorting">2</div>
-			   				   <div class="prompting"></div>
-			   				   <div class="ButtonThe">我要修改</div>
-			   </div>
-			   <div class="inputminbox whetherInput">
 			   				   <div class="Sorting">3</div>
 			   				   <div class="prompting"></div>
 			   				   <div class="ButtonThe">我要修改</div>
 			   </div>
-			   <div class="inputminbox anywhereInput" style="display: none;">
+			   <div class="inputminbox whetherInput">
 			   				   <div class="Sorting">4</div>
 			   				   <div class="prompting"></div>
 			   				   <div class="ButtonThe">我要修改</div>
 			   </div>
-			   <div class="inputminbox AssetsInput">
+			   <div class="inputminbox anywhereInput" style="display: none;">
 			   				   <div class="Sorting">5</div>
 			   				   <div class="prompting"></div>
 			   				   <div class="ButtonThe">我要修改</div>
 			   </div>
-			   <div class="inputminbox marriageInput">
+			   <div class="inputminbox AssetsInput">
 			   				   <div class="Sorting">6</div>
 			   				   <div class="prompting"></div>
 			   				   <div class="ButtonThe">我要修改</div>
 			   </div>
-			   <div class="inputminbox linusericssonInput" style="display: none;">
+			   <div class="inputminbox marriageInput">
 			   				   <div class="Sorting">7</div>
 			   				   <div class="prompting"></div>
 			   				   <div class="ButtonThe">我要修改</div>
 			   </div>
-			   <div class="inputminbox ProfessorInput">
+			   <div class="inputminbox linusericssonInput" style="display: none;">
 			   				   <div class="Sorting">8</div>
 			   				   <div class="prompting"></div>
 			   				   <div class="ButtonThe">我要修改</div>
 			   </div>
-			   <div class="inputminbox NorthwesternInput">
+			   <div class="inputminbox ProfessorInput">
 			   				   <div class="Sorting">9</div>
 			   				   <div class="prompting"></div>
 			   				   <div class="ButtonThe">我要修改</div>
 			   </div>
-                <div class="inputminbox ProfessionalInput">
+			   <div class="inputminbox NorthwesternInput">
 			   				   <div class="Sorting">10</div>
+			   				   <div class="prompting"></div>
+			   				   <div class="ButtonThe">我要修改</div>
+			   </div>
+                <div class="inputminbox ProfessionalInput">
+			   				   <div class="Sorting">11</div>
 			   				   <div class="prompting"></div>
 			   				   <div class="ButtonThe">我要修改</div>
 			   </div>
 
 			   <div class="inputminbox unitsCurrencyInput">
-			   				   <div class="Sorting">11</div>
-			   				   <div class="prompting"></div>
-			   				   <div class="ButtonThe">我要修改</div>
-			   </div>
-			   <div class="inputminbox AddressLocationInput" style="display: none;">
 			   				   <div class="Sorting">12</div>
 			   				   <div class="prompting"></div>
 			   				   <div class="ButtonThe">我要修改</div>
 			   </div>
-			   <div class="inputminbox monthlyInput">
+			   <div class="inputminbox AddressLocationInput" style="display: none;">
 			   				   <div class="Sorting">13</div>
 			   				   <div class="prompting"></div>
 			   				   <div class="ButtonThe">我要修改</div>
 			   </div>
-			   <div class="inputminbox paydayInput">
+			   <div class="inputminbox monthlyInput">
 			   				   <div class="Sorting">14</div>
+			   				   <div class="prompting"></div>
+			   				   <div class="ButtonThe">我要修改</div>
+			   </div>
+			   <div class="inputminbox paydayInput">
+			   				   <div class="Sorting">15</div>
 			   				   <div class="prompting"></div>
 			   				   <div class="ButtonThe">我要修改</div>
 			   </div>
 	       </div>
 	       <div class="selectmaxbox">
+
+			   <div class="submitMessage" style="height: 220px">
+				   <!-- Hint of 提示名 -->
+				   <div class="HintOf">确认信息</div>
+				   <button class="button" onclick="submitMessages()">
+					   <span class="submit">信息提交</span>
+					   <span class="loading"><i class="fa fa-refresh"></i></span>
+					   <span class="check"><i class="fa fa-check"></i></span>
+				   </button>
+			   </div>
+			   <script>
+				   const button = document.querySelector('.button');
+				   const submit = document.querySelector('.submit');
+
+				   function toggleClass() {
+					   this.classList.toggle('active');
+				   }
+
+				   function addClass() {
+					   this.classList.add('finished');
+				   }
+
+				   button.addEventListener('click', toggleClass);
+				   button.addEventListener('transitionend', toggleClass);
+				   button.addEventListener('transitionend', addClass);
+			   </script>
 			   <!-- theFinalStep  最后一步 -->
-			    <div class="theFinalStep">
+			    <div class="theFinalStep" style="height: 660px;">
 			   				  <!-- Hint of 提示名 -->
-			   				    <div class="HintOf">最后一步</div>
-			   			 	   <div class="selectItems">
+			   				    <div class="HintOf">基本信息</div>
+			   			 	   <div class="selectItems" style="height: 510px">
 							    <h3 style="padding: 10px 0;">姓名：</h3>
 			   			 	   <input type="text" class="inputStyle" id="ymjusername" placeholder="您的姓名" />
-							   <h3 style="padding: 10px 0;">年龄：</h3>
-							   <input type="text" class="inputStyle" id="ymjage" placeholder="您的年龄" />
+							   <!--<h3 style="padding: 10px 0;">年龄：</h3>-->
+							   <!--<input type="text" class="inputStyle" id="ymjage" placeholder="您的年龄" />-->
 							  <h3 style="padding: 10px 0;">手机号：</h3>
 							   <input type="text" class="inputStyle" id="ymjphone" placeholder="您的手机号" />
 							   <h3 style="padding: 10px 0;">QQ号：</h3>
@@ -110,24 +143,26 @@
 								   <input type="text" class="inputStyle" id="ymjSesame" placeholder="您的支付宝芝麻分" />
 								   <h3 style="padding: 10px 0;">身份证号：</h3>
 								   <input type="text" class="inputStyle" id="ymjCard" placeholder="您的身份证号码"  style="margin-bottom: 15px"/>
-								   <input type="radio" value="男" name="sex" class="input-radios"
-										  style="width: 25px; height: 25px; float: left;">
-								   <div style="width: 30px;height: 25px;float: left;line-height: 25px">男</div>
-								   <input type="radio" value="女" name="sex"  class="input-radios" style="width: 25px; height: 25px; float: left;line-height: 25px">
-								   <div style="width: 30px;height: 25px;float: left">女</div>
+								   <!--<h3 style="padding: 10px 0;">性别：</h3>-->
+								   <!--<input type="radio" value="男" checked name="sex" class="input-radios"-->
+										  <!--style="width: 25px; height: 25px; float: left;">-->
+								   <!--<div style="width: 30px;height: 25px;float: left;line-height: 25px">男</div>-->
+								   <!--<input type="radio" value="女" name="sex"  class="input-radios" style="width: 25px; height: 25px; float: left;line-height: 25px">-->
+								   <!--<div style="width: 30px;height: 25px;float: left">女</div>-->
 			   			 	   </div>
 			   							 
-			   							    <div class="xiayibu theFinalStepSbmit">提交</div>
+			   							    <div class="xiayibu theFinalStepSbmit">下一步</div>
 			    </div>
 			   <!-- payday  发薪日 -->
+
 			    <div class="payday">
 			   				  <!-- Hint of 提示名 -->
 			   				    <div class="HintOf">发薪日</div>
 			   			 	   <div class="unitsCurrencyselectItems">
-			   			 	   <input type="number" class="inputStyle" id="paydayMessage" placeholder="您的发薪日" />
+			   			 	   <input type="text" onclick="faxinbox()" style="width: 55%;margin-left: 22%;text-align: center" class="inputStyle" id="paydayMessage" placeholder="您的发薪日" />
 			   			 	   </div>
 							   <h4 style="margin-left: 30px;">注释：发薪日 每月工作发放日</h4>
-							    <div class="xiayibu paydayxiayibu">下一步</div>
+							    <div class="xiayibu paydayxiayibu"><提交></提交></div>
 			    </div>
 				<!-- monthly  月收入 -->
 				 <div class="monthly">
@@ -135,7 +170,7 @@
 								    <div class="HintOf">月收入</div>
 							 	    <div class="selectItems monthlyselect">
 									    <div class="unitsCurrencyselectItems">
-									    <input class="inputStyle"  type="number" id="monthlyMessage" placeholder="您的月收入 " />
+									    <input class="inputStyle" style="width: 95%;"  type="number" id="monthlyMessage" placeholder="您的月收入 " />
 									    </div>
 										<h4 style="margin-left: 30px;">单位：人民币</h4>
 									     <div class="xiayibu monthlyxiayibu">下一步</div>
@@ -164,7 +199,7 @@
 			   				  <!-- Hint of 提示名 -->
 			   				    <div class="HintOf">工作单位</div>
 								<div class="unitsCurrencyselectItems">
-			   			 	    <input class="inputStyle"  type="text" id="unitsCurrencyMessage" placeholder="请输入您的工作单位名" />
+			   			 	    <input class="inputStyle" style="width: 95%;"  type="text" id="unitsCurrencyMessage" placeholder="请输入您的工作单位名" />
 			   					</div>
 								 <h4 style="margin-left: 30px;">请填写：公司名字</h4>
 								 <div class="xiayibu unitsCurrencyxiayibu">下一步</div>
@@ -174,7 +209,7 @@
 			    <div class="Professional">
 			   				  <!-- Hint of 提示名 -->
 			   				    <div class="HintOf">职业</div>
-			   			 	    <div class="selectItems Professionalselect">
+			   			 	    <div class="selectItems Professionalselect" style="height: 600px;overflow-y: scroll;: ">
 			   					    <li value="生产业">生产业</li>
 			   					    <li value="加工业">加工业</li>
 			   					   <li value="制造业">制造业</li>
@@ -290,11 +325,11 @@
 
 
 							<div class="selectItems Borrowingselect">
-								<li value="1000">1000</li>
-								<li value="2000">2000</li>
 								<li value="5000">5000</li>
 								<li value="10000">10000</li>
 								<li value="20000">20000</li>
+								<li value="30000">30000</li>
+								<li value="40000">40000</li>
 
 							</div>
 
@@ -340,11 +375,16 @@
 			    <!--</div>-->
 		   </div>
 		</div>
+			<div class="faxinTimeOneBox">
+				<div class="faxinTimeTwoBox" onclick="guanbifaxin()"></div>
+				<div class="faxinTimeTwoBox" style="background: white">
+					<div class="faxinTimeConter">
+
+					</div>
+				</div>
+			</div>
 	</body>
-	<style>
-		
-	</style>
-<script src="js/jquery.min.js"></script>
+
 				<script src="js/ydui.citys.js"></script>
 				<script src="js/ydui.js"></script>
 	<script type="text/javascript">

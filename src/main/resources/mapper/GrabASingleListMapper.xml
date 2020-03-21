@@ -7,8 +7,6 @@
                 qd_often,qd_social,qd_plicy,qd_assets,qd_income,qd_units,qd_fund,qd_time,qd_sex from
                 qd_basicmanager
                         where  3>qd_gshop_status and TIMESTAMPDIFF(MINUTE,qd_fb_time, now())>=1 and
-            qd_sesame>=#{privatePersonalSubscriptionsModel.minSesame} and
-            #{privatePersonalSubscriptionsModel.maxSesame}>=qd_sesame and
             qd_age>=#{privatePersonalSubscriptionsModel.minAge} and
             #{privatePersonalSubscriptionsModel.maxAge}>=qd_age and
             qd_loanpay>=#{privatePersonalSubscriptionsModel.minLimit} and
@@ -67,7 +65,7 @@
                 and qd_social like "有社保" and qd_assets like "%有房%" and qd_assets like "%有车%" and qd_fund like "%有本地公积金%"
             </if>
             <if test="searchConditions.rank == 1">
-                ORDER BY   qd_loanpay desc
+                ORDER BY   qd_fb_time desc
             </if>
                 <if test="searchConditions.rank == 2">
                          ORDER BY   qd_loanpay desc
@@ -81,7 +79,7 @@
                 <if test="searchConditions.rank == 5">
                          ORDER BY  qd_sesame desc
                 </if>
-            LIMIT #{searchConditions.numberOfInitial},#{searchConditions.numberOfBranches}
+
         </select>
 
 
@@ -117,9 +115,7 @@
                 <if test="searchConditions.rank == 4">
                           ORDER BY qd_loanpay asc
                 </if>
-                <if test="searchConditions.rank == 5">
-                         ORDER BY  qd_sesame desc
-                </if>
+
 
 
         </select>

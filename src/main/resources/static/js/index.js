@@ -3,8 +3,8 @@
 var minSesame=550;//最小芝麻分
 var maxSesame=950;//最大芝麻分
 
-var minAge=22;//最小年龄
-var maxAge=45;//最大年龄
+var minAge=18;//最小年龄
+var maxAge=70;//最大年龄
 
 var minLimit=1000 ;//最小额度
 var maxLimit=50000 ;//最大额度
@@ -20,8 +20,7 @@ $('.subscriptionSubmit').on('click', function () {
     $.ajax({
         url: "/PersonalSubscriptions",
         type: "get",
-        data:{"minSesame":minSesame,"maxSesame":maxSesame,
-            "minAge":minAge,"maxAge":maxAge,
+        data:{"minAge":minAge,"maxAge":maxAge,
             "minLimit":minLimit,"maxLimit":maxLimit,
             "guarantee":guarantee,"creditCard":creditCard,
             "educationBackground":educationBackground,
@@ -39,32 +38,32 @@ $('.subscriptionSubmit').on('click', function () {
     })
 });
 //月供滑动
-$(".range_1").ionRangeSlider({
-    min: 550, //最小值 
-    max: 950, //最大值 
-    from: 0, //默认从哪个值开始选
-    to: 6000, //默认选到哪个值
-    type: 'double', //设置类型
-    step: 1,
-    prefix: "", //设置数值前缀
-    postfix: "分", //设置数值后缀
-    prettify: true,
-    hasGrid: true,
-    onChange: function (data) {//数据变化时触发
-        console.log(data)
-        moveSliderRange1(data.from, data.to);
-    },
-});
-var sliderRange2 = $(".range_1").data("ionRangeSlider");
-
-function moveSliderRange1(leftNum, rightNum) {
-   minSesame=leftNum;
-   maxSesame=rightNum;
-        $('.bxyc1').text(leftNum + '-' + rightNum + '分');
-        $('.bxyc1').attr("data-leftNum", leftNum);
-        $('.bxyc1').attr("data-rightNum", rightNum);
-  
-}
+// $(".range_1").ionRangeSlider({
+//     min: 550, //最小值
+//     max: 950, //最大值
+//     from: 0, //默认从哪个值开始选
+//     to: 6000, //默认选到哪个值
+//     type: 'double', //设置类型
+//     step: 1,
+//     prefix: "", //设置数值前缀
+//     postfix: "分", //设置数值后缀
+//     prettify: true,
+//     hasGrid: true,
+//     onChange: function (data) {//数据变化时触发
+//         console.log(data)
+//         moveSliderRange1(data.from, data.to);
+//     },
+// });
+// var sliderRange2 = $(".range_1").data("ionRangeSlider");
+//
+// function moveSliderRange1(leftNum, rightNum) {
+//    minSesame=leftNum;
+//    maxSesame=rightNum;
+//         $('.bxyc1').text(leftNum + '-' + rightNum + '分');
+//         $('.bxyc1').attr("data-leftNum", leftNum);
+//         $('.bxyc1').attr("data-rightNum", rightNum);
+//
+// }
 
 
 //月供滑动

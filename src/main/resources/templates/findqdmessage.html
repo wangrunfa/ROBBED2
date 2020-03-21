@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+    <link rel="icon" href="img/favicon.ico" mce_href="/favicon.ico" type="image/x-icon">
+<title>云借条-渠道信息查询</title>
+
+<link type="text/css" href="css/findqdmessage.css" rel="stylesheet" />
+    <script src="js/jquery.min.js"></script>
+</head>
+<body>
+
+<script src="js/anime.min.js"></script>
+
+<div class="page">
+    <div class="container">
+        <div class="left">
+            <div class="login"><img src="img/yjtlogo.png" style="width: 220px"></div>
+            <div class="eula">渠道数据信息查询！</div>
+        </div>
+        <div class="right">
+            <svg viewBox="0 0 320 300">
+        <defs>
+          <linearGradient
+                          inkscape:collect="always"
+                          id="linearGradient"
+                          x1="13"
+                          y1="193.49992"
+                          x2="307"
+                          y2="193.49992"
+                          gradientUnits="userSpaceOnUse">
+            <stop
+                  style="stop-color:#ff00ff;"
+                  offset="0"
+                  id="stop876" />
+            <stop
+                  style="stop-color:#ff0000;"
+                  offset="1"
+                  id="stop878" />
+          </linearGradient>
+        </defs>
+        <path d="m 40,120.00016 239.99984,-3.2e-4 c 0,0 24.99263,0.79932 25.00016,35.00016 0.008,34.20084 -25.00016,35 -25.00016,35 h -239.99984 c 0,-0.0205 -25,4.01348 -25,38.5 0,34.48652 25,38.5 25,38.5 h 215 c 0,0 20,-0.99604 20,-25 0,-24.00396 -20,-25 -20,-25 h -190 c 0,0 -20,1.71033 -20,25 0,24.00396 20,25 20,25 h 168.57143" />
+      </svg>
+            <div class="form">
+                <label for="email">渠道登录名</label>
+                <input type="email" id="email">
+                <label for="password">渠道密码</label>
+                <input type="password" id="password">
+                <input type="submit" id="submit" onclick="findqdmessagedataajax()" value="点击查询" style="background: rgba(0,0,0,0);">
+            </div>
+        </div>
+    </div>
+ <div class="finddatabox">
+	 <div class="finddataconteng">
+		 <h3>查询结果</h3>
+		 <div class="finddatatable">
+			<ul style="border-bottom: 1px solid #fff3f32b;">
+                <li>渠道名</li>
+				<li>渠道创建时间</li>
+				<li>渠道链接</li>
+				<li>渠道申请量</li>
+
+				</ul>
+				<ul class="resultdata">
+                    <li>渠道名</li>
+					<li>渠道创建时间</li>
+					<li>渠道链接</li>
+					<li>渠道申请量</li>
+					</ul>
+		 </div>
+	 </div>
+ </div>
+</div>
+
+<script>
+    var loginnames="";
+    var loginpasswords="";
+    function findqdmessagedataajax(fenyenumber) {
+
+        if (loginnames==$("#email").val()&&loginpasswords==$("#password").val()){
+            alert("请不要重复查询同一账号！")
+        }else{
+            if($("#email").val().length>=3){
+                if($("#password").val().length>=6){
+
+
+
+                    loginnames=$("#email").val();
+                    loginpasswords=$("#password").val();
+                    console.log("进入----");
+                    thmladd = "";
+                    $.ajax({
+                        url: "/findqdmessagedataajaxs",
+                        data: {
+                            "loginusername": $("#email").val(), "loginpassword": $("#password").val()},
+                        type: "post",
+                        dataType: "json",
+                        success: function (result) {
+                            var htmlli="";
+                            if (result.code==0){
+                                htmlli="<li>"+result.data.qdQdname+"</li><li>"+result.data.qdAddvartime+"</li>" +
+                                    "<li>"+result.data.qdQdurl+"</li><li>"+result.data.qdKlsql+"</li>";
+                                $(".resultdata").html(htmlli);
+                                $(".resultdata li").slideDown("slow");
+                            }
+                            if (result.code==1){
+                                htmlli="<h4>此账号 未查询到 渠道信息！</h4>"
+                                $(".resultdata").html(htmlli);
+                                $(".resultdata").slideDown("slow");
+                            }
+                        }
+                    })
+                }else{ alert("渠道密码不能小于 6位")}
+
+            }else{ alert("渠道登录名不能小于 3位")}
+        }
+    }
+
+
+
+    var current = null;
+document.querySelector('#email').addEventListener('focus', function(e) {
+  if (current) current.pause();
+  current = anime({
+    targets: 'path',
+    strokeDashoffset: {
+      value: 0,
+      duration: 700,
+      easing: 'easeOutQuart'
+    },
+    strokeDasharray: {
+      value: '240 1386',
+      duration: 700,
+      easing: 'easeOutQuart'
+    }
+  });
+});
+document.querySelector('#password').addEventListener('focus', function(e) {
+  if (current) current.pause();
+  current = anime({
+    targets: 'path',
+    strokeDashoffset: {
+      value: -336,
+      duration: 700,
+      easing: 'easeOutQuart'
+    },
+    strokeDasharray: {
+      value: '240 1386',
+      duration: 700,
+      easing: 'easeOutQuart'
+    }
+  });
+});
+document.querySelector('#submit').addEventListener('focus', function(e) {
+  if (current) current.pause();
+  current = anime({
+    targets: 'path',
+    strokeDashoffset: {
+      value: -730,
+      duration: 700,
+      easing: 'easeOutQuart'
+    },
+    strokeDasharray: {
+      value: '530 1386',
+      duration: 700,
+      easing: 'easeOutQuart'
+    }
+  });
+});</script>
+
+</body>
+</html>

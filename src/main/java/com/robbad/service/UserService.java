@@ -50,4 +50,10 @@ public interface UserService {
     Object findLgBalance(String lgPhone);
 
     Object findxsxls(String lgPhone);
+
+    Object rondstoffenlijstbeizhu(Integer particularsId, String lgPhone);
+
+    Object updatepowerbeizhu(Integer gmid, String beizhu, String lgPhone);
+
+    Object findqdmessagedataajaxs(String loginusername, String loginpassword);
 }

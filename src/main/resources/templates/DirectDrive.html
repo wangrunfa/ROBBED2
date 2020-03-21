@@ -2,12 +2,12 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
-    <link rel="icon" href="img/bitbug_favicon.ico" mce_href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="img/favicon.ico" mce_href="/favicon.ico" type="image/x-icon">
     <title>云借条-大数据信息平台</title>
 
     <link rel="stylesheet" href="css/login.css"/>
 
-    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <script src="js/jquery.min.js"></script>
     <!--时间css start-->
     <link href="css/bootstrap-datetimepicker.css" rel="stylesheet">
     <link href="css/font-awesome.min.css" rel="stylesheet">
@@ -64,7 +64,7 @@
                     </li>
                     <li class="fore3">
                         微信客服
-                        <div class="qrcode-box"><img src="/javaimg/ewm.png" alt="">
+                        <div class="qrcode-box"><img src="img/ewm.jpg" alt="">
                             <p>客服二维码</p>
                         </div>
                     </li>
@@ -82,7 +82,7 @@
             <!---->
         </div>
         <div class="aside-nav" style="z-index: 999999;">
-            <div class="avatar-box"><img src="http://api.jbd.melonmobile.cn/cdn/resource/usr_ico_default.png" alt="">
+            <div class="avatar-box"><img src="img/usr_ico_default.png" alt="">
                 <div class="username text-overflow" th:text="${lgUsername}"></div>
                 <div class="user-id text-overflow"><p th:text="'Tel：'+${lgPhone}"></p></div>
                 <div class="user-id text-overflow"><p th:text="'余额：'+${lgBalance}"></p></div>
@@ -185,8 +185,10 @@
                                     </ul>
                                 </div>
                             </li>
-                            <li class="fore3" id="refreshButton">刷新
-                                <!----></li>
+                            <li class="fore3 shuaxingannssss">
+                                <b onclick="shuaxingann()" class="shuaxingann">刷新</b>
+                                <!---->
+                            </li>
                         </ul>
                     </div>
 
@@ -238,12 +240,10 @@
                             $(function () {
                                 $('#startTime01').datetimepicker({locale: 'zh-cn', viewMode: 'days', format: 'HH:mm:ss'});
                                 $('#stopTime01').datetimepicker({locale: 'zh-cn', viewMode: 'days', format: 'HH:mm:ss'});
-                                $("#startTime01").on("dp.change",function (e) {
-                                    $('#stopTime01').data("DateTimePicker").minDate(e.date);
-                                });
-                                $("#stopTime01").on("dp.change",function (e) {
-                                    $('#startTime01').data("DateTimePicker").maxDate(e.date);
-                                });
+                                // $("#startTime01").on("dp.change",function (e) {
+                                //     $('#stopTime01').data("DateTimePicker").minDate(e.date);
+                                // });
+
                             });
                         </script>
 
@@ -578,10 +578,67 @@
             }
         })
 
-        $(".shuaxingann").click(function () {
+
+        function shuaxingann() {
             thmladd = "";
-            refresh(1);
-        })
+            var xsss = 0;
+            if (xsss == 0) {
+                xsss = 1
+                refresh(1);
+
+
+                jQuery.fn.delay = function (time, func) {
+                    return this.each(function () {
+                        setTimeout(func, time);
+                    });
+                };
+
+
+                jQuery.fn.countDown = function (settings, to) {
+                    settings = jQuery.extend({
+                        startFontSize: '14px',
+                        endFontSize: '15px',
+                        duration: 1000,
+                        startNumber: 10,
+                        endNumber: 0,
+                        callBack: function () {
+                        }
+                    }, settings);
+                    return this.each(function () {
+
+                        if (!to && to != settings.endNumber) {
+                            to = settings.startNumber;
+                        }
+
+                        //set the countdown to the starting number
+                        $(this).html(to).css('fontSize', settings.startFontSize);
+
+                        //loopage
+                        $(this).animate({
+                            'fontSize': settings.endFontSize
+                        }, settings.duration, '', function () {
+                            if (to > settings.endNumber + 1) {
+                                $(this).css('fontSize', settings.startFontSize).html(to - 1).countDown(settings, to - 1);
+                            } else {
+                                settings.callBack(this);
+                            }
+                        });
+
+                    });
+                }
+                $('.shuaxingannssss').countDown({
+                    startNumber: 10,
+                    callBack: function (me) {
+                        xsss = 0
+                        $(me).html("<b onclick=\"shuaxingann()\" class=\"shuaxingann\">刷新</b>")
+                    }
+                });
+            }
+            ;
+
+
+        }
+
         $(".chongzhiann").click(function () {
             number = 0;  // 开始加载条数
             orderColumn = 2; //  已读未读
@@ -703,22 +760,18 @@
                         } else {
                             liianxianniu = "<div class=\"buy\" style=\"background: #2f72ff\">已被联系</div>"
                         }
-                        var shortName = result.ArrayList[i].qdUsername.substring(0, 1);
 
-                        if (result.ArrayList[i].qdSex == '男') {
-                            shortName = shortName + '先生'
-                        } else if (result.ArrayList[i].qdSex == '女') {
-                            shortName = shortName + '女士'
-                        }
+
+
                         thmladd += "<div class=\"w100 user-list\">\n" +
                             "\t\t\t\t\t\t\t<!---->\n" +
                             "\t\t\t\t\t\t\t<div class=\"user-item\">\n" +
                             "\t\t\t\t\t\t\t\t<div class=\"d-relative pull-left user-avatar\"><a href=\"/DirectDriveParticularsParticularsRequest?particularsId=" + result.ArrayList[i].lgShopUid + "\" " +
-                            "\t\t\t\t\t\t\t\t\t class=\"full-cover-link\"></a> <img src=\"http://api.jbd.melonmobile.cn/cdn/resource/usr_ico_default.png\" alt=\"\"></div>\n" +
+                            "\t\t\t\t\t\t\t\t\t class=\"full-cover-link\"></a> <img src=\"img/usr_ico_default.png\" alt=\"\"></div>\n" +
                             "\t\t\t\t\t\t\t\t<div class=\"d-relative pull-left user-data user-data1\"\n" +
                             "\t\t\t\t\t\t\t\t\t class=\"full-cover-link\"></a>\n" +
                             "\t\t\t\t\t\t\t\t\t<div class=\"user-name-wrapper\">\n" +
-                            "\t\t\t\t\t\t\t\t\t\t<div class=\"pull-left username\">" + shortName + "</div>\n" +
+                            "\t\t\t\t\t\t\t\t\t\t<div class=\"pull-left username\">" + result.ArrayList[i].qdUsername + "</div>\n" +
                             "\t\t\t\t\t\t\t\t\t\t<div class=\"pull-left tag tag1\"><img src=\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAABQElEQVQ4T3XSv6uOYRgH8M+XzqB0LEdOYjiTwUAGOfIHSFInzJLFolhMRCHJYGGTgdVmQCIGWQxSymJmUUqZDpfut+fW6+l97/F6rs9z/7i+MVpVtYAbOI11vMalJF+mWzMDXsWVUf0n1pK87PX/YFVtxTPsG/8Qv7Ca5GP79g9W1VlswgkcnAFb6T0OJPk9gVW1E5/xBq9wew5s5VNJHnZ4B+fxB0dxE3vm4OdJDnfYdts1NF7HPTzF3hn4e5KlDtuzb8TdJOeG4y/iBfaP8HqShQ7bi23AcpIfvbGq2nE/jODXJNs7fIeVJMvTTVW1Dd9G8EmSYx1exC0cSvJ2asczuD+CJ5M87nAz2mC34PJwvFVcG2bbbQvHkSQ1HYDdQ2p2zBlDy2yL3eQNxpFbwgUcb3dGy+gnPMCjJG3Ok/UXLXtrD5W+ae4AAAAASUVORK5CYII=\"\n" +
                             "\t\t\t\t\t\t\t\t\t\t\t alt=\"\">" + result.ArrayList[i].qdSesame + "</div><div class=\"pull-left tag man\">" + result.ArrayList[i].qdAge + "</div>\n" +
                             "\t\t\t\t\t\t\t\t\t\t<div class=\"pull-left tag tag3\">" + result.ArrayList[i].qdProfessional + "</div>\n" +
@@ -815,6 +868,7 @@
             position: fixed;
             background: rgba(50, 50, 50, 0.5);
             z-index: 1000000;
+            top: 0;
             display: none;
         }
 
@@ -872,14 +926,14 @@
 
         .citybox {
             display: none;
-            position: relative;
+            position: fixed;
             left: 50%;
             margin-left: -405px;
             top: 200px;
             padding: 30px;
             z-index: 1000001;
             width: 700px;
-            height: 370px;
+            height: 430px;
 
             background: #FFF;
         }

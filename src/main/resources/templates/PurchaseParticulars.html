@@ -2,11 +2,11 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 	<head>
 		<meta charset="utf-8">
-		<link rel="icon" href="img/bitbug_favicon.ico" mce_href="/favicon.ico" type="image/x-icon">
+		<link rel="icon" href="img/favicon.ico" mce_href="/favicon.ico" type="image/x-icon">
 		<title>云借条-大数据信息平台</title>
 		<link rel="stylesheet" href="css/login.css" />
 		<script src="vendor/jquery/jquery.min.js"></script>
-		<script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+		<script src="js/jquery.min.js"></script>
 	</head>
 	<body>
 		<div id="app">
@@ -19,7 +19,7 @@
 							</li>
 							<li class="fore3">
 								微信客服
-								<div class="qrcode-box"><img src="/javaimg/ewm.png" alt="">
+								<div class="qrcode-box"><img src="img/ewm.jpg" alt="">
 									<p>客服二维码</p>
 								</div>
 							</li>
@@ -35,7 +35,7 @@
 					<!---->
 				</div>
 				<div class="aside-nav" style="z-index: 999999;">
-					<div class="avatar-box"><img src="http://api.jbd.melonmobile.cn/cdn/resource/usr_ico_default.png" alt="">
+					<div class="avatar-box"><img src="img/usr_ico_default.png" alt="">
 						<div class="username text-overflow" th:text="${lgUsername}"></div>
 						<div class="user-id text-overflow"><p th:text="'Tel：'+${lgPhone}"></p></div>
 						<div class="user-id text-overflow"><p th:text="'余额：'+${lgBalance}"></p></div>
@@ -64,7 +64,7 @@
 						<div class="w100 user-list user-detail-box">
 							<div class="user-item">
 								<div class="d-relative pull-left user-avatar"><a href="#/index/detail" class="full-cover-link router-link-active"></a>
-									<img src="http://api.jbd.melonmobile.cn/cdn/resource/usr_ico_default.png" alt=""></div>
+									<img src="img/usr_ico_default.png" alt=""></div>
 								<div class="d-relative pull-left user-data user-data1"><a href="#/index/detail" class="full-cover-link router-link-active"></a>
 									<div class="user-name-wrapper">
 										<div class="pull-left username">
@@ -108,13 +108,10 @@
 								</div>
 								<div class="pull-right buy-wrapper">
 									<div class="time" th:text="${particularsMessages.qdFbTime}">7个小时之前</div>
-									<div class="buy" STYLE="background: white;color: orange;"  th:onclick="'purchasess('+${particularsMessages.lgShopUid}+')'"><p th:text="'价格-'+${particularsMessages.qdGmPay}+'币'"></p></div>
-									<!---->
-									<!---->
-									<!---->
-									<!---->
-									<!---->
-									<!---->
+									<!--<div class="buy" STYLE="background: white;color: orange;"  th:onclick="'purchasess('+${particularsMessages.lgShopUid}+')'"><p th:text="'价格-'+${particularsMessages.qdGmPay}+'币'"></p></div>-->
+									<div class="buy" style="background: #ff8f14" onclick="dakaishurukuang()">
+										标记
+									</div>
 									<!---->
 								</div>
 							</div>
@@ -180,6 +177,123 @@
 		})
 	}
 </script>
+		<style>
+			.citymaxbox{
+				width: 100%;
+				height:2000px;
+				position: fixed;
+				background: rgba(50,50,50,0.5);
+				z-index: 1000000;
+				display: none;
+			}
+			.cityminboxtop{
+				height: auto;
+				margin-bottom: 30px;
+				font-size: 20px;
+				height: 220px;
+			}
+			.cityminboxtop li{
+				padding: 3px 10px;
+				margin: 10px 15px 10px 0;
+				border: 1px solid #e3dada;
+				list-style: none;
+				font-size: 18px;
+				float: left;
+			}
+			.cityminboxtop li:hover{
+				background: #ffb00a;
+				color: white;
+				cursor: pointer;
+			}
+			.cityqunding{
+				width: 120px;
+				height: 50px;
+				line-height: 50px;
+				text-align: center;
+				float: right;
+				background: orange;
+				color: #fff;
+				font-size: 16px;
+				font-weight: bold;
+			}
+			.cityquxiao{
+				width: 120px;
+				height: 50px;
+				line-height: 50px;
+				text-align: center;
+				float: right;
+				background: #999;
+				margin-right: 30px;
+				font-weight: bold;
+				color: #fff;
+				font-size: 16px;
 
+			}
+			.cityminboxbuttom{
+				height: 70px;
+			}
+			.citybox{
+				display: none;
+				position: relative;
+				left: 50%;
+				margin-left: -405px;
+				top: 200px;
+				padding: 30px;
+				z-index: 1000001;
+				width: 700px;
+				height: 370px;
+
+				background: #FFF;
+			}
+			.cityqunding:hover{
+				cursor: pointer;
+				background: #ffdb19;
+			}
+			.cityquxiao:hover{
+				cursor: pointer;
+				background: #7d7d7d;
+			}
+
+		</style>
+
+		<div class="citymaxbox">
+		</div>
+		<div class="citybox">
+			<h2 id="cityxhuanzhe">标记录：</h2>
+			<textarea placeholder="点击输入标记" style="width: 96%;  border: 1px solid #999;padding: 10px" class="cityminboxtop" id="cityminboxtops" th:text="${beizhueirong}">
+
+			</textarea>
+			<div class="cityminboxbuttom">
+				<div class="cityqunding"  th:onclick="'purchasess('+${particularsMessages.lgShopUid}+')'">确定</div>
+				<div class="cityquxiao" onclick="cityGuanbi()">关闭</div>
+			</div>
+		</div>
+		<script>
+			function dakaishurukuang(){
+				$(".citymaxbox").show()
+				$(".citybox").show()
+			}
+			function cityGuanbi(){
+				$(".citymaxbox").hide()
+				$(".citybox").hide()
+			}
+
+			function purchasess(id) {
+				$.ajax({
+					url: "/submitBeiZhu",
+					data:{"gmid":id,"beizhu":$("#cityminboxtops").val()},
+					type: "get",
+					dataType: "json",
+					success: function (result) {
+						$(".citymaxbox").hide()
+						$(".citybox").hide()
+
+					},
+					error: function (result) {
+						console.log("error----");
+					}
+				})
+			}
+		</script>
 	</body>
 </html>

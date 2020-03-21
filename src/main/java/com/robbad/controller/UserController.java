@@ -3,6 +3,7 @@ package com.robbad.controller;
 
 import com.robbad.model.*;
 import com.robbad.service.UserService;
+import com.robbad.util.MessagePostFromUtil;
 import com.robbad.util.RedisUtil;
 import com.robbad.util.WebTools;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,11 +11,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
@@ -239,6 +242,26 @@ public class UserController {
 
         return "DirectDriveParticulars";
     }
+
+    @RequestMapping("/DirectDriveApplyForTable")
+    public String DirectDriveApplyForTable(Model model,Integer particularsId, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        model.addAttribute("lgUsername", session.getAttribute("lgUsername"));
+        model.addAttribute("lgPhone", session.getAttribute("lgPhone"));
+        model.addAttribute("lgBalance", session.getAttribute("lgBalance"));
+        return "DirectDriveApplyForTable";
+    }
+
+    @RequestMapping("/DirectDriveNoDredge")
+    public String DirectDriveNoDredge(Model model,Integer particularsId, HttpServletRequest request) {
+
+        HttpSession session = request.getSession();
+        model.addAttribute("lgUsername", session.getAttribute("lgUsername"));
+        model.addAttribute("lgPhone", session.getAttribute("lgPhone"));
+        model.addAttribute("lgBalance", session.getAttribute("lgBalance"));
+        return "DirectDriveNoDredge";
+    }
+
     /**
      * 详情页面
      * @param model
@@ -253,6 +276,8 @@ public class UserController {
         model.addAttribute("lgPhone", session.getAttribute("lgPhone"));
         model.addAttribute("lgBalance", session.getAttribute("lgBalance"));
         model.addAttribute("particularsMessages",userService.particularsMessage(particularsId,(String)session.getAttribute("lgPhone")));
+        model.addAttribute("beizhueirong",userService.rondstoffenlijstbeizhu(particularsId,(String)session.getAttribute("lgPhone")));
+
         return "PurchaseParticulars";
     }
     /**
@@ -373,8 +398,7 @@ public class UserController {
     }
     /**
      * 已购信息数据
-     * @param gmid
-     * @param request
+
      * @return
      */
     @ResponseBody
@@ -423,7 +447,7 @@ public class UserController {
 
         System.out.println(getRemortIP(request));
         System.out.println(getIpAddr(request));
-                return userService.insertBasicmanager(basicmanager,getIpAddr(request));
+         return userService.insertBasicmanager(basicmanager,getIpAddr(request));
     }
     public String getRemortIP(HttpServletRequest request) {
         if (request.getHeader("x-forwarded-for") == null) {
@@ -512,6 +536,14 @@ public class UserController {
 
         return userService.updatepowerbiaoji(gmid,biaoji,(String)session.getAttribute("lgPhone"));
     }
+    @ResponseBody
+    @RequestMapping("/submitBeiZhu")
+    public Object submitBeiZhu(Integer gmid,String beizhu,HttpServletRequest request) {
+
+        HttpSession session = request.getSession();
+
+        return userService.updatepowerbeizhu(gmid,beizhu,(String)session.getAttribute("lgPhone"));
+    }
     /**
      *
      * @param
@@ -545,5 +577,18 @@ public class UserController {
         model.addAttribute("lgBalance", session.getAttribute("lgBalance"));
 
         return "DirectDriveDatajiluTable";
+    }
+
+    @ResponseBody
+    @RequestMapping("/findqdmessagedataajaxs")
+    public Object findqdmessagedataajaxs(String loginusername,String loginpassword) {
+
+        return userService.findqdmessagedataajaxs(loginusername,loginpassword);
+    }
+    @ResponseBody
+    @RequestMapping("/judgeUserMessage")
+    public Object judgeUserMessage(String name, String mobile, String idcard) throws IOException {
+
+        return MessagePostFromUtil.messagePostFrom(name,mobile,idcard);
     }
 }

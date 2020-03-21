@@ -1,0 +1,202 @@
+@charset "utf-8";
+::selection {
+  background: #2D2F36;
+}
+::-webkit-selection {
+  background: #2D2F36;
+}
+::-moz-selection {
+  background: #2D2F36;
+}
+body {
+  background: white;
+  font-family: 'Inter UI', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+.finddatabox{
+	padding-top: 100px;
+	width: 100%;
+	height: 300px;
+	
+	
+}
+
+.finddataconteng{
+	box-shadow: 0px 0px 40px 16px rgba(0,0,0,0.22);
+	border-radius: 6px;
+	width: 800px;
+	height: 200px;
+background: #474A59;
+margin: 0 auto;
+padding: 25px;
+}
+.finddataconteng>h3{
+	border-left: 5px solid #ffd17b;
+	text-indent: 15px;
+	color: white
+}
+.finddatatable{
+	width: 100%;
+	height: 150px;
+}
+.finddatatable>ul{
+	padding: 0;
+	margin: 5px 0;
+	width: 100%;
+	height: 38px;
+	margin: 5px 0;
+	float: left;
+}
+.finddatatable>ul>li{
+	list-style: none;
+	line-height: 28px;
+	height: 28px;
+	text-indent: 10px;
+	font-size: 14px;
+	color: wheat;
+	float: left;
+	overflow: hidden;
+}
+.resultdata>li{
+	color: #ffe86d  !important;
+    display: none;
+}
+.finddatatable>ul>li:nth-child(1){
+    width: 10%;
+}
+.finddatatable>ul>li:nth-child(2){
+	width: 22%;
+}
+.finddatatable>ul>li:nth-child(3){
+	width: 52%;
+}
+.finddatatable>ul>li:nth-child(4){
+	width: 14%;
+}
+.finddatatable>ul>h4{
+    color: #ffe86d;
+    text-align: center;
+}
+.page {
+  background: #25b7ff96;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  position: absolute;
+  place-content: center;
+  
+  width: 100%;
+}
+@media (max-width: 767px) {
+  .page {
+    height: auto;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+  }
+}
+.container {
+  display: flex;
+  height: 320px;
+  margin: 0 auto;
+  width: 640px;
+}
+@media (max-width: 767px) {
+  .container {
+    flex-direction: column;
+    height: 630px;
+    width: 320px;
+  }
+}
+.left {
+  background: white;
+  height: calc(100% - 40px);
+  top: 20px;
+  position: relative;
+  width: 50%;
+	  border-radius: 6px 0 0 6px;
+}
+@media (max-width: 767px) {
+  .left {
+    height: 100%;
+    left: 20px;
+    width: calc(100% - 40px);
+    max-height: 270px;
+  }
+}
+.login {
+  font-size: 50px;
+  font-weight: 900;
+  margin: 50px 40px 40px;
+}
+.eula {
+  color: #898989;
+  font-size: 17px;
+  line-height: 1.5;
+  margin: 40px;
+}
+.right {
+  background: #474A59;
+  	border-radius: 6px;
+  box-shadow: 0px 0px 40px 16px rgba(0,0,0,0.22);
+  color: #F1F1F2;
+  position: relative;
+  width: 50%;
+}
+@media (max-width: 767px) {
+  .right {
+    flex-shrink: 0;
+    height: 100%;
+    width: 100%;
+    max-height: 350px;
+  }
+}
+svg {
+  position: absolute;
+  width: 320px;
+}
+path {
+  fill: none;
+  stroke: url(#linearGradient);;
+  stroke-width: 4;
+  stroke-dasharray: 240 1386;
+}
+.form {
+  margin: 40px;
+  position: absolute;
+}
+label {
+  color:  #c2c2c5;
+  display: block;
+  font-size: 14px;
+  height: 16px;
+  margin-top: 20px;
+  margin-bottom: 5px;
+}
+input {
+  background: #e3c9c926;
+  border: 0;
+  color: #f2f2f2;
+  font-size: 20px;
+  height: 30px;
+  line-height: 30px;
+  outline: none !important;
+  width: 100%;
+}
+input::-moz-focus-inner { 
+  border: 0; 
+}
+#submit {
+  color: #a4a4b0;
+  margin-top: 40px;
+  transition: color 300ms;
+}
+#submit:hover{
+ cursor: pointer;
+}
+#submit:focus {
+  color: #f2f2f2;
+}
+#submit:active {
+  color: #d0d0d2;
+}

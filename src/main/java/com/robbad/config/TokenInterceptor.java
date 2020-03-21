@@ -23,7 +23,7 @@ public class TokenInterceptor extends HandlerInterceptorAdapter {
         try {
             if ((boolean)session.getAttribute("userStatus")) {
                 System.out.println(request.getRequestURI() + " : 通过检查");
-//                session.setAttribute("lgBalance",userService.findLgBalance((String)session.getAttribute("lgPhone")));
+                session.setAttribute("lgBalance",userService.findLgBalance((String)session.getAttribute("lgPhone")));
                 return true;
             } else {
                 System.out.println(request.getRequestURI() + " : 未能通过检查");
