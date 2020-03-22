@@ -180,12 +180,14 @@ $(function () {
                                                         alert("年龄条件：18-70 之间")
                                                     }
                                                 } else {
-                                                    alert("错误！请检查-姓名,手机号,身份证-是否都为 您 所有")
+                                                    // alert("错误！请检查-姓名,手机号,身份证-是否都为 您 所有")
+                                                    alert("错误！请检查您的实名信息是否填写正确！")
                                                 }
 
 
-                                            } else if (result.code == 1) {
-                                                alert(result.message)
+                                            } else {
+                                                // alert(resultJson.message)
+                                                alert("错误！请检查您的实名信息是否填写正确！")
                                             }
                                             $(".jiashiann").hide()
                                         },

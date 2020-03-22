@@ -6,6 +6,7 @@ import com.robbad.service.UserService;
 import com.robbad.util.MessagePostFromUtil;
 import com.robbad.util.RedisUtil;
 import com.robbad.util.WebTools;
+import org.apache.catalina.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -589,6 +590,22 @@ public class UserController {
     @RequestMapping("/judgeUserMessage")
     public Object judgeUserMessage(String name, String mobile, String idcard) throws IOException {
 
+        System.out.println((int)Math.ceil((double)1*(double)20/100)+"---------------");
+
         return MessagePostFromUtil.messagePostFrom(name,mobile,idcard);
+    }
+    @ResponseBody
+    @RequestMapping("/findBiaojiztc")
+    public String findBiaojiztc(HttpServletRequest request,Integer bzid) throws IOException {
+        HttpSession session=request.getSession();
+        return (String) userService.rondstoffenlijstbiaoji(bzid,(String)session.getAttribute("lgPhone"));
+
+    }
+
+    @ResponseBody
+    @RequestMapping("/findBiaojigm")
+    public String findBiaojigm(HttpServletRequest request,Integer bzid) throws IOException {
+        HttpSession session=request.getSession();
+        return (String) userService.rondstoffenlijstbeizhu(bzid,(String)session.getAttribute("lgPhone"));
     }
 }

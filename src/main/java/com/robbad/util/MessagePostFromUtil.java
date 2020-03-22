@@ -12,7 +12,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 public class MessagePostFromUtil {
-    private static String  privateAppCode="5a2331d207c54d7bba52f2b27a3d6a7b";
+    private static String  privateAppCode="304e05a307924cb2aa933fedf58379b1";
     public static Object messagePostFrom(String name, String mobile, String idcard) throws IOException {
         String url = "https://mobile3elements.shumaidata.com/mobile/verify_real_name";
         String appCode = privateAppCode;

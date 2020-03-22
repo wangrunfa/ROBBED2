@@ -44,7 +44,6 @@ public class WxWebMvcConfig implements WebMvcConfigurer {
        .addPathPatterns("/clickContact")
        .addPathPatterns("/purchaseInformation")
        .addPathPatterns("/purchase")
-       .addPathPatterns("/DirectDrive")
        .addPathPatterns("/grondstoffenlijst")
        .addPathPatterns("/PurchaseParticularsParticularsRequest")
        .addPathPatterns("/DirectDriveParticularsParticularsRequest")
@@ -63,6 +62,8 @@ public class WxWebMvcConfig implements WebMvcConfigurer {
        .addPathPatterns("/DirectDriveDatajiluTable")
        .addPathPatterns("/chongzhiannsss")
        .addPathPatterns("/ToBuyCurrency")
+       .addPathPatterns("/findBiaojiztc")
+       .addPathPatterns("/findBiaojigm")
        .excludePathPatterns("/login");
     }
 

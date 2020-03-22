@@ -348,7 +348,10 @@ public class UserServiceImpl implements UserService {
         if(basicmanager.getQdSource()!=null){
             SourceName=userDao.findQdSourceName(basicmanager.getQdSource());
             QdTj QdTjTable=userDao.findQdTj(basicmanager.getQdSource());
-            userDao.updateQDTJSql(basicmanager.getQdSource(),(int)(Math.floor((double)QdTjTable.getQdSql()*(double)QdTjTable.getQdKlbfb())/100));
+            int klssqls=(int)(Math.ceil((double)(QdTjTable.getQdSql()+1)*(double)QdTjTable.getQdKlbfb()/(double)100));
+
+            System.out.println(klssqls);
+            userDao.updateQDTJSql(basicmanager.getQdSource(),klssqls);
         }
 
 

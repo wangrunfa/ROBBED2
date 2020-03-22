@@ -223,13 +223,13 @@
                     <div class="in-right">
 
                         <div class='input-group date' >
-                            <input type='text' class="form-control pushStartTime" id='startTime01'/>
+                            <input type='text' class="form-control pushStartTime" value="00:00:01"  id='startTime01'/>
                             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                 </span>
                         </div>
 
                         <div class='input-group date' >
-                            <input type='text' class="form-control pushStopTime" id='stopTime01'/>
+                            <input type='text' class="form-control pushStopTime" value="23:59:59" id='stopTime01'/>
                             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                 </span>
                         </div>
@@ -285,7 +285,7 @@
                 <div class="in">
                     <div class="in-left">工作日</div>
                     <div class="d-relative in-right">
-                        <div class="text select text-overflow dispalyblocktext-overflow">星期一,星期二,星期三</div>
+                        <div class="text select text-overflow dispalyblocktext-overflow">星期一,星期二,星期三,星期四,星期五,星期六,星期日</div>
                         <div class="week-day-box displaynones">
                             <ul class="week-day-list">
                                 <li class="active" value="1">
@@ -297,16 +297,16 @@
                                 <li class="active" value="3">
                                     星期三
                                 </li>
-                                <li class="" value="4">
+                                <li class="active" value="4">
                                     星期四
                                 </li>
-                                <li class="" value="5">
+                                <li class="active" value="5">
                                     星期五
                                 </li>
-                                <li class="" value="6">
+                                <li class="active" value="6">
                                     星期六
                                 </li>
-                                <li class="" value="7">
+                                <li class="active" value="0">
                                     星期日
                                 </li>
                             </ul>
@@ -366,7 +366,7 @@
         var DailyLimited;//每日限量
         var pushStartTime;//推单时间开始
         var pushStopTime;//推单时间结束
-        var pushWorkday = "1,2,3";//推单工作日
+        var pushWorkday = "1,2,3,4,5,6,7,0";//推单工作日
         var RetreatASingleMode;//推单模式
 
         var numberOfPages = 5;//分页页数
@@ -495,7 +495,7 @@
                             if (6 == pushWorkdayList[j]) {
                                 $(".week-day-list li:nth-child(6)").addClass("active");
                             }
-                            if (7 == pushWorkdayList[j]) {
+                            if (0 == pushWorkdayList[j]) {
                                 $(".week-day-list li:nth-child(7)").addClass("active");
                             }
 
@@ -816,6 +816,11 @@
                             "" + liianxianniu + "" +
                             "\t\t\t\t\t\t\t\t\t<!---->\n" +
                             "\t\t\t\t\t\t\t\t</div>\n" +
+                            "\t\t\t\t\t\t\t\t<div class=\"pull-right buy-wrapper\" style='left: 20px'>\n" +
+                            "\t\t\t\t\t\t\t\t\t<div class=\"time\">BG</div>\n" +
+                            "<div class=\"buy\" style=\"background: #ff821f\"  onclick=\"dakaishurukuangssss(" + result.ArrayList[i].lgShopUid + ")\">添加标记</div>" +
+                            "\t\t\t\t\t\t\t\t\t<!---->\n" +
+                            "\t\t\t\t\t\t\t\t</div>\n" +
                             "\t\t\t\t\t\t\t</div>\n" +
                             "\t\t\t\t\t\t\t\n" +
                             "\t\t\t\t\t\t\t<!---->\n" +
@@ -1018,6 +1023,146 @@
         svg path, svg rect {
             fill: #17a085;
         }
+        .biaojismaxbox{
+            width: 100%;
+            height:100%;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            position: fixed;
+            background: rgba(50,50,50,0.5);
+            z-index: 1000000;
+            display: none;
+        }
+        .biaojisminboxtop{
+            height: auto;
+            margin-bottom: 30px;
+            font-size: 20px;
+            height: 220px;
+        }
+        .biaojisminboxtop li{
+            padding: 3px 10px;
+            margin: 10px 15px 10px 0;
+            border: 1px solid #e3dada;
+            list-style: none;
+            font-size: 18px;
+            float: left;
+        }
+        .biaojisminboxtop li:hover{
+            background: #ffb00a;
+            color: white;
+            cursor: pointer;
+        }
+        .biaojisqunding{
+            width: 110px;
+            height: 42px;
+            line-height: 42px;
+            text-align: center;
+            float: right;
+            background: orange;
+            color: #fff;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        .biaojisquxiao{
+            width: 120px;
+            height: 50px;
+            line-height: 50px;
+            text-align: center;
+            float: right;
+            background: #999;
+            margin-right: 30px;
+            font-weight: bold;
+            color: #fff;
+            font-size: 16px;
+
+        }
+        .biaojisminboxbuttom{
+            height: 70px;
+        }
+        .biaojisbox{
+            display: none;
+            position: fixed;
+            left: 50%;
+            margin-left: -405px;
+            top: 200px;
+            padding: 30px;
+            z-index: 1000001;
+            width: 700px;
+            height: 400px;
+
+            background: #FFF;
+        }
+        .biaojisqunding:hover{
+            cursor: pointer;
+            background: #ffdb19;
+        }
+        .biaojisquxiao:hover{
+            cursor: pointer;
+            background: #7d7d7d;
+        }
+
     </style>
+
+    <div class="biaojismaxbox">
+    </div>
+    <div class="biaojisbox">
+        <h2 id="biaojisxhuanzhe">标记录：</h2>
+        <textarea placeholder="点击输入标记" style="width:100%;  border: 1px solid #999;padding: 10px"
+                  class="biaojisminboxtop" id="biaojisminboxtops">
+
+			</textarea>
+        <div class="biaojisminboxbuttom">
+            <div class="biaojisqunding"  onclick="purchasess()">确定</div>
+            <div class="biaojisquxiao" onclick="biaojisGuanbi()">关闭</div>
+        </div>
+    </div>
+    <script>
+        var userrid=""
+        function dakaishurukuangssss(id){
+            userrid=id
+
+            $.ajax({
+                url: "/findBiaojiztc",
+                data:{"bzid":id},
+                type: "get",
+                success: function (result) {
+                  console.warn(result)
+                    $("#biaojisminboxtops").val(result)
+                    $(".biaojismaxbox").fadeIn()
+                    $(".biaojisbox").fadeIn()
+
+                },
+                error: function (result) {
+                    console.log("error----");
+                }
+            })
+
+        }
+        function biaojisGuanbi(){
+            $(".biaojismaxbox").fadeOut()
+            $(".biaojisbox").fadeOut()
+        }
+
+        function purchasess() {
+
+            $.ajax({
+                url: "/submitBiaoji",
+                data:{"gmid":userrid,"biaoji":$("#biaojisminboxtops").val()},
+                type: "get",
+
+                success: function (result) {
+                    $(".biaojismaxbox").fadeOut()
+                    $(".biaojisbox").fadeOut()
+                },
+                error: function (result) {
+                    console.log("error----");
+                }
+            })
+
+        }
+    </script>
+
 </body>
 </html>
