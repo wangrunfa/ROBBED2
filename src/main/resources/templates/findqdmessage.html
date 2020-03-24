@@ -1,172 +1,310 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="utf-8">
+    <meta charset="utf-8">
     <link rel="icon" href="img/favicon.ico" mce_href="/favicon.ico" type="image/x-icon">
-<title>云借条-渠道信息查询</title>
+    <title>好多鱼-渠道信息查询</title>
 
-<link type="text/css" href="css/findqdmessage.css" rel="stylesheet" />
+    <link type="text/css" href="css/findqdmessage.css" rel="stylesheet"/>
     <script src="js/jquery.min.js"></script>
+    <!--时间css start-->
+    <link href="css/bootstrap-datetimepicker.css" rel="stylesheet">
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" media="screen" href="css/bootstrap.min.css"/>
+    <!--时间css end-->
+    <link href="css/animate.min.css" rel="stylesheet">
+    <link href="css/prettify-1.0.css" rel="stylesheet">
+    <link href="css/base.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/default.css">
+    <script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <!--时间js start-->
+    <script src="js/moment-with-locales.js"></script>
+    <script src="js/bootstrap-datetimepicker.js"></script>
+    <link rel="stylesheet" href="css/myPagination.css"/>
+    <script src="js/myPagination.js"></script>
 </head>
 <body>
 
 <script src="js/anime.min.js"></script>
 
 <div class="page">
-    <div class="container">
-        <div class="left">
-            <div class="login"><img src="img/yjtlogo.png" style="width: 220px"></div>
+    <div class="qdcontainer">
+        <div class="qdleft">
+            <div class="login"><img src="img/xhdylogo.png" style="width: 150px"></div>
             <div class="eula">渠道数据信息查询！</div>
         </div>
-        <div class="right">
+        <div class="qdright">
             <svg viewBox="0 0 320 300">
-        <defs>
-          <linearGradient
-                          inkscape:collect="always"
-                          id="linearGradient"
-                          x1="13"
-                          y1="193.49992"
-                          x2="307"
-                          y2="193.49992"
-                          gradientUnits="userSpaceOnUse">
-            <stop
-                  style="stop-color:#ff00ff;"
-                  offset="0"
-                  id="stop876" />
-            <stop
-                  style="stop-color:#ff0000;"
-                  offset="1"
-                  id="stop878" />
-          </linearGradient>
-        </defs>
-        <path d="m 40,120.00016 239.99984,-3.2e-4 c 0,0 24.99263,0.79932 25.00016,35.00016 0.008,34.20084 -25.00016,35 -25.00016,35 h -239.99984 c 0,-0.0205 -25,4.01348 -25,38.5 0,34.48652 25,38.5 25,38.5 h 215 c 0,0 20,-0.99604 20,-25 0,-24.00396 -20,-25 -20,-25 h -190 c 0,0 -20,1.71033 -20,25 0,24.00396 20,25 20,25 h 168.57143" />
-      </svg>
+                <defs>
+                    <linearGradient
+                            inkscape:collect="always"
+                            id="linearGradient"
+                            x1="13"
+                            y1="193.49992"
+                            x2="307"
+                            y2="193.49992"
+                            gradientUnits="userSpaceOnUse">
+                        <stop
+                                style="stop-color:#ff00ff;"
+                                offset="0"
+                                id="stop876"/>
+                        <stop
+                                style="stop-color:#ff0000;"
+                                offset="1"
+                                id="stop878"/>
+                    </linearGradient>
+                </defs>
+                <path d="m 40,120.00016 239.99984,-3.2e-4 c 0,0 24.99263,0.79932 25.00016,35.00016 0.008,34.20084 -25.00016,35 -25.00016,35 h -239.99984 c 0,-0.0205 -25,4.01348 -25,38.5 0,34.48652 25,38.5 25,38.5 h 215 c 0,0 20,-0.99604 20,-25 0,-24.00396 -20,-25 -20,-25 h -190 c 0,0 -20,1.71033 -20,25 0,24.00396 20,25 20,25 h 168.57143"/>
+            </svg>
             <div class="form">
                 <label for="email">渠道登录名</label>
                 <input type="email" id="email">
                 <label for="password">渠道密码</label>
                 <input type="password" id="password">
-                <input type="submit" id="submit" onclick="findqdmessagedataajax()" value="点击查询" style="background: rgba(0,0,0,0);">
+                <input type="submit" id="submit" onclick="refresh(1)" value="点击查询" style="background: rgba(0,0,0,0);">
             </div>
         </div>
     </div>
- <div class="finddatabox">
-	 <div class="finddataconteng">
-		 <h3>查询结果</h3>
-		 <div class="finddatatable">
-			<ul style="border-bottom: 1px solid #fff3f32b;">
-                <li>渠道名</li>
-				<li>渠道创建时间</li>
-				<li>渠道链接</li>
-				<li>渠道申请量</li>
-
-				</ul>
-				<ul class="resultdata">
+    <div class="finddatabox">
+        <div class="finddataconteng">
+            <h3>查询结果</h3>
+            <div class="finddatatable">
+                <ul style="border-bottom: 1px solid #fff3f32b;">
                     <li>渠道名</li>
-					<li>渠道创建时间</li>
-					<li>渠道链接</li>
-					<li>渠道申请量</li>
-					</ul>
-		 </div>
-	 </div>
- </div>
+                    <li>渠道创建时间</li>
+                    <li>渠道链接</li>
+                    <li>渠道数量</li>
+
+                </ul>
+                <ul class="resultdata">
+
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="finddataboxtwo">
+        <div class="finddatacontengtwo">
+            <h3>查询结果</h3>
+            <div class="finddatatabletwo">
+                <div class="finddatatabletwoTimeSelect">
+                    <div class="findtimetitles">开始时间 -</div>
+                    <div class='input-group date timeselectbox'>
+                        <input type='text' class="form-control" value="" id='datetimepicker14'/>
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+                </span>
+                    </div>
+                    <div class="findtimetitles">结束时间 -</div>
+                    <div class='input-group date timeselectbox'>
+                        <input type='text' class="form-control" value="" id='datetimepicker15'/>
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+                </span>
+                    </div>
+
+                    <script type="text/javascript">
+                        $(function () {
+                            $('#datetimepicker14').datetimepicker({
+                                locale: 'zh-cn',
+                                viewMode: 'days',
+                                format: 'YYYY-MM-DD HH:mm:ss'
+                            });
+                            $('#datetimepicker15').datetimepicker({
+                                locale: 'zh-cn',
+                                viewMode: 'days',
+                                format: 'YYYY-MM-DD HH:mm:ss'
+                            });
+                            $("#datetimepicker14").on("dp.change", function (e) {
+                                $('#datetimepicker15').data("DateTimePicker").minDate(e.date);
+                            });
+                            $("#datetimepicker15").on("dp.change", function (e) {
+                                $('#datetimepicker14').data("DateTimePicker").maxDate(e.date);
+                            });
+                        });
+                    </script>
+                    <div class="timefindmessages" onclick="refresh(1)">时间查询</div>
+                </div>
+                <ul style="border-bottom: 1px solid #fff3f32b;">
+                    <li></li>
+
+                    <li>渠道时间</li>
+
+                    <li>渠道数量</li>
+
+                </ul>
+
+                <div class="finddatatabletwodata">
+                    <ul class="resulttwodata">
+                        <li>渠道名</li>
+
+                        <li>渠道申请量</li>
+                    </ul>
+                </div>
+                <div class="pagings pagination" id="pagination" >
+
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script>
-    var loginnames="";
-    var loginpasswords="";
-    function findqdmessagedataajax(fenyenumber) {
+    window.onload = function () {
+        $("#datetimepicker14").val("");
+         $("#datetimepicker15").val("");
+    };
+    var loginnames = "";
+    var loginpasswords = "";
+    var numberOfPages = 1;//分页页数
+    var numberOfBranches = 12;//分页条数
+    var numberOfInitial = 1;//分页开始
+    var numberOfInitialasdsadasd;
 
-        if (loginnames==$("#email").val()&&loginpasswords==$("#password").val()){
-            alert("请不要重复查询同一账号！")
-        }else{
-            if($("#email").val().length>=3){
-                if($("#password").val().length>=6){
-
-
-
-                    loginnames=$("#email").val();
-                    loginpasswords=$("#password").val();
+    function refresh(fenyenumber) {
+        // alert("请不要重复查询同一账号！")
+        if ($("#email").val().length >= 3) {
+            if ($("#password").val().length >= 6) {
+            //     if (loginnames == $("#email").val() && loginpasswords == $("#password").val()) {
+            //         alert("请不要重复查询同一账号！")
+            //     } else {}
+                    loginnames = $("#email").val();
+                    loginpasswords = $("#password").val();
                     console.log("进入----");
                     thmladd = "";
                     $.ajax({
                         url: "/findqdmessagedataajaxs",
                         data: {
-                            "loginusername": $("#email").val(), "loginpassword": $("#password").val()},
+                            "loginusername": $("#email").val(),
+                            "loginpassword": $("#password").val(),
+                            "startTime": $("#datetimepicker14").val(),
+                            "stopTime": $("#datetimepicker15").val(),
+                            "numberOfInitial": numberOfBranches * (fenyenumber - 1),
+                            "numberOfBranches": numberOfBranches
+                        },
                         type: "post",
                         dataType: "json",
                         success: function (result) {
-                            var htmlli="";
-                            if (result.code==0){
-                                htmlli="<li>"+result.data.qdQdname+"</li><li>"+result.data.qdAddvartime+"</li>" +
-                                    "<li>"+result.data.qdQdurl+"</li><li>"+result.data.qdKlsql+"</li>";
+                            numberOfInitialasdsadasd = result.data.zongshus;
+                            numberOfPages = Math.ceil(result.data.zongshus / numberOfBranches)
+
+                            console.log(result);
+                            var htmlli = "";
+                            var htmllitimefind = "";
+                            if (result.code == 0) {
+                                htmlli = "<li>" + result.data.qdTj.qdQdname + "</li><li>" + result.data.qdTj.qdAddvartime + "</li>" +
+                                    "<li>" + result.data.qdTj.qdQdurl + "</li><li>" + result.data.qdTj.qdKlsql + "</li>";
                                 $(".resultdata").html(htmlli);
                                 $(".resultdata li").slideDown("slow");
+                                var abcds=0;
+                               for (i=0;i<result.data.EverydayNumberList.length;i++){
+
+                                   if (abcds==0) {
+                                       htmllitimefind += "" +
+                                           "<ul class=\"resulttwodata\">" +
+                                           "<li>" + (i + 1) + "</li>" +
+                                           "<li>" + result.data.EverydayNumberList[i].lgAddtime + "</li>" +
+                                           "<li>" + result.data.EverydayNumberList[i].number + "</li>" +
+                                           " </ul>"
+                                       abcds=1
+                                   }else {
+                                       abcds=0
+                                       htmllitimefind += "" +
+                                           "<ul class=\"resulttwodata shengsehyanshe\">" +
+                                           "<li>" + (i + 1) + "</li>" +
+                                           "<li>" + result.data.EverydayNumberList[i].lgAddtime + "</li>" +
+                                           "<li>" + result.data.EverydayNumberList[i].number + "</li>" +
+                                           " </ul>"
+                                   }
+                               }
+                                $(".finddatatabletwodata").html(htmllitimefind);
+                                $(".resulttwodata li").slideDown("slow");
+                                new myPagination({
+                                    id: 'pagination',
+                                    curPage: fenyenumber, //初始页码
+                                    pageTotal: numberOfPages, //总页数
+                                    pageAmount: numberOfBranches,  //每页多少条
+                                    dataTotal: numberOfInitialasdsadasd, //总共多少条数据
+                                    pageSize: 3, //可选,分页个数
+                                    showPageTotalFlag: true, //是否显示数据统计
+                                    showSkipInputFlag: true, //是否支持跳转
+                                    getPage: function (page) {
+                                        //获取当前页数
+                                        console.log(page);
+                                    }
+                                })
                             }
-                            if (result.code==1){
-                                htmlli="<h4>此账号 未查询到 渠道信息！</h4>"
+                            if (result.code == 1) {
+                                htmlli = "<h4>此账号 未查询到 渠道信息！</h4>"
                                 $(".resultdata").html(htmlli);
                                 $(".resultdata").slideDown("slow");
                             }
                         }
+
                     })
-                }else{ alert("渠道密码不能小于 6位")}
 
-            }else{ alert("渠道登录名不能小于 3位")}
+            } else {
+                alert("渠道密码不能小于 6位")
+            }
+
+        } else {
+            alert("渠道登录名不能小于 3位")
         }
-    }
 
+    }
 
 
     var current = null;
-document.querySelector('#email').addEventListener('focus', function(e) {
-  if (current) current.pause();
-  current = anime({
-    targets: 'path',
-    strokeDashoffset: {
-      value: 0,
-      duration: 700,
-      easing: 'easeOutQuart'
-    },
-    strokeDasharray: {
-      value: '240 1386',
-      duration: 700,
-      easing: 'easeOutQuart'
-    }
-  });
-});
-document.querySelector('#password').addEventListener('focus', function(e) {
-  if (current) current.pause();
-  current = anime({
-    targets: 'path',
-    strokeDashoffset: {
-      value: -336,
-      duration: 700,
-      easing: 'easeOutQuart'
-    },
-    strokeDasharray: {
-      value: '240 1386',
-      duration: 700,
-      easing: 'easeOutQuart'
-    }
-  });
-});
-document.querySelector('#submit').addEventListener('focus', function(e) {
-  if (current) current.pause();
-  current = anime({
-    targets: 'path',
-    strokeDashoffset: {
-      value: -730,
-      duration: 700,
-      easing: 'easeOutQuart'
-    },
-    strokeDasharray: {
-      value: '530 1386',
-      duration: 700,
-      easing: 'easeOutQuart'
-    }
-  });
-});</script>
+    document.querySelector('#email').addEventListener('focus', function (e) {
+        if (current) current.pause();
+        current = anime({
+            targets: 'path',
+            strokeDashoffset: {
+                value: 0,
+                duration: 700,
+                easing: 'easeOutQuart'
+            },
+            strokeDasharray: {
+                value: '240 1386',
+                duration: 700,
+                easing: 'easeOutQuart'
+            }
+        });
+    });
+    document.querySelector('#password').addEventListener('focus', function (e) {
+        if (current) current.pause();
+        current = anime({
+            targets: 'path',
+            strokeDashoffset: {
+                value: -336,
+                duration: 700,
+                easing: 'easeOutQuart'
+            },
+            strokeDasharray: {
+                value: '240 1386',
+                duration: 700,
+                easing: 'easeOutQuart'
+            }
+        });
+    });
+    document.querySelector('#submit').addEventListener('focus', function (e) {
+        if (current) current.pause();
+        current = anime({
+            targets: 'path',
+            strokeDashoffset: {
+                value: -730,
+                duration: 700,
+                easing: 'easeOutQuart'
+            },
+            strokeDasharray: {
+                value: '530 1386',
+                duration: 700,
+                easing: 'easeOutQuart'
+            }
+        });
+    });
+
+
+</script>
 
 </body>
 </html>

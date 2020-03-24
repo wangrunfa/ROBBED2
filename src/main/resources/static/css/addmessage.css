@@ -2,10 +2,18 @@ body{
 	background: #ebede2;
 }
 .theFinalStep{
+	z-index: 3200;
+	background: white;
+}
+
+.theFinalStepInput{
+	display: none;
+}
+.supplementary{
 	z-index: 3100;
 	background: white;
 }
-.theFinalStepInput{
+.supplementaryInput{
 	display: none;
 }
 .BorrowingInput{

@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
+import java.util.Map;
 
 public interface UserDao {
 
@@ -160,9 +161,7 @@ Basicmanager particularsMessage(@Param("particularsId")Integer particularsId);
     @Select("select * from qd_basicmanager where qd_submit_ip=#{submitIP} and qd_phone=#{basicmanager.qdPhone}")
     Basicmanager findQdBasicmanagerOneData(@Param("basicmanager")Basicmanager basicmanager,@Param("submitIP") String submitIP);
 
-
-    @Insert("INSERT INTO qd_lg_power(lg_phone,lg_shop_uid,lg_ztc_id,lg_gm_pays,lg_addtime) values(#{lgPhone},#{particularsId},#{particularsId},#{gmpays},NOW());")
-    int ztcpowerAdd(@Param("particularsId")Integer particularsId,@Param("lgPhone") String lgPhone,@Param("gmpays") Integer gmpays);
+    int ztcpowerAdd(@Param("particularsId")Integer particularsId,@Param("lgPhone") String lgPhone,@Param("gmpays") Integer gmpays,@Param("qdid") Integer qdid);
 
     @Update("update qd_xsxl set daily_limited=daily_limited-1,submit_time=now() where xsxl_id=#{xsxlId}")
     int ztcUpdateQdXsxls(@Param("xsxlId")Integer xsxlId);
@@ -194,6 +193,21 @@ Basicmanager particularsMessage(@Param("particularsId")Integer particularsId);
 
     @Update("update qd_lg_power set lg_gm_beizhu=#{beizhu} where lg_phone=#{lgPhone} and lg_shop_uid=#{gmid}")
     Integer updatepowerbeizhuimpl(@Param("gmid")Integer gmid,@Param("beizhu") String beizhu, @Param("lgPhone")String lgPhone);
-    @Select("select qd_qdname,qd_qdurl,qd_addvartime,qd_klsql from qd_qdtj where login_name=#{loginusername} and login_password=#{loginpassword} LIMIT 1")
-    QdTj findqdmessagedataajaxsImpl(@Param("loginusername")String loginusername,@Param("loginpassword") String loginpassword);
+    @Select("select qd_qdname,qd_qdurl,qd_addvartime,qd_klsql,qd_id,qd_klbfb from qd_qdtj where login_name=#{findQdMessageModel.loginusername} and login_password=#{findQdMessageModel.loginpassword} LIMIT 1")
+    QdTj findqdmessagedataajaxsImpl(@Param("findQdMessageModel")FindQdMessageModel findQdMessageModel);
+
+    List<FindQdMessageEverydayNumber> findqdmessageEverydayNumberImpl(@Param("findQdMessageModel")FindQdMessageModel findQdMessageModel, @Param("qdId") Integer qdId);
+
+    List<FindQdMessageEverydayNumber>  findqdmessageNumberImpl(@Param("findQdMessageModel")FindQdMessageModel findQdMessageModel, @Param("qdId") Integer qdId);
+    @Select("select count(*) from qd_sq_ip where sq_ip=#{ipAddr} and qd_id=#{sourceId}")
+    Integer findQdSqIp(@Param("ipAddr")String ipAddr,@Param("sourceId")Integer sourceId);
+    @Select("select count(*) from qd_qdtj where qd_id=#{sourceId}")
+    Integer findQdTjId(@Param("sourceId")Integer sourceId);
+    @Insert("INSERT INTO qd_sq_ip(sq_ip,qd_id,addtime) values(#{ipAddr},#{sourceId},NOW());")
+    void addQdSqIp(@Param("ipAddr")String ipAddr,@Param("sourceId") Integer sourceId);
+
+    @Update("update qd_qdtj set qd_pv=qd_pv+1 where qd_id=#{sourceId}")
+    void addQdTjPvNumber(@Param("sourceId")Integer sourceId);
+    @Update("update qd_qdtj set qd_pv=qd_pv+1,qd_uv=qd_uv+1 where qd_id=#{sourceId}")
+    void addQdTjPvUvNumber(@Param("sourceId")Integer sourceId);
 }

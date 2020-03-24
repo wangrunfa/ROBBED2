@@ -90,6 +90,60 @@
 
         </select>
 
+    <select id="findqdmessageEverydayNumberImpl" resultType="com.robbad.model.FindQdMessageEverydayNumber">
+      select COUNT(*) as number,resultss.lg_addtime
+       from
+       (select count(*) as zss,lg_addtime,DATE_FORMAT(lg_addtime, '%m%d') as day
+       from qd_lg_power
+       where lg_qd_id=#{qdId}
+       and lg_ztc_id
+       is not null
+       GROUP BY lg_ztc_id) as resultss
+        <if test="findQdMessageModel.startTime!=null and findQdMessageModel.stopTime!=null">
+            WHERE #{findQdMessageModel.stopTime}>=resultss.lg_addtime and
+            resultss.lg_addtime>=#{findQdMessageModel.startTime}
+        </if>
+
+       GROUP BY resultss.day
+       ORDER BY resultss.lg_addtime DESC
+       LIMIT #{findQdMessageModel.numberOfInitial},#{findQdMessageModel.numberOfBranches}
+        </select>
+    <select id="findqdmessageNumberImpl" resultType="com.robbad.model.FindQdMessageEverydayNumber">
+        select COUNT(*) as number,resultss.lg_addtime
+        from
+        (select count(*) as zss,lg_addtime,DATE_FORMAT(lg_addtime, '%m%d') as day
+        from qd_lg_power
+        where lg_qd_id=#{qdId}
+        and lg_ztc_id
+        is not null
+        GROUP BY lg_ztc_id) as resultss
+        <if test="findQdMessageModel.startTime!=null and findQdMessageModel.stopTime!=null">
+            WHERE #{findQdMessageModel.stopTime}>=resultss.lg_addtime and
+            resultss.lg_addtime>=#{findQdMessageModel.startTime}
+        </if>
+
+        GROUP BY resultss.day
+        ORDER BY resultss.lg_addtime DESC
+
+    </select>
+
+    <insert id="ztcpowerAdd">
+        INSERT INTO
+        <if test="qdid!=null">
+            qd_lg_power(lg_phone,lg_shop_uid,lg_ztc_id,lg_gm_pays,lg_qd_id,lg_addtime)
+        </if>
+        <if test="qdid==null">
+            qd_lg_power(lg_phone,lg_shop_uid,lg_ztc_id,lg_gm_pays,lg_addtime)
+        </if>
+        <if test="qdid!=null">
+            values(#{lgPhone},#{particularsId},#{particularsId},#{gmpays},#{qdid},NOW());
+        </if>
+        <if test="qdid==null">
+            values(#{lgPhone},#{particularsId},#{particularsId},#{gmpays},NOW());
+        </if>
+
+    </insert>
+
   <select id="purchaseList" parameterType="com.robbad.model.SearchCondition"  resultType="com.robbad.model.Basicmanager">
 
         select lg_shop_uid,qd_gm_pay,qd_fb_time,qd_sesame,qd_loanpay,qd_username,qd_region,qd_age,qd_professional,

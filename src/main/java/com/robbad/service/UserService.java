@@ -55,5 +55,7 @@ public interface UserService {
 
     Object updatepowerbeizhu(Integer gmid, String beizhu, String lgPhone);
 
-    Object findqdmessagedataajaxs(String loginusername, String loginpassword);
+    Object findqdmessagedataajaxs(FindQdMessageModel findQdMessageModel);
+
+    void qdMessageIp(String ipAddr,Integer sourceId);
 }

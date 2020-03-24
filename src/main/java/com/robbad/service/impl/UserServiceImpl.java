@@ -341,7 +341,7 @@ public class UserServiceImpl implements UserService {
         try{
         if(userDao.findCaiLiangIP(submitIP)>0){
 //            return WebTools.returnData("此IP已提交过信息，请不要用此设备再次提交",1);
-            return WebTools.returnData(SubmitSkipUrl,0);
+            return WebTools.returnData(SubmitSkipUrl,2);
         }
             String SourceName="云借条主渠道";
         Integer ztcgmpay=userDao.inquirePricesssztc();
@@ -369,28 +369,21 @@ public class UserServiceImpl implements UserService {
                     if(userDao.inquireBalance(QdXsxlTimeId.getLgPhone())>ztcgmpay){
                   if(status<(3-basicmanagersss.getQdQdztcStatus())){
                       if(userDao.updateBalance(QdXsxlTimeId.getLgPhone(),ztcgmpay)>0){
-                          if (userDao.ztcpowerAdd(basicmanagersss.getLgShopUid(), QdXsxlTimeId.getLgPhone(),ztcgmpay) > 0) {
+                          if (userDao.ztcpowerAdd(basicmanagersss.getLgShopUid(), QdXsxlTimeId.getLgPhone(),ztcgmpay,basicmanager.getQdSource()) > 0) {
                               if (userDao.ztcUpdateQdXsxls(QdXsxlTimeId.getXsxlId()) > 0) {
                                   if (userDao.ztcUpdateBasicmanager(basicmanagersss.getLgShopUid()) > 0) {
-
                                       status = status + 1;
-                                  }
-                                  ;
-
-                              }
-                              ;
-
-                          }
-                          ;
+                                  };
+                              };
+                          };
                       }
                   }
              }
                 }
-
         }
         return WebTools.returnData(SubmitSkipUrl,0);
         }catch (Exception e){
-            return WebTools.returnData(SubmitSkipUrl,0);
+            return WebTools.returnData(SubmitSkipUrl,2);
         }
     }
 
@@ -429,12 +422,44 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Object findqdmessagedataajaxs(String loginusername, String loginpassword) {
-        QdTj qdTj=userDao.findqdmessagedataajaxsImpl(loginusername,loginpassword);
+    public Object findqdmessagedataajaxs(FindQdMessageModel findQdMessageModel) {
+        QdTj qdTj=userDao.findqdmessagedataajaxsImpl(findQdMessageModel);
+
         if(qdTj!=null){
-            return WebTools.returnData(qdTj,0);
+            Map<String,Object> maps=new HashMap<>();
+
+            //findqdmessageEverydayNumberImpl 查询每日申请数量
+            List<FindQdMessageEverydayNumber> lists=new ArrayList<>();
+            List<FindQdMessageEverydayNumber> findQdMessageEverydayNumberList=userDao.findqdmessageEverydayNumberImpl(findQdMessageModel,qdTj.getQdId());
+            for (FindQdMessageEverydayNumber findQdMessageEverydayNumber:findQdMessageEverydayNumberList ) {
+                findQdMessageEverydayNumber.setNumber((int)(Math.ceil((double)findQdMessageEverydayNumber.getNumber()*(double)qdTj.getQdKlbfb()/(double)100)));
+
+                lists.add(findQdMessageEverydayNumber);
+            }
+            maps.put("qdTj",qdTj);
+            qdTj.setQdKlbfb(0);
+            maps.put("EverydayNumberList",lists);
+            int zongshus=0;
+            List<FindQdMessageEverydayNumber> FindQdMessageNumberList=userDao.findqdmessageNumberImpl(findQdMessageModel,qdTj.getQdId());
+            for (FindQdMessageEverydayNumber findQdMessageNumber:FindQdMessageNumberList) {
+                zongshus++;
+            }
+            maps.put("zongshus",zongshus);
+            return WebTools.returnData(maps,0);
         }
         return WebTools.returnData("未查到信息",1);
+    }
+
+    @Override
+    public void qdMessageIp(String ipAddr,Integer sourceId) {
+       if(userDao.findQdTjId(sourceId)>0){
+           if(userDao.findQdSqIp(ipAddr,sourceId)>0){
+               userDao.addQdTjPvNumber(sourceId);
+           }else{
+               userDao.addQdSqIp(ipAddr,sourceId);
+               userDao.addQdTjPvUvNumber(sourceId);
+           }
+       };
     }
 
     @Override

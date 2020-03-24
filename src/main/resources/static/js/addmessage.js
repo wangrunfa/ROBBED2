@@ -68,8 +68,11 @@ function submitMessages() {
             if (result.code == 0) {
                 alert("信息已提交完成，稍后将有工作人员联系您")
                 $(location).prop('href', result.data)
-            } else {
-                $(location).prop('href', "/login")
+            }else if (result.code == 1) {
+                alert(result.message)
+            }else if (result.code == 2) {
+                alert("信息已提交完成，客服正在审核，请不要重复提交")
+                $(location).prop('href', result.message)
 
             }
         },
@@ -80,22 +83,26 @@ function submitMessages() {
     })
 
 }
+
 function faxinInputFUZHI(number) {
-    $("#paydayMessage").val("每月-"+number+"-号")
+    $("#paydayMessage").val("每月-" + number + "-号")
     paydayvalue = number;
     $(".faxinTimeOneBox").fadeOut()
 }
+
 function guanbifaxin() {
     $(".faxinTimeOneBox").fadeOut()
 }
+
 function faxinbox() {
-    var faxinHtml="";
-    for (i = 1;i<32;i++){
-        faxinHtml+="<li onclick='faxinInputFUZHI("+i+")'>"+i+"</li>";
+    var faxinHtml = "";
+    for (i = 1; i < 32; i++) {
+        faxinHtml += "<li onclick='faxinInputFUZHI(" + i + ")'>" + i + "</li>";
         $(".faxinTimeConter").html(faxinHtml)
     }
     $(".faxinTimeOneBox").fadeIn()
 }
+
 function getUrlParam(name) {//封装方法
     var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
     var r = window.location.search.substr(1).match(reg); //匹配目标参数
@@ -115,7 +122,7 @@ function agesss(str) {
 }
 
 $(function () {
-   // var storage = window.localStorage;
+    // var storage = window.localStorage;
     //theFinalStep  最后一步
 
     $(".theFinalStepSbmit").click(function () {
@@ -133,99 +140,86 @@ $(function () {
         ymjusername = $("#ymjusername").val();
         if (checkChinese(ymjusername)) {
             // storage.setItem("usernames",$("#ymjusername").val());
-            var firstName = ymjusername.substr(0, 1);
-            if (checkbjx(firstName)) {
-                ymjphone = $("#ymjphone").val();
-                if (phonezz.test(ymjphone)) {
-                    ymjQQ = $("#ymjQQ").val();
-                    if (ymjQQ != "") {
-                        ymjwechat = $("#ymjwechat").val();
-                        if (ymjwechat != "") {
-                            ymjSesame = $("#ymjSesame").val();
-                            if (ymjSesame >= 550 && ymjSesame <= 950) {
-                                ymjCard = $("#ymjCard").val();
-                                if (Cardzz.test(ymjCard)) {
-                                    $(".jiashiann").show()
-                                    $("#paydayMessage").val("点击选择发薪日")
-                                    $.ajax({
-                                        url: "/judgeUserMessage",
-                                        data: {
-                                            "name": ymjusername,
-                                            "mobile": ymjphone,
-                                            "idcard": ymjCard
-                                        },
-                                        type: "post",
-                                        dataType: "json",
-                                        success: function (resultJson) {
-                                            console.warn(resultJson)
+            // var firstName = ymjusername.substr(0, 1);
+            // if (checkbjx(firstName)) {
+            ymjphone = $("#ymjphone").val();
+            if (phonezz.test(ymjphone)) {
 
-                                            if (resultJson.code == 0) {
-                                                if (resultJson.result.res == 1) {
-                                                    ymjSex = resultJson.result.sex;
-                                                    console.warn("性别:" +ymjSex)
-                                                    var ymjagebirthday = resultJson.result.birthday;
-                                                    var returnAge = agesss(ymjagebirthday.slice(0, 4) + "-" + ymjagebirthday.slice(4, 6) + "-" + ymjagebirthday.slice(6, 8));
-                                                    console.warn("年龄:" +returnAge)
-                                                    if (returnAge >= 18 && returnAge <= 70) {
-                                                        ymjage = returnAge;
-                                                        $(".theFinalStepInput").fadeIn();
-                                                        $(".theFinalStep").fadeOut();
-                                                        // $(".selectmaxbox").css({"height": "550px","overflow-y": "scroll"})
-                                                        if (inputmaxboxheight <= 350) {
-                                                            inputmaxboxheight = inputmaxboxheight + 35
-                                                            $(".inputmaxbox").css({"height": inputmaxboxheight + "px"})
-                                                        }
-                                                        $(".jiashiann").hide()
-                                                    } else {
-                                                        alert("年龄条件：18-70 之间")
-                                                    }
-                                                } else {
-                                                    // alert("错误！请检查-姓名,手机号,身份证-是否都为 您 所有")
-                                                    alert("错误！请检查您的实名信息是否填写正确！")
-                                                }
+                ymjCard = $("#ymjCard").val();
+                if (Cardzz.test(ymjCard)) {
+                    $(".jiashiann").show()
+                    $("#paydayMessage").val("点击选择发薪日")
+                    $.ajax({
+                        url: "/judgeUserMessage",
+                        data: {
+                            "name": ymjusername,
+                            "mobile": ymjphone,
+                            "idcard": ymjCard
+                        },
+                        type: "post",
+                        dataType: "json",
+                        success: function (resultJson) {
+                            console.warn(resultJson)
 
-
-                                            } else {
-                                                // alert(resultJson.message)
-                                                alert("错误！请检查您的实名信息是否填写正确！")
-                                            }
-                                            $(".jiashiann").hide()
-                                        },
-                                        error: function (result) {
-                                            $(".jiashiann").hide()
-                                            // $(location).prop('href', "/login")
-                                            console.warn("error----");
-                                        }
-                                    })
-                                    $(".theFinalStepInput>.prompting").html("姓名:" + ymjusername);
-                                    console.warn("姓名:" + ymjusername)
-                                    console.warn("年龄:" + ymjage)
-                                    console.warn("手机号:" + ymjphone)
-                                    console.warn("QQ:" + ymjQQ)
-                                    console.warn("微信:" + ymjwechat)
-                                    console.warn("芝麻分:" + ymjSesame)
-                                    console.warn("身份证:" + ymjCard)
+                            if (resultJson.code == 0) {
+                                if (resultJson.result.res == 1) {
+                                    ymjSex = resultJson.result.sex;
                                     console.warn("性别:" + ymjSex)
-
+                                    var ymjagebirthday = resultJson.result.birthday;
+                                    var returnAge = agesss(ymjagebirthday.slice(0, 4) + "-" + ymjagebirthday.slice(4, 6) + "-" + ymjagebirthday.slice(6, 8));
+                                    console.warn("年龄:" + returnAge)
+                                    if (returnAge >= 18 && returnAge <= 70) {
+                                        ymjage = returnAge;
+                                        $(".theFinalStepInput").fadeIn();
+                                        $(".theFinalStep").fadeOut();
+                                        // $(".selectmaxbox").css({"height": "550px","overflow-y": "scroll"})
+                                        if (inputmaxboxheight <= 350) {
+                                            inputmaxboxheight = inputmaxboxheight + 35
+                                            $(".inputmaxbox").css({"height": inputmaxboxheight + "px"})
+                                        }
+                                        $(".jiashiann").hide()
+                                    } else {
+                                        alert("年龄条件：18-70 之间")
+                                    }
                                 } else {
-                                    alert("请正确填写身份证号")
+                                    // alert("错误！请检查-姓名,手机号,身份证-是否都为 您 所有")
+                                    alert("错误！请检查您的实名信息是否填写正确！")
                                 }
+
+
                             } else {
-                                alert("请正确填写芝麻分（ 550 至 950 ） ")
+                                // alert(resultJson.message)
+                                alert("错误！请检查您的实名信息是否填写正确！")
                             }
-                        } else {
-                            alert("请正确填写微信号")
+                            $(".jiashiann").hide()
+                        },
+                        error: function (result) {
+                            $(".jiashiann").hide()
+                            // $(location).prop('href', "/login")
+                            console.warn("error----");
                         }
-                    } else {
-                        alert("请正确填写QQ号")
-                    }
+                    })
+                    $(".theFinalStepInput>.prompting").html("姓名:" + ymjusername);
+                    console.warn("姓名:" + ymjusername)
+                    console.warn("年龄:" + ymjage)
+                    console.warn("手机号:" + ymjphone)
+                    console.warn("QQ:" + ymjQQ)
+                    console.warn("微信:" + ymjwechat)
+                    console.warn("芝麻分:" + ymjSesame)
+                    console.warn("身份证:" + ymjCard)
+                    console.warn("性别:" + ymjSex)
+
                 } else {
-                    alert("请正确填写手机号")
+                    alert("请正确填写身份证号")
                 }
 
             } else {
-                alert("请输入正确中文姓名！");
+                alert("请正确填写手机号")
             }
+
+            // } else {
+            //     alert("请输入正确中文姓名！");
+            // }
         } else {
             alert("请输入正确中文姓名，并且长度为2-4位");
         }
@@ -285,6 +279,39 @@ $(function () {
         zIndex = zIndex + 100
         $(".anywhere").css({"z-index": zIndex})
         $(".anywhere").fadeIn();
+    })
+    //supplementarySbmit  补充信息
+    $(".supplementarySbmit").click(function () {
+        ymjQQ = $("#ymjQQ").val();
+        var qqzz=/^[1-9]\d{4,9}$/;
+        var wechatzz=/^[a-zA-Z]{1}[-_a-zA-Z0-9]{5,19}$/;
+        if (qqzz.test(ymjQQ)) {
+            ymjwechat = $("#ymjwechat").val();
+            if (wechatzz.test(ymjwechat)) {
+                ymjSesame = $("#ymjSesame").val();
+                if (ymjSesame >= 550 && ymjSesame <= 950) {
+                    $(".supplementaryInput>.prompting").html("QQ号: " + ymjQQ);
+                    console.warn("QQ号:" + ymjQQ)
+                    $(".supplementaryInput").fadeIn();
+                    $(".supplementary").fadeOut();
+                    if (inputmaxboxheight <= 350) {
+                        inputmaxboxheight = inputmaxboxheight + 35
+                        $(".inputmaxbox").css({"height": inputmaxboxheight + "px"})
+                    }
+                } else {
+                    alert("请正确填写芝麻分（ 550 至 950 ） ")
+                }
+            } else {
+                alert("请正确填写微信号")
+            }
+        } else {
+            alert("请正确填写QQ号")
+        }
+    })
+    $(".supplementaryInput>.ButtonThe").click(function () {
+        zIndex = zIndex + 100
+        $(".supplementary").css({"z-index": zIndex})
+        $(".supplementary").fadeIn();
     })
     //payday  发薪日
 
@@ -428,7 +455,7 @@ $(function () {
         linusericssonvalue = $("#linusericssonmessage").val();
         if (linusericssonvalue != "") {
             $(".linusericssonInput>.prompting").html("现居地：" + linusericssonvalue);
-            ymjRegion=linusericssonvalue.split(" ")[0];
+            ymjRegion = linusericssonvalue.split(" ")[0];
 
             console.warn("现居地：" + linusericssonvalue)
             $(".linusericssonInput").fadeIn();
@@ -534,7 +561,7 @@ $(function () {
     })
     $(".BorrowingInput>.ButtonThe").click(function () {
         zIndex = zIndex + 100
-        $(".Borrowing").css({"z-index":zIndex})
+        $(".Borrowing").css({"z-index": zIndex})
         $(".Borrowing").fadeIn()
     })
     //whether  有无社保

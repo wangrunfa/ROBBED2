@@ -9,17 +9,24 @@
   background: #2D2F36;
 }
 body {
-  background: white;
+    background: #25b7ff96;
   font-family: 'Inter UI', sans-serif;
   margin: 0;
   padding: 0;
 }
 .finddatabox{
-	padding-top: 100px;
+	padding-top: 70px;
 	width: 100%;
 	height: 300px;
 	
 	
+}
+.finddataboxtwo{
+	padding-top: 70px;
+	width: 100%;
+	height: 850px;
+
+
 }
 
 .finddataconteng{
@@ -31,7 +38,16 @@ background: #474A59;
 margin: 0 auto;
 padding: 25px;
 }
-.finddataconteng>h3{
+.finddatacontengtwo{
+	box-shadow: 0px 0px 40px 16px rgba(0,0,0,0.22);
+	border-radius: 6px;
+	width: 800px;
+	height: 800px;
+background: #474A59;
+margin: 0 auto;
+padding: 25px;
+}
+.finddataconteng>h3,.finddatacontengtwo>h3{
 	border-left: 5px solid #ffd17b;
 	text-indent: 15px;
 	color: white
@@ -40,6 +56,76 @@ padding: 25px;
 	width: 100%;
 	height: 150px;
 }
+.finddatatabletwo{
+	width: 100%;
+	height: 750px;
+}
+.shengsehyanshe{
+    background: #555866 !important;
+}
+.finddatatabletwo>ul{
+    padding: 0;
+    margin: 5px 0;
+    width: 100%;
+    height: 38px;
+    margin: 5px 0;
+    float: left;
+}
+.resulttwodata:hover{
+   background: #62677b;
+    cursor: pointer;
+}
+.finddatatabletwo>ul>li{
+    list-style: none;
+    line-height: 35px;
+
+    height: 35px;
+    text-indent: 10px;
+    font-size: 14px;
+    color: wheat;
+    overflow: hidden;
+    width: 50%;
+    float: left;
+}
+.resulttwodata{
+    height:35px ;
+    width: 100%;
+    padding: 0;
+    float: left;
+}
+.resulttwodata>li{
+    color: #ffe86d  !important;
+    display: none;
+    list-style: none;
+    height: 35px;
+    line-height: 35px;
+    float: left;
+    text-align: left;
+}
+.resulttwodata>li:nth-child(1){
+    width: 20%;
+    text-align: left;
+}
+.resulttwodata>li:nth-child(2){
+    width: 50%;
+    text-align: left;
+}
+.resulttwodata>li:nth-child(3){
+    width: 30%;
+    text-align: right;
+}
+.finddatatabletwo>ul>li:nth-child(1){
+    width: 20%;
+    text-align: left;
+}
+.finddatatabletwo>ul>li:nth-child(2){
+    width: 50%;
+    text-align: left;
+}
+.finddatatabletwo>ul>li:nth-child(3){
+    width: 30%;
+    text-align: right;
+}
 .finddatatable>ul{
 	padding: 0;
 	margin: 5px 0;
@@ -47,6 +133,33 @@ padding: 25px;
 	height: 38px;
 	margin: 5px 0;
 	float: left;
+}
+.finddatatabletwodata{
+    width: 100%;
+    height: 550px;
+
+    float: left;
+}
+.pagination ul li{
+    background: #ff711b !important;
+    color: white !important;
+}
+.pagination ul li:hover {
+    background-color: #127FEC !important;
+}
+.pagination li.totalPage{
+    background: transparent !important;
+}
+.finddatatabletwoTimeSelect{
+    width: 100%;
+    height: 50px;
+
+    float: left;
+}
+.pagings{
+    width: 100%;
+    height: 70px;
+    float: left;
 }
 .finddatatable>ul>li{
 	list-style: none;
@@ -79,8 +192,8 @@ padding: 25px;
     text-align: center;
 }
 .page {
-  background: #25b7ff96;
-  display: flex;
+
+    margin-top: 50px;
   flex-direction: column;
   height: 100%;
   position: absolute;
@@ -95,7 +208,7 @@ padding: 25px;
     padding-bottom: 20px;
   }
 }
-.container {
+.qdcontainer {
   display: flex;
   height: 320px;
   margin: 0 auto;
@@ -108,7 +221,7 @@ padding: 25px;
     width: 320px;
   }
 }
-.left {
+.qdleft {
   background: white;
   height: calc(100% - 40px);
   top: 20px;
@@ -117,7 +230,7 @@ padding: 25px;
 	  border-radius: 6px 0 0 6px;
 }
 @media (max-width: 767px) {
-  .left {
+  .qdleft {
     height: 100%;
     left: 20px;
     width: calc(100% - 40px);
@@ -135,7 +248,35 @@ padding: 25px;
   line-height: 1.5;
   margin: 40px;
 }
-.right {
+.timeselectbox{
+    float: left;
+    width: 200px;
+    margin-right: 20px;
+}
+.findtimetitles{
+    float: left;
+    height: 34px;
+    width: 80px;
+    color: #cbcbcb;
+    text-align: center;
+    line-height: 34px;
+}
+.timefindmessages{
+    height: 34px;
+    width: 100px;
+    border-radius: 3px;
+    float: right;
+    color: white;
+    background: #ff7915;
+    box-shadow: 0px 0px 40px 16px rgba(0,0,0,0.22);
+    text-align: center;
+    line-height: 34px;
+}
+.timefindmessages:hover{
+    cursor: pointer;
+    background: #ff6a19;
+}
+.qdright {
   background: #474A59;
   	border-radius: 6px;
   box-shadow: 0px 0px 40px 16px rgba(0,0,0,0.22);
@@ -144,7 +285,7 @@ padding: 25px;
   width: 50%;
 }
 @media (max-width: 767px) {
-  .right {
+  .qdright {
     flex-shrink: 0;
     height: 100%;
     width: 100%;

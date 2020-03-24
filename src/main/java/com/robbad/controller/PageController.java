@@ -37,10 +37,7 @@ public class PageController {
         return "changePassword";
     }
 
-    @RequestMapping("/addmessage")
-    public String addmessage() {
-        return "addmessage";
-    }
+
 
     @RequestMapping("/subscription")
     public String subscription() {
