@@ -456,7 +456,7 @@ public class UserController {
         if (!Pattern.matches(usernameRegular,basicmanager.getQdUsername()))return WebTools.returnData("用户姓名格式错误", 1);
         if (!Pattern.matches(phoneRegular,basicmanager.getQdPhone()))return WebTools.returnData("用户手机号格式错误", 1);
         if (!Pattern.matches(qqRegular,basicmanager.getQdQq()))return WebTools.returnData("用户QQ格式错误", 1);
-        if (!Pattern.matches(wechatRegular,basicmanager.getQdWechat()))return WebTools.returnData("用户微信格式错误", 1);
+//        if (!Pattern.matches(wechatRegular,basicmanager.getQdWechat()))return WebTools.returnData("用户微信格式错误", 1);
         if (!Pattern.matches(CardRegular,basicmanager.getQdCard()))return WebTools.returnData("用户身份证号格式错误", 1);
          return userService.insertBasicmanager(basicmanager,getIpAddr(request));
     }
@@ -598,11 +598,9 @@ public class UserController {
     }
     @ResponseBody
     @RequestMapping("/judgeUserMessage")
-    public Object judgeUserMessage(String name, String mobile, String idcard) throws IOException {
+    public Object judgeUserMessage(String name, String mobile, String idcard,HttpServletRequest request) {
 
-        System.out.println((int)Math.ceil((double)1*(double)20/100)+"---------------");
-
-        return MessagePostFromUtil.messagePostFrom(name,mobile,idcard);
+        return  userService.messageVerification(name,mobile,idcard,getIpAddr(request));
     }
     @RequestMapping("/addmessage")
     public String addmessage(HttpServletRequest request,Integer sourceId) {

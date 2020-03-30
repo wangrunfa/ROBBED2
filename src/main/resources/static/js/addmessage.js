@@ -167,30 +167,32 @@ $(function () {
                                     console.warn("性别:" + ymjSex)
                                     var ymjagebirthday = resultJson.result.birthday;
                                     var returnAge = agesss(ymjagebirthday.slice(0, 4) + "-" + ymjagebirthday.slice(4, 6) + "-" + ymjagebirthday.slice(6, 8));
-                                    console.warn("年龄:" + returnAge)
-                                    if (returnAge >= 18 && returnAge <= 70) {
-                                        ymjage = returnAge;
-                                        $(".theFinalStepInput").fadeIn();
-                                        $(".theFinalStep").fadeOut();
-                                        // $(".selectmaxbox").css({"height": "550px","overflow-y": "scroll"})
-                                        if (inputmaxboxheight <= 350) {
-                                            inputmaxboxheight = inputmaxboxheight + 35
-                                            $(".inputmaxbox").css({"height": inputmaxboxheight + "px"})
+
+                                        console.warn("年龄:" + returnAge)
+                                        if (returnAge >= 23 && returnAge <= 45) {
+                                            ymjage = returnAge;
+                                            $(".theFinalStepInput").fadeIn();
+                                            $(".theFinalStep").fadeOut();
+                                            // $(".selectmaxbox").css({"height": "550px","overflow-y": "scroll"})
+                                            if (inputmaxboxheight <= 350) {
+                                                inputmaxboxheight = inputmaxboxheight + 35
+                                                $(".inputmaxbox").css({"height": inputmaxboxheight + "px"})
+                                            }
+                                            $(".jiashiann").hide()
+                                        } else {
+                                            alert("年龄条件：23-45 之间")
                                         }
-                                        $(".jiashiann").hide()
-                                    } else {
-                                        alert("年龄条件：18-70 之间")
-                                    }
+
                                 } else {
                                     // alert("错误！请检查-姓名,手机号,身份证-是否都为 您 所有")
                                     alert("错误！请检查您的实名信息是否填写正确！")
                                 }
 
 
-                            } else {
-                                // alert(resultJson.message)
-                                alert("错误！请检查您的实名信息是否填写正确！")
                             }
+                if (resultJson.code==1){
+                    alert(resultJson.message);
+                }
                             $(".jiashiann").hide()
                         },
                         error: function (result) {
@@ -284,10 +286,10 @@ $(function () {
     $(".supplementarySbmit").click(function () {
         ymjQQ = $("#ymjQQ").val();
         var qqzz=/^[1-9]\d{4,9}$/;
-        var wechatzz=/^[a-zA-Z]{1}[-_a-zA-Z0-9]{5,19}$/;
+
         if (qqzz.test(ymjQQ)) {
             ymjwechat = $("#ymjwechat").val();
-            if (wechatzz.test(ymjwechat)) {
+            if (ymjwechat!="") {
                 ymjSesame = $("#ymjSesame").val();
                 if (ymjSesame >= 550 && ymjSesame <= 950) {
                     $(".supplementaryInput>.prompting").html("QQ号: " + ymjQQ);
@@ -302,7 +304,7 @@ $(function () {
                     alert("请正确填写芝麻分（ 550 至 950 ） ")
                 }
             } else {
-                alert("请正确填写微信号")
+                alert("请填写微信号")
             }
         } else {
             alert("请正确填写QQ号")

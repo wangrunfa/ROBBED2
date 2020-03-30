@@ -193,7 +193,7 @@ Basicmanager particularsMessage(@Param("particularsId")Integer particularsId);
 
     @Update("update qd_lg_power set lg_gm_beizhu=#{beizhu} where lg_phone=#{lgPhone} and lg_shop_uid=#{gmid}")
     Integer updatepowerbeizhuimpl(@Param("gmid")Integer gmid,@Param("beizhu") String beizhu, @Param("lgPhone")String lgPhone);
-    @Select("select qd_qdname,qd_qdurl,qd_addvartime,qd_klsql,qd_id,qd_klbfb from qd_qdtj where login_name=#{findQdMessageModel.loginusername} and login_password=#{findQdMessageModel.loginpassword} LIMIT 1")
+    @Select("select qd_qdname,qd_qdurl,qd_addvartime,qd_id,qd_klbfb from qd_qdtj where login_name=#{findQdMessageModel.loginusername} and login_password=#{findQdMessageModel.loginpassword} LIMIT 1")
     QdTj findqdmessagedataajaxsImpl(@Param("findQdMessageModel")FindQdMessageModel findQdMessageModel);
 
     List<FindQdMessageEverydayNumber> findqdmessageEverydayNumberImpl(@Param("findQdMessageModel")FindQdMessageModel findQdMessageModel, @Param("qdId") Integer qdId);
@@ -210,4 +210,21 @@ Basicmanager particularsMessage(@Param("particularsId")Integer particularsId);
     void addQdTjPvNumber(@Param("sourceId")Integer sourceId);
     @Update("update qd_qdtj set qd_pv=qd_pv+1,qd_uv=qd_uv+1 where qd_id=#{sourceId}")
     void addQdTjPvUvNumber(@Param("sourceId")Integer sourceId);
+    @Select("select qd_ip_number from qd_ip_astrict where qd_ip=#{ip} limit 1")
+    Integer findIp(@Param("ip")String ip);
+    @Insert("INSERT INTO qd_ip_astrict(qd_ip,addtime) values(#{ip},NOW());")
+    Integer addIp(@Param("ip")String ip);
+    @Select("select qd_number from qd_message_verify where qd_phone=#{mobile} or qd_card=#{idcard} limit 1")
+    Integer findQdMessageVerify(@Param("mobile")String mobile, @Param("idcard")String idcard);
+    @Insert("INSERT INTO qd_message_verify(" +
+            "qd_name,qd_phone,qd_card,qd_ip,qd_addtime" +
+            ") values(" +
+            "#{name},#{mobile},#{idcard},#{ip},NOW());")
+    Integer addQdMessageVerify(@Param("mobile")String mobile, @Param("idcard")String idcard, @Param("name")String name, @Param("ip")String ip);
+    @Select("select count(*) from qd_basicmanager where qd_phone=#{mobile} or qd_card=#{idcard} limit 1")
+    Integer findQdBasicmanager(String mobile, String idcard);
+    @Update("update qd_ip_astrict set qd_ip_number=qd_ip_number+1 where qd_ip=#{ip} limit 1")
+    Integer updateIpNumber(@Param("ip")String ip);
+    @Update("update qd_message_verify set qd_number=qd_number+1 where qd_phone=#{mobile} and qd_card=#{idcard} limit 1")
+    Integer updateQdNumber(@Param("mobile")String mobile, @Param("idcard")String idcard);
 }

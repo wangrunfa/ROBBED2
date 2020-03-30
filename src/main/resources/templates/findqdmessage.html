@@ -74,7 +74,7 @@
                     <li>渠道名</li>
                     <li>渠道创建时间</li>
                     <li>渠道链接</li>
-                    <li>渠道数量</li>
+
 
                 </ul>
                 <ul class="resultdata">
@@ -192,7 +192,8 @@
                             var htmllitimefind = "";
                             if (result.code == 0) {
                                 htmlli = "<li>" + result.data.qdTj.qdQdname + "</li><li>" + result.data.qdTj.qdAddvartime + "</li>" +
-                                    "<li>" + result.data.qdTj.qdQdurl + "</li><li>" + result.data.qdTj.qdKlsql + "</li>";
+                                    "<li>" + result.data.qdTj.qdQdurl + "</li>";
+                                //<li>" + result.data.qdTj.qdKlsql + "</li>
                                 $(".resultdata").html(htmlli);
                                 $(".resultdata li").slideDown("slow");
                                 var abcds=0;

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.thymeleaf.util.ListUtils;
 
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -460,6 +461,43 @@ public class UserServiceImpl implements UserService {
                userDao.addQdTjPvUvNumber(sourceId);
            }
        };
+    }
+
+    @Override
+    public Object messageVerification(String name, String mobile, String idcard,String ip) {
+        Integer findExists=userDao.findQdBasicmanager(mobile,idcard);
+        if(findExists>0){
+            return WebTools.returnData("错误提示!身份证或手机号已被申请，请不要重复使用手机号，身份证申请",1);
+        }
+        Integer findIpNumber=userDao.findIp(ip);
+        if(findIpNumber!=null && findIpNumber==4){
+           return WebTools.returnData("错误提示!此IP验证已达上限",1);
+        }
+        if(findIpNumber==null){
+           userDao.addIp(ip);
+        }
+        Integer findQdNumber=userDao.findQdMessageVerify(mobile,idcard);
+        if(findQdNumber!=null && findQdNumber==4){
+            return WebTools.returnData("错误提示!此用户信息验证已达上限",1);
+        }
+        if(findQdNumber==null){
+            userDao.addQdMessageVerify(mobile,idcard,name,ip);
+        }
+
+        try {
+
+            if(userDao.updateIpNumber(ip)==1 && userDao.updateQdNumber(mobile,idcard)==1){
+                JSONObject ObjectMessage=  MessagePostFromUtil.messagePostFrom(name,mobile,idcard);
+              if(ObjectMessage.getInteger("code")==0){
+                  return ObjectMessage;
+              }
+                return WebTools.returnData("错误提示!验证系统出现错误，请稍后再试",1);
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return WebTools.returnData("错误提示!验证失败",1);
     }
 
     @Override

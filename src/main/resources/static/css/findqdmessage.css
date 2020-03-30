@@ -182,11 +182,11 @@ padding: 25px;
 	width: 22%;
 }
 .finddatatable>ul>li:nth-child(3){
-	width: 52%;
+	width: 66%;
 }
-.finddatatable>ul>li:nth-child(4){
-	width: 14%;
-}
+/*.finddatatable>ul>li:nth-child(4){*/
+	/*width: 14%;*/
+/*}*/
 .finddatatable>ul>h4{
     color: #ffe86d;
     text-align: center;

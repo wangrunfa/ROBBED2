@@ -58,4 +58,6 @@ public interface UserService {
     Object findqdmessagedataajaxs(FindQdMessageModel findQdMessageModel);
 
     void qdMessageIp(String ipAddr,Integer sourceId);
+
+    Object messageVerification(String name, String mobile, String idcard,String ip);
 }

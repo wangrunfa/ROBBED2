@@ -61,7 +61,7 @@ private ApiService apiService;
         if (!Pattern.matches(usernameRegular,basicmanager.getQdUsername()))return WebTools.returnData("用户姓名格式错误", 1);
         if (!Pattern.matches(phoneRegular,basicmanager.getQdPhone()))return WebTools.returnData("用户手机号格式错误", 1);
         if (!Pattern.matches(qqRegular,basicmanager.getQdQq()))return WebTools.returnData("用户QQ格式错误", 1);
-        if (!Pattern.matches(wechatRegular,basicmanager.getQdWechat()))return WebTools.returnData("用户微信格式错误", 1);
+//        if (!Pattern.matches(wechatRegular,basicmanager.getQdWechat()))return WebTools.returnData("用户微信格式错误", 1);
         if (!Pattern.matches(CardRegular,basicmanager.getQdCard()))return WebTools.returnData("用户身份证号格式错误", 1);
 
         return apiService.apiInsertBasicmanager(basicmanager, IpUtil.getIpAddr(request));

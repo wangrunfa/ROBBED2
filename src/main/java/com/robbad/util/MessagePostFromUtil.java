@@ -13,7 +13,7 @@ import java.util.Map;
 
 public class MessagePostFromUtil {
     private static String  privateAppCode="304e05a307924cb2aa933fedf58379b1";
-    public static Object messagePostFrom(String name, String mobile, String idcard) throws IOException {
+    public static JSONObject  messagePostFrom(String name, String mobile, String idcard) throws IOException {
         String url = "https://mobile3elements.shumaidata.com/mobile/verify_real_name";
         String appCode = privateAppCode;
         Map<String,String> params = new HashMap<>();
@@ -32,7 +32,7 @@ public class MessagePostFromUtil {
      *     <version>3.13.1</version>
      *  </dependency>
      */
-    public static Object postForm(String appCode, String url, Map<String,String> params) throws IOException {
+    public static JSONObject  postForm(String appCode, String url, Map<String,String> params) throws IOException {
         OkHttpClient client = new OkHttpClient.Builder().build();
         FormBody.Builder formbuilder = new FormBody.Builder();
         Iterator<String> it = params.keySet().iterator();
