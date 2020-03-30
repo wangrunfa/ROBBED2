@@ -160,7 +160,9 @@ $(function () {
                         dataType: "json",
                         success: function (resultJson) {
                             console.warn(resultJson)
-
+                            if (resultJson.code==1){
+                                alert(resultJson.message);
+                            }
                             if (resultJson.code == 0) {
                                 if (resultJson.result.res == 1) {
                                     ymjSex = resultJson.result.sex;
@@ -180,19 +182,26 @@ $(function () {
                                             }
                                             $(".jiashiann").hide()
                                         } else {
-                                            alert("年龄条件：23-45 之间")
+                                            if (resultJson.requsetNumber==2){
+                                                alert("实名错误提示，实名需要三要素一致， 姓名，手机号码，身份证 ")
+                                            }else{
+                                                alert("年龄条件：23-45 之间")
+                                            }
+
                                         }
 
                                 } else {
                                     // alert("错误！请检查-姓名,手机号,身份证-是否都为 您 所有")
-                                    alert("错误！请检查您的实名信息是否填写正确！")
+                                    if (resultJson.requsetNumber==2){
+                                        alert("实名错误提示，实名需要三要素一致， 姓名，手机号码，身份证 ")
+                                    }else {
+                                        alert("错误！请检查您的实名信息是否填写正确！")
+                                    }
                                 }
 
 
                             }
-                if (resultJson.code==1){
-                    alert(resultJson.message);
-                }
+
                             $(".jiashiann").hide()
                         },
                         error: function (result) {

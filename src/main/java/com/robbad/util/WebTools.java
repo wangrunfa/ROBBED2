@@ -78,4 +78,18 @@ public class WebTools {
         }
         return null;
     }
+
+    /**
+     * 取最大值
+     * @param oneNumber
+     * @param twoNumber
+     * @return
+     */
+    public static Integer  takeTheMaximum(Integer oneNumber,Integer twoNumber){
+        if(oneNumber>=twoNumber){
+            return oneNumber;
+        }
+        return twoNumber;
+    }
+
 }

@@ -470,18 +470,22 @@ public class UserServiceImpl implements UserService {
             return WebTools.returnData("错误提示!身份证或手机号已被申请，请不要重复使用手机号，身份证申请",1);
         }
         Integer findIpNumber=userDao.findIp(ip);
-        if(findIpNumber!=null && findIpNumber==4){
-           return WebTools.returnData("错误提示!此IP验证已达上限",1);
+        if(findIpNumber!=null && findIpNumber>=3){
+//           return WebTools.returnData("错误提示!此IP验证已达上限",1);
+            return WebTools.returnData("错误提示!实名认证已被锁，请勿重复申请",1);
         }
         if(findIpNumber==null){
            userDao.addIp(ip);
+            findIpNumber=0;
         }
         Integer findQdNumber=userDao.findQdMessageVerify(mobile,idcard);
-        if(findQdNumber!=null && findQdNumber==4){
-            return WebTools.returnData("错误提示!此用户信息验证已达上限",1);
+        if(findQdNumber!=null && findQdNumber>=3){
+//            return WebTools.returnData("错误提示!此用户信息验证已达上限",1);
+            return WebTools.returnData("错误提示!实名认证已被锁，请勿重复申请",1);
         }
         if(findQdNumber==null){
             userDao.addQdMessageVerify(mobile,idcard,name,ip);
+            findQdNumber=0;
         }
 
         try {
@@ -489,6 +493,7 @@ public class UserServiceImpl implements UserService {
             if(userDao.updateIpNumber(ip)==1 && userDao.updateQdNumber(mobile,idcard)==1){
                 JSONObject ObjectMessage=  MessagePostFromUtil.messagePostFrom(name,mobile,idcard);
               if(ObjectMessage.getInteger("code")==0){
+                  ObjectMessage.put("requsetNumber",WebTools.takeTheMaximum(findQdNumber,findIpNumber));
                   return ObjectMessage;
               }
                 return WebTools.returnData("错误提示!验证系统出现错误，请稍后再试",1);
