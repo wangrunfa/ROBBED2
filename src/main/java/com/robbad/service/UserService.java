@@ -59,5 +59,7 @@ public interface UserService {
 
     void qdMessageIp(String ipAddr,Integer sourceId);
 
-    Object messageVerification(String name, String mobile, String idcard,String ip);
+    Object messageVerification(String name, String mobile, String idcard,Integer sourceId,String ip);
+
+    Object findqdtjstatus(Integer qdSource);
 }

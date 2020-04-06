@@ -1,10 +1,7 @@
 package com.robbad.dao;
 
 import com.robbad.model.*;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 import java.util.Map;
@@ -14,7 +11,7 @@ public interface UserDao {
    @Select("SELECT * from qd_userss where lg_phone=#{user.lgPhone} and lg_password=#{user.lgPassword} LIMIT 1")
    User qclogin(@Param("user") User user);
 
-   @Insert("INSERT INTO qd_userss(lg_username,lg_sex,lg_password,lg_phone) values(#{user.lgUsername},#{user.lgSex},#{user.lgPassword},#{user.lgPhone});")
+   @Insert("INSERT INTO qd_userss(lg_username,lg_sex,lg_password,lg_phone,lg_addtime) values(#{user.lgUsername},#{user.lgSex},#{user.lgPassword},#{user.lgPhone},NOW());")
    int userRegister(@Param("user") User user);
 
    @Select("SELECT count(*) from qd_userss where lg_phone=#{phone}")
@@ -205,26 +202,39 @@ Basicmanager particularsMessage(@Param("particularsId")Integer particularsId);
     Integer findQdTjId(@Param("sourceId")Integer sourceId);
     @Insert("INSERT INTO qd_sq_ip(sq_ip,qd_id,addtime) values(#{ipAddr},#{sourceId},NOW());")
     void addQdSqIp(@Param("ipAddr")String ipAddr,@Param("sourceId") Integer sourceId);
+    @Insert("INSERT INTO qd_pvuv(qd_user_id,addtime) values(#{sourceId},NOW());")
+    void addQdTjPvUv(@Param("sourceId")Integer sourceId);
+    @Select("select count(*) from qd_pvuv where qd_user_id=#{sourceId} and  TO_DAYS(addtime) = TO_DAYS(NOW())")
+    Integer findQdPvUv(Integer sourceId);
 
-    @Update("update qd_qdtj set qd_pv=qd_pv+1 where qd_id=#{sourceId}")
+    @Update("update qd_pvuv set qd_pv=qd_pv+1 where qd_user_id=#{sourceId}  and  TO_DAYS(addtime) = TO_DAYS(NOW()) order by addtime limit 1")
     void addQdTjPvNumber(@Param("sourceId")Integer sourceId);
-    @Update("update qd_qdtj set qd_pv=qd_pv+1,qd_uv=qd_uv+1 where qd_id=#{sourceId}")
+    @Update("update qd_pvuv set qd_pv=qd_pv+1,qd_uv=qd_uv+1 where qd_user_id=#{sourceId}  and  TO_DAYS(addtime) = TO_DAYS(NOW()) order by addtime limit 1")
     void addQdTjPvUvNumber(@Param("sourceId")Integer sourceId);
     @Select("select qd_ip_number from qd_ip_astrict where qd_ip=#{ip} limit 1")
     Integer findIp(@Param("ip")String ip);
     @Insert("INSERT INTO qd_ip_astrict(qd_ip,addtime) values(#{ip},NOW());")
     Integer addIp(@Param("ip")String ip);
-    @Select("select qd_number from qd_message_verify where qd_phone=#{mobile} or qd_card=#{idcard} limit 1")
+    @Select("select qd_number from qd_message_verify where qd_phone=#{mobile} and qd_card=#{idcard} limit 1")
     Integer findQdMessageVerify(@Param("mobile")String mobile, @Param("idcard")String idcard);
     @Insert("INSERT INTO qd_message_verify(" +
-            "qd_name,qd_phone,qd_card,qd_ip,qd_addtime" +
+            "qd_name,qd_phone,qd_card,qd_ip,qd_qdid,qd_addtime" +
             ") values(" +
-            "#{name},#{mobile},#{idcard},#{ip},NOW());")
-    Integer addQdMessageVerify(@Param("mobile")String mobile, @Param("idcard")String idcard, @Param("name")String name, @Param("ip")String ip);
+            "#{name},#{mobile},#{idcard},#{ip},#{sourceId},NOW());")
+    Integer addQdMessageVerify(@Param("mobile")String mobile, @Param("idcard")String idcard, @Param("name")String name, @Param("ip")String ip,@Param("sourceId")Integer sourceId);
     @Select("select count(*) from qd_basicmanager where qd_phone=#{mobile} or qd_card=#{idcard} limit 1")
     Integer findQdBasicmanager(String mobile, String idcard);
     @Update("update qd_ip_astrict set qd_ip_number=qd_ip_number+1 where qd_ip=#{ip} limit 1")
     Integer updateIpNumber(@Param("ip")String ip);
     @Update("update qd_message_verify set qd_number=qd_number+1 where qd_phone=#{mobile} and qd_card=#{idcard} limit 1")
     Integer updateQdNumber(@Param("mobile")String mobile, @Param("idcard")String idcard);
+
+    @Select("select qd_status from qd_qdtj where qd_id=#{qdSource} limit 1")
+    Integer findqdtjstatus(@Param("qdSource")Integer qdSource);
+    @Update("update qd_message_verify set qd_status=#{statusss} where qd_phone=#{mobile} and qd_card=#{idcard} limit 1")
+    void updateMessageStatus(@Param("mobile")String mobile, @Param("idcard")String idcard,@Param("statusss")int statuss);
+    @Delete("DELETE FROM qd_message_verify where qd_phone=#{basicmanager.qdPhone} and qd_card=#{basicmanager.qdCard}  limit 1")
+    Integer deleteMessage(@Param("basicmanager")Basicmanager basicmanager);
+    @Select("select lg_ztc_staus from qd_userss where lg_phone=#{lgPhone} limit 1")
+    Integer findUserZtcStatus(@Param("lgPhone")String lgPhone);
 }

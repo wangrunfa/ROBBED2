@@ -131,17 +131,12 @@
         INSERT INTO
         <if test="qdid!=null">
             qd_lg_power(lg_phone,lg_shop_uid,lg_ztc_id,lg_gm_pays,lg_qd_id,lg_addtime)
-        </if>
-        <if test="qdid==null">
-            qd_lg_power(lg_phone,lg_shop_uid,lg_ztc_id,lg_gm_pays,lg_addtime)
-        </if>
-        <if test="qdid!=null">
             values(#{lgPhone},#{particularsId},#{particularsId},#{gmpays},#{qdid},NOW());
         </if>
         <if test="qdid==null">
+            qd_lg_power(lg_phone,lg_shop_uid,lg_ztc_id,lg_gm_pays,lg_addtime)
             values(#{lgPhone},#{particularsId},#{particularsId},#{gmpays},NOW());
         </if>
-
     </insert>
 
   <select id="purchaseList" parameterType="com.robbad.model.SearchCondition"  resultType="com.robbad.model.Basicmanager">

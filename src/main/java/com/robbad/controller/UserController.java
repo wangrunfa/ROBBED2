@@ -598,9 +598,9 @@ public class UserController {
     }
     @ResponseBody
     @RequestMapping("/judgeUserMessage")
-    public Object judgeUserMessage(String name, String mobile, String idcard,HttpServletRequest request) {
+    public Object judgeUserMessage(String name, String mobile, String idcard,Integer sourceId,HttpServletRequest request) {
 
-        return  userService.messageVerification(name,mobile,idcard,getIpAddr(request));
+        return  userService.messageVerification(name,mobile,idcard,sourceId,getIpAddr(request));
     }
     @RequestMapping("/addmessage")
     public String addmessage(HttpServletRequest request,Integer sourceId) {
@@ -623,5 +623,11 @@ public class UserController {
     public String findBiaojigm(HttpServletRequest request,Integer bzid) throws IOException {
         HttpSession session=request.getSession();
         return (String) userService.rondstoffenlijstbeizhu(bzid,(String)session.getAttribute("lgPhone"));
+    }
+    @ResponseBody
+    @RequestMapping("/findqdtjstatus")
+    public Object findqdtjstatus(Integer qdSource){
+
+        return userService.findqdtjstatus(qdSource);
     }
 }

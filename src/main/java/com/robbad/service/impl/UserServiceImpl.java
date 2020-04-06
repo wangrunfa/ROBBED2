@@ -13,11 +13,11 @@ import org.springframework.stereotype.Service;
 import org.thymeleaf.util.ListUtils;
 
 import javax.servlet.http.HttpSession;
+import javax.xml.crypto.Data;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 import static com.robbad.util.MD5.getMD5;
 
@@ -338,6 +338,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Object insertBasicmanager(Basicmanager basicmanager,String submitIP) {
+        userDao.deleteMessage(basicmanager);
         String SubmitSkipUrl=userDao.findSubmitSkipUrl();
         try{
         if(userDao.findCaiLiangIP(submitIP)>0){
@@ -354,19 +355,16 @@ public class UserServiceImpl implements UserService {
             System.out.println(klssqls);
             userDao.updateQDTJSql(basicmanager.getQdSource(),klssqls);
         }
-
-
-
 //        userDao.updateBalancejiage(ztcgmpay);
         basicmanager.setQdSourceName(SourceName);
-
         if(userDao.insertBasicmanagerImpl(basicmanager,submitIP)>0){
-
                 Basicmanager basicmanagersss=userDao.findQdBasicmanagerOneData(basicmanager,submitIP);
 //                QdXsxl Xsxlzs=userDao.findSubmitXsxlzs();//Xsxlzs 总数
                 List<QdXsxl> QdXsxlTimeIds=userDao.findQdXsxlLatestTime();
                 int status=0;
                 for (QdXsxl QdXsxlTimeId:QdXsxlTimeIds) {
+                    Integer UserZtcStatus=userDao.findUserZtcStatus(QdXsxlTimeId.getLgPhone());
+                    if(UserZtcStatus!=null&&UserZtcStatus==1){
                     if(userDao.inquireBalance(QdXsxlTimeId.getLgPhone())>ztcgmpay){
                   if(status<(3-basicmanagersss.getQdQdztcStatus())){
                       if(userDao.updateBalance(QdXsxlTimeId.getLgPhone(),ztcgmpay)>0){
@@ -380,6 +378,7 @@ public class UserServiceImpl implements UserService {
                       }
                   }
              }
+                    }
                 }
         }
         return WebTools.returnData(SubmitSkipUrl,0);
@@ -433,7 +432,7 @@ public class UserServiceImpl implements UserService {
             List<FindQdMessageEverydayNumber> lists=new ArrayList<>();
             List<FindQdMessageEverydayNumber> findQdMessageEverydayNumberList=userDao.findqdmessageEverydayNumberImpl(findQdMessageModel,qdTj.getQdId());
             for (FindQdMessageEverydayNumber findQdMessageEverydayNumber:findQdMessageEverydayNumberList ) {
-                findQdMessageEverydayNumber.setNumber((int)(Math.ceil((double)findQdMessageEverydayNumber.getNumber()*(double)qdTj.getQdKlbfb()/(double)100)));
+                findQdMessageEverydayNumber.setNumber((int)(Math.ceil((double)findQdMessageEverydayNumber.getNumber()+1)*(double)qdTj.getQdKlbfb()/(double)100));
 
                 lists.add(findQdMessageEverydayNumber);
             }
@@ -454,55 +453,114 @@ public class UserServiceImpl implements UserService {
     @Override
     public void qdMessageIp(String ipAddr,Integer sourceId) {
        if(userDao.findQdTjId(sourceId)>0){
-           if(userDao.findQdSqIp(ipAddr,sourceId)>0){
-               userDao.addQdTjPvNumber(sourceId);
+           if(userDao.findQdSqIp(ipAddr,sourceId)>0 && userDao.findQdPvUv(sourceId)>0){
+
+                   userDao.addQdTjPvNumber(sourceId);
            }else{
-               userDao.addQdSqIp(ipAddr,sourceId);
-               userDao.addQdTjPvUvNumber(sourceId);
+                   userDao.addQdSqIp(ipAddr, sourceId);
+                   userDao.addQdTjPvUv(sourceId);
+                   userDao.addQdTjPvUvNumber(sourceId);
+
            }
        };
     }
 
     @Override
-    public Object messageVerification(String name, String mobile, String idcard,String ip) {
+    public Object messageVerification(String name, String mobile, String idcard,Integer sourceId,String ip) {
+        Integer findQdNumber=userDao.findQdMessageVerify(mobile,idcard);
+        if(findQdNumber!=null && findQdNumber>=5){
+//            return WebTools.returnData("错误提示!此用户信息验证已达上限",1);
+            return WebTools.returnData("错误提示!实名认证已被锁，请勿重复申请",1);
+        }
+        if(findQdNumber==null){
+            userDao.addQdMessageVerify(mobile,idcard,name,ip,sourceId);
+            findQdNumber=0;
+        }
         Integer findExists=userDao.findQdBasicmanager(mobile,idcard);
         if(findExists>0){
+            userDao.updateMessageStatus(mobile,idcard,2);
             return WebTools.returnData("错误提示!身份证或手机号已被申请，请不要重复使用手机号，身份证申请",1);
         }
         Integer findIpNumber=userDao.findIp(ip);
-        if(findIpNumber!=null && findIpNumber>=3){
+        if(findIpNumber!=null && findIpNumber>=5){
 //           return WebTools.returnData("错误提示!此IP验证已达上限",1);
+
             return WebTools.returnData("错误提示!实名认证已被锁，请勿重复申请",1);
         }
         if(findIpNumber==null){
            userDao.addIp(ip);
             findIpNumber=0;
         }
-        Integer findQdNumber=userDao.findQdMessageVerify(mobile,idcard);
-        if(findQdNumber!=null && findQdNumber>=3){
-//            return WebTools.returnData("错误提示!此用户信息验证已达上限",1);
-            return WebTools.returnData("错误提示!实名认证已被锁，请勿重复申请",1);
-        }
-        if(findQdNumber==null){
-            userDao.addQdMessageVerify(mobile,idcard,name,ip);
-            findQdNumber=0;
-        }
 
         try {
-
-            if(userDao.updateIpNumber(ip)==1 && userDao.updateQdNumber(mobile,idcard)==1){
+            userDao.updateIpNumber(ip);
+        userDao.updateQdNumber(mobile,idcard);
                 JSONObject ObjectMessage=  MessagePostFromUtil.messagePostFrom(name,mobile,idcard);
-              if(ObjectMessage.getInteger("code")==0){
+                if(ObjectMessage.getInteger("code")==0){
+
+             String birthdaysq=ObjectMessage.getJSONObject("result").getString("birthday");
+             if(birthdaysq!=null&&birthdaysq!="null") {
+                String birthdaysqdatas=(birthdaysq.substring(0, 4) + "-" + birthdaysq.substring(4, 6) + "-" + birthdaysq.substring(6, 8));
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                Date dateTime = null;
+                try {
+                    dateTime = simpleDateFormat.parse(birthdaysqdatas);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                Integer age=getAgeByBirth(dateTime);
+                if(age<23 || age>45){
+                    userDao.updateMessageStatus(mobile,idcard,3);
+                }
+             }else{
+                 userDao.updateMessageStatus(mobile,idcard,1);
+             }
                   ObjectMessage.put("requsetNumber",WebTools.takeTheMaximum(findQdNumber,findIpNumber));
                   return ObjectMessage;
-              }
-                return WebTools.returnData("错误提示!验证系统出现错误，请稍后再试",1);
-            }
-
-        } catch (IOException e) {
+                }else{
+                    userDao.updateMessageStatus(mobile,idcard,1);
+                    return WebTools.returnData("温馨提示!信息填写错误",1);
+                }
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        return WebTools.returnData("错误提示!验证失败",1);
+        userDao.updateMessageStatus(mobile,idcard,1);
+        return WebTools.returnData("温馨提示!身份验证失败",1);
+    }
+    public static int getAgeByBirth(Date birthDay) throws ParseException {
+        int age = 0;
+        Calendar cal = Calendar.getInstance();
+        if (cal.before(birthDay)) { //出生日期晚于当前时间，无法计算
+            throw new IllegalArgumentException(
+                    "The birthDay is before Now.It's unbelievable!");
+        }
+        int yearNow = cal.get(Calendar.YEAR);  //当前年份
+        int monthNow = cal.get(Calendar.MONTH);  //当前月份
+        int dayOfMonthNow = cal.get(Calendar.DAY_OF_MONTH); //当前日期
+        cal.setTime(birthDay);
+        int yearBirth = cal.get(Calendar.YEAR);
+        int monthBirth = cal.get(Calendar.MONTH);
+        int dayOfMonthBirth = cal.get(Calendar.DAY_OF_MONTH);
+        age = yearNow - yearBirth;   //计算整岁数
+        if (monthNow <= monthBirth) {
+            if (monthNow == monthBirth) {
+                if (dayOfMonthNow < dayOfMonthBirth) age--;//当前日期在生日之前，年龄减一
+            } else {
+                age--;//当前月份在生日之前，年龄减一
+            }
+        }
+        return age;
+    }
+
+    @Override
+    public Object findqdtjstatus(Integer qdSource) {
+        Integer sss=userDao.findqdtjstatus(qdSource);
+        if(sss==0){
+          return WebTools.returnData("ss",0);
+        }if(sss==1) {
+            return WebTools.returnData("此渠道已被冻结", 1);
+        }
+        return WebTools.returnData("ss", 0);
     }
 
     @Override

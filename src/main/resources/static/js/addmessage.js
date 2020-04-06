@@ -26,9 +26,57 @@ var ymjRegion;//身份证号qd_region
 var ymjSex;//性别
 
 var inputmaxboxheight = 0;
+
+var qsstatus=0;
 //身份证正则
 var Cardzz = /^[1-9][0-9]{5}(19|20)[0-9]{2}((01|03|05|07|08|10|12)(0[1-9]|[1-2][0-9]|31)|(04|06|09|11)(0[1-9]|[1-2][0-9]|30)|02(0[1-9]|[1-2][0-9]))[0-9]{3}([0-9]|x|X)$/
 var phonezz = /^1[3456789]\d{9}$/
+
+window.onload=function(){
+    findqdtjstatus();
+}
+
+function findqdtjstatus() {
+    var sourceIdsss= getUrlParam('sourceId')
+if (sourceIdsss!=null && sourceIdsss!='' && sourceIdsss>0){
+
+
+    $.ajax({
+        url: "/findqdtjstatus",
+        data: {
+             "qdSource":sourceIdsss,
+
+        },
+        type: "post",
+        dataType: "json",
+        success: function (result) {
+            console.warn(result)
+            if (result.code == 0) {
+                qsstatus=0
+            }
+            if (result.code == 1) {
+                qsstatus=1
+                alert(result.message)
+                // $(location).prop('href',)
+
+            }
+        },
+        error: function (result) {
+            $(location).prop('href', "/login")
+            console.warn("error----");
+        }
+    })
+}else{
+    qsstatus=1
+    alert("温馨提示：您没有使用渠道!")
+}
+
+
+}
+
+
+
+
 
 function submitMessages() {
     console.warn("进入 submitMessages:")
@@ -66,12 +114,12 @@ function submitMessages() {
         success: function (result) {
             console.warn(result)
             if (result.code == 0) {
-                alert("信息已提交完成，稍后将有工作人员联系您")
+                alert("温馨提示：信息已提交完成，稍后将有工作人员联系您")
                 $(location).prop('href', result.data)
             }else if (result.code == 1) {
                 alert(result.message)
             }else if (result.code == 2) {
-                alert("信息已提交完成，客服正在审核，请不要重复提交")
+                alert("温馨提示：信息已提交完成，客服正在审核，请不要重复提交")
                 $(location).prop('href', result.message)
 
             }
@@ -138,6 +186,9 @@ $(function () {
         // }
 
         ymjusername = $("#ymjusername").val();
+        if (qsstatus==0){
+
+
         if (checkChinese(ymjusername)) {
             // storage.setItem("usernames",$("#ymjusername").val());
             // var firstName = ymjusername.substr(0, 1);
@@ -147,6 +198,7 @@ $(function () {
 
                 ymjCard = $("#ymjCard").val();
                 if (Cardzz.test(ymjCard)) {
+                    var sourceIdsss= getUrlParam('sourceId')
                     $(".jiashiann").show()
                     $("#paydayMessage").val("点击选择发薪日")
                     $.ajax({
@@ -154,7 +206,8 @@ $(function () {
                         data: {
                             "name": ymjusername,
                             "mobile": ymjphone,
-                            "idcard": ymjCard
+                            "idcard": ymjCard,
+                            "sourceId":sourceIdsss
                         },
                         type: "post",
                         dataType: "json",
@@ -182,20 +235,20 @@ $(function () {
                                             }
                                             $(".jiashiann").hide()
                                         } else {
-                                            if (resultJson.requsetNumber==2){
-                                                alert("实名错误提示，实名需要三要素一致， 姓名，手机号码，身份证 ")
+                                            if (resultJson.requsetNumber==3){
+                                                alert("温馨提示：实名错误提示，实名需要三要素一致， 姓名，手机号码，身份证 ")
                                             }else{
-                                                alert("年龄条件：23-45 之间")
+                                                alert("温馨提示：您的年龄不符合申请要求-年龄条件：23-45 之间")
                                             }
 
                                         }
 
                                 } else {
                                     // alert("错误！请检查-姓名,手机号,身份证-是否都为 您 所有")
-                                    if (resultJson.requsetNumber==2){
-                                        alert("实名错误提示，实名需要三要素一致， 姓名，手机号码，身份证 ")
+                                    if (resultJson.requsetNumber==3){
+                                        alert("温馨提示：实名错误提示，实名需要三要素一致， 姓名，手机号码，身份证 ")
                                     }else {
-                                        alert("错误！请检查您的实名信息是否填写正确！")
+                                        alert("温馨提示：请检查您的实名信息是否填写正确！")
                                     }
                                 }
 
@@ -207,7 +260,7 @@ $(function () {
                         error: function (result) {
                             $(".jiashiann").hide()
                             // $(location).prop('href', "/login")
-                            console.warn("error----");
+                            alert("温馨提示：您的信息填写错误，请重试！")
                         }
                     })
                     $(".theFinalStepInput>.prompting").html("姓名:" + ymjusername);
@@ -221,18 +274,21 @@ $(function () {
                     console.warn("性别:" + ymjSex)
 
                 } else {
-                    alert("请正确填写身份证号")
+                    alert("温馨提示：请正确填写身份证号")
                 }
 
             } else {
-                alert("请正确填写手机号")
+                alert("温馨提示：请正确填写手机号")
             }
 
             // } else {
             //     alert("请输入正确中文姓名！");
             // }
         } else {
-            alert("请输入正确中文姓名，并且长度为2-4位");
+            alert("温馨提示：请输入正确中文姓名，并且长度为2-4位");
+        }
+        }else{
+            alert("温馨提示：渠道信息有误");
         }
     })
 
@@ -310,13 +366,13 @@ $(function () {
                         $(".inputmaxbox").css({"height": inputmaxboxheight + "px"})
                     }
                 } else {
-                    alert("请正确填写芝麻分（ 550 至 950 ） ")
+                    alert("温馨提示：请正确填写芝麻分（ 550 至 950 ） ")
                 }
             } else {
-                alert("请填写微信号")
+                alert("温馨提示：请填写微信号")
             }
         } else {
-            alert("请正确填写QQ号")
+            alert("温馨提示：请正确填写QQ号")
         }
     })
     $(".supplementaryInput>.ButtonThe").click(function () {
@@ -338,7 +394,7 @@ $(function () {
             $(".inputmaxbox").css({"height": "550px"})
 
         } else {
-            alert("请正确填写发薪日")
+            alert("温馨提示：请正确填写发薪日")
         }
     })
     $(".paydayInput>.ButtonThe").click(function () {
@@ -359,7 +415,7 @@ $(function () {
                 $(".inputmaxbox").css({"height": inputmaxboxheight + "px"})
             }
         } else {
-            alert("请正确填写月收入")
+            alert("温馨提示：请正确填写月收入")
         }
     })
     $(".monthlyInput>.ButtonThe").click(function () {
@@ -380,7 +436,7 @@ $(function () {
                 $(".inputmaxbox").css({"height": inputmaxboxheight + "px"})
             }
         } else {
-            alert("请正确填写单位地址")
+            alert("温馨提示：请正确填写单位地址")
         }
     })
     $(".AddressLocationInput>.ButtonThe").click(function () {
@@ -401,7 +457,7 @@ $(function () {
                 $(".inputmaxbox").css({"height": inputmaxboxheight + "px"})
             }
         } else {
-            alert("请正确填写工作单位")
+            alert("温馨提示：请正确填写工作单位")
         }
     })
     $(".unitsCurrencyInput>.ButtonThe").click(function () {
@@ -476,7 +532,7 @@ $(function () {
                 $(".inputmaxbox").css({"height": inputmaxboxheight + "px"})
             }
         } else {
-            alert("请正确填写现居地")
+            alert("温馨提示：请正确填写现居地")
         }
     })
     $(".linusericssonInput>.ButtonThe").click(function () {
