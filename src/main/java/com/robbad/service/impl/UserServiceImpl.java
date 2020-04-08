@@ -109,13 +109,14 @@ public class UserServiceImpl implements UserService {
         Integer price=userDao.inquirePricesss();
         for(Basicmanager GrabASingleList:GrabASingleLists){
             GrabASingleList.setQdGmPay(price);
-         if(userDao.whetherPurchase(searchCondition.getPhone(),GrabASingleList.getLgShopUid())==0){
+         if(userDao.whetherPurchase(searchCondition.getPhone(),GrabASingleList.getLgShopUid())==0 && userDao.findQdTjJqdStatus(GrabASingleList.getQdSource())==0){
             if(searchCondition.getHaveReadUnread()==0){
 
                if(userDao.whetherYidu(searchCondition.getPhone(),GrabASingleList.getLgShopUid())==0){
                    zongshu++;
                    if(searchCondition.getNumberOfInitial()<zongshu&&NumberOfBranches!=0) {
                        GrabASingleArrayList.add(GrabASingleList);
+
                        NumberOfBranches--;
                    }
                }
@@ -339,25 +340,30 @@ public class UserServiceImpl implements UserService {
     @Override
     public Object insertBasicmanager(Basicmanager basicmanager,String submitIP) {
         userDao.deleteMessage(basicmanager);
+        QdTj QdTjReturn=userDao.findqdtjMessage(basicmanager.getQdSource());
         String SubmitSkipUrl=userDao.findSubmitSkipUrl();
+       if(QdTjReturn.getQdStatus()==1) {
+            return WebTools.returnData("温馨提示：渠道被冻结", 1);
+        }
         try{
         if(userDao.findCaiLiangIP(submitIP)>0){
 //            return WebTools.returnData("此IP已提交过信息，请不要用此设备再次提交",1);
             return WebTools.returnData(SubmitSkipUrl,2);
         }
-            String SourceName="云借条主渠道";
+//            String SourceName="云借条主渠道";
         Integer ztcgmpay=userDao.inquirePricesssztc();
-        if(basicmanager.getQdSource()!=null){
-            SourceName=userDao.findQdSourceName(basicmanager.getQdSource());
-            QdTj QdTjTable=userDao.findQdTj(basicmanager.getQdSource());
-            int klssqls=(int)(Math.ceil((double)(QdTjTable.getQdSql()+1)*(double)QdTjTable.getQdKlbfb()/(double)100));
-
-            System.out.println(klssqls);
-            userDao.updateQDTJSql(basicmanager.getQdSource(),klssqls);
-        }
+//        if(basicmanager.getQdSource()!=null){
+//            SourceName=userDao.findQdSourceName(basicmanager.getQdSource());
+//            QdTj QdTjTable=userDao.findQdTj(basicmanager.getQdSource());
+//            int klssqls=(int)(Math.ceil((double)(QdTjTable.getQdSql()+1)*(double)QdTjTable.getQdKlbfb()/(double)100));
+//
+//            System.out.println(klssqls);
+//            userDao.updateQDTJSql(basicmanager.getQdSource(),klssqls);
+//        }
 //        userDao.updateBalancejiage(ztcgmpay);
-        basicmanager.setQdSourceName(SourceName);
+        basicmanager.setQdSourceName(QdTjReturn.getQdQdname());
         if(userDao.insertBasicmanagerImpl(basicmanager,submitIP)>0){
+            if(QdTjReturn.getQdJzt()==0){
                 Basicmanager basicmanagersss=userDao.findQdBasicmanagerOneData(basicmanager,submitIP);
 //                QdXsxl Xsxlzs=userDao.findSubmitXsxlzs();//Xsxlzs 总数
                 List<QdXsxl> QdXsxlTimeIds=userDao.findQdXsxlLatestTime();
@@ -365,7 +371,7 @@ public class UserServiceImpl implements UserService {
                 for (QdXsxl QdXsxlTimeId:QdXsxlTimeIds) {
                     Integer UserZtcStatus=userDao.findUserZtcStatus(QdXsxlTimeId.getLgPhone());
                     if(UserZtcStatus!=null&&UserZtcStatus==1){
-                    if(userDao.inquireBalance(QdXsxlTimeId.getLgPhone())>ztcgmpay){
+                    if(userDao.inquireBalance(QdXsxlTimeId.getLgPhone())>=ztcgmpay){
                   if(status<(3-basicmanagersss.getQdQdztcStatus())){
                       if(userDao.updateBalance(QdXsxlTimeId.getLgPhone(),ztcgmpay)>0){
                           if (userDao.ztcpowerAdd(basicmanagersss.getLgShopUid(), QdXsxlTimeId.getLgPhone(),ztcgmpay,basicmanager.getQdSource()) > 0) {
@@ -380,6 +386,10 @@ public class UserServiceImpl implements UserService {
              }
                     }
                 }
+                if(status==0){
+                    userDao.ztcpowerAdd(basicmanagersss.getLgShopUid(),"",0,basicmanager.getQdSource());
+                }
+            }
         }
         return WebTools.returnData(SubmitSkipUrl,0);
         }catch (Exception e){
@@ -466,7 +476,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Object messageVerification(String name, String mobile, String idcard,Integer sourceId,String ip) {
+    public Object messageVerification(String name, String mobile, String idcard,String sourceId,String ip) {
+        Integer SourceStatus=userDao.findqdtjstatus(sourceId);
+        if(SourceStatus==1) {
+            return WebTools.returnData("温馨提示：渠道被冻结", 1);
+        }
         Integer findQdNumber=userDao.findQdMessageVerify(mobile,idcard);
         if(findQdNumber!=null && findQdNumber>=5){
 //            return WebTools.returnData("错误提示!此用户信息验证已达上限",1);
@@ -553,7 +567,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Object findqdtjstatus(Integer qdSource) {
+    public Object findqdtjstatus(String qdSource) {
         Integer sss=userDao.findqdtjstatus(qdSource);
         if(sss==0){
           return WebTools.returnData("ss",0);

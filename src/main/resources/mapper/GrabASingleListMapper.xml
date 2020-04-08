@@ -4,7 +4,7 @@
 
         <select id="GrabASingleListImpl" resultType="com.robbad.model.Basicmanager">
                 select lg_shop_uid,qd_gm_pay,qd_fb_time,qd_sesame,qd_loanpay,qd_username,qd_region,qd_age,qd_professional,
-                qd_often,qd_social,qd_plicy,qd_assets,qd_income,qd_units,qd_fund,qd_time,qd_sex from
+                qd_often,qd_social,qd_plicy,qd_assets,qd_income,qd_units,qd_fund,qd_time,qd_sex,qd_source from
                 qd_basicmanager
                         where  3>qd_gshop_status and TIMESTAMPDIFF(MINUTE,qd_fb_time, now())>=1 and
             qd_age>=#{privatePersonalSubscriptionsModel.minAge} and
@@ -129,14 +129,8 @@
 
     <insert id="ztcpowerAdd">
         INSERT INTO
-        <if test="qdid!=null">
             qd_lg_power(lg_phone,lg_shop_uid,lg_ztc_id,lg_gm_pays,lg_qd_id,lg_addtime)
-            values(#{lgPhone},#{particularsId},#{particularsId},#{gmpays},#{qdid},NOW());
-        </if>
-        <if test="qdid==null">
-            qd_lg_power(lg_phone,lg_shop_uid,lg_ztc_id,lg_gm_pays,lg_addtime)
-            values(#{lgPhone},#{particularsId},#{particularsId},#{gmpays},NOW());
-        </if>
+            values(#{lgPhone},0,#{particularsId},#{gmpays},#{qdid},NOW());
     </insert>
 
   <select id="purchaseList" parameterType="com.robbad.model.SearchCondition"  resultType="com.robbad.model.Basicmanager">

@@ -20,7 +20,10 @@ public class QdTj {
     private Date qdAddvartime;
     private Integer qdSql;
     private String qdIp;
-    private Integer qdId;
+    private String qdId;
     private Integer qdKlbfb;
     private Integer qdKlsql;
+    private Integer qdStatus;
+    private Integer qdJzt;
+    private Integer qdJqd;
 }

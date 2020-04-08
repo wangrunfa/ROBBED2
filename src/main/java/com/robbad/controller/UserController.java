@@ -598,7 +598,7 @@ public class UserController {
     }
     @ResponseBody
     @RequestMapping("/judgeUserMessage")
-    public Object judgeUserMessage(String name, String mobile, String idcard,Integer sourceId,HttpServletRequest request) {
+    public Object judgeUserMessage(String name, String mobile, String idcard,String sourceId,HttpServletRequest request) {
 
         return  userService.messageVerification(name,mobile,idcard,sourceId,getIpAddr(request));
     }
@@ -626,7 +626,7 @@ public class UserController {
     }
     @ResponseBody
     @RequestMapping("/findqdtjstatus")
-    public Object findqdtjstatus(Integer qdSource){
+    public Object findqdtjstatus(String qdSource){
 
         return userService.findqdtjstatus(qdSource);
     }

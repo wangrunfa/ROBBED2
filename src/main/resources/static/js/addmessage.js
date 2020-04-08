@@ -45,7 +45,6 @@ if (sourceIdsss!=null && sourceIdsss!='' && sourceIdsss>0){
         url: "/findqdtjstatus",
         data: {
              "qdSource":sourceIdsss,
-
         },
         type: "post",
         dataType: "json",
@@ -288,7 +287,7 @@ $(function () {
             alert("温馨提示：请输入正确中文姓名，并且长度为2-4位");
         }
         }else{
-            alert("温馨提示：渠道信息有误");
+            alert("温馨提示：渠道错误");
         }
     })
 

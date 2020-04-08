@@ -96,7 +96,7 @@ Basicmanager particularsMessage(@Param("particularsId")Integer particularsId);
     @Select("select lg_balance from qd_userss where lg_phone=#{lgPhone}")
     Integer inquireBalance(@Param("lgPhone") String lgPhone);
     //查询是否购买
-    @Select("select count(*) from qd_lg_power where lg_phone=#{lgPhone} and lg_shop_uid=#{gmid}")
+    @Select("select count(*) from qd_lg_power where lg_phone=#{lgPhone} and lg_shop_uid=#{gmid} or lg_ztc_id=#{gmid}")
     Integer whetherPurchase(@Param("lgPhone")String lgPhone,@Param("gmid") Integer gmid);
 
     //查询是否购买 的價格
@@ -137,7 +137,7 @@ Basicmanager particularsMessage(@Param("particularsId")Integer particularsId);
     @Update("update qd_qdtj set qd_sql=qd_sql+1,qd_klsql=#{klsql} where qd_id=#{qdSource}")
     Integer updateQDTJSql(@Param("qdSource")int qdSource,@Param("klsql")int klsql);
     @Select("select qd_qdname from qd_qdtj where qd_id=#{qdSource}")
-    String findQdSourceName(@Param("qdSource")int qdSource);
+    String findQdSourceName(@Param("qdSource")String qdSource);
     @Select("select qd_sql,qd_klbfb from qd_qdtj where qd_id=#{qdSource}")
     QdTj findQdTj(@Param("qdSource")int qdSource);
     @Select("select count(*) from qd_xsxl where lg_phone=#{qdXsxl.lgPhone}")
@@ -158,7 +158,7 @@ Basicmanager particularsMessage(@Param("particularsId")Integer particularsId);
     @Select("select * from qd_basicmanager where qd_submit_ip=#{submitIP} and qd_phone=#{basicmanager.qdPhone}")
     Basicmanager findQdBasicmanagerOneData(@Param("basicmanager")Basicmanager basicmanager,@Param("submitIP") String submitIP);
 
-    int ztcpowerAdd(@Param("particularsId")Integer particularsId,@Param("lgPhone") String lgPhone,@Param("gmpays") Integer gmpays,@Param("qdid") Integer qdid);
+    int ztcpowerAdd(@Param("particularsId")Integer particularsId,@Param("lgPhone") String lgPhone,@Param("gmpays") Integer gmpays,@Param("qdid") String qdid);
 
     @Update("update qd_xsxl set daily_limited=daily_limited-1,submit_time=now() where xsxl_id=#{xsxlId}")
     int ztcUpdateQdXsxls(@Param("xsxlId")Integer xsxlId);
@@ -193,9 +193,9 @@ Basicmanager particularsMessage(@Param("particularsId")Integer particularsId);
     @Select("select qd_qdname,qd_qdurl,qd_addvartime,qd_id,qd_klbfb from qd_qdtj where login_name=#{findQdMessageModel.loginusername} and login_password=#{findQdMessageModel.loginpassword} LIMIT 1")
     QdTj findqdmessagedataajaxsImpl(@Param("findQdMessageModel")FindQdMessageModel findQdMessageModel);
 
-    List<FindQdMessageEverydayNumber> findqdmessageEverydayNumberImpl(@Param("findQdMessageModel")FindQdMessageModel findQdMessageModel, @Param("qdId") Integer qdId);
+    List<FindQdMessageEverydayNumber> findqdmessageEverydayNumberImpl(@Param("findQdMessageModel")FindQdMessageModel findQdMessageModel, @Param("qdId") String qdId);
 
-    List<FindQdMessageEverydayNumber>  findqdmessageNumberImpl(@Param("findQdMessageModel")FindQdMessageModel findQdMessageModel, @Param("qdId") Integer qdId);
+    List<FindQdMessageEverydayNumber>  findqdmessageNumberImpl(@Param("findQdMessageModel")FindQdMessageModel findQdMessageModel, @Param("qdId") String qdId);
     @Select("select count(*) from qd_sq_ip where sq_ip=#{ipAddr} and qd_id=#{sourceId}")
     Integer findQdSqIp(@Param("ipAddr")String ipAddr,@Param("sourceId")Integer sourceId);
     @Select("select count(*) from qd_qdtj where qd_id=#{sourceId}")
@@ -221,7 +221,7 @@ Basicmanager particularsMessage(@Param("particularsId")Integer particularsId);
             "qd_name,qd_phone,qd_card,qd_ip,qd_qdid,qd_addtime" +
             ") values(" +
             "#{name},#{mobile},#{idcard},#{ip},#{sourceId},NOW());")
-    Integer addQdMessageVerify(@Param("mobile")String mobile, @Param("idcard")String idcard, @Param("name")String name, @Param("ip")String ip,@Param("sourceId")Integer sourceId);
+    Integer addQdMessageVerify(@Param("mobile")String mobile, @Param("idcard")String idcard, @Param("name")String name, @Param("ip")String ip,@Param("sourceId")String sourceId);
     @Select("select count(*) from qd_basicmanager where qd_phone=#{mobile} or qd_card=#{idcard} limit 1")
     Integer findQdBasicmanager(String mobile, String idcard);
     @Update("update qd_ip_astrict set qd_ip_number=qd_ip_number+1 where qd_ip=#{ip} limit 1")
@@ -229,12 +229,16 @@ Basicmanager particularsMessage(@Param("particularsId")Integer particularsId);
     @Update("update qd_message_verify set qd_number=qd_number+1 where qd_phone=#{mobile} and qd_card=#{idcard} limit 1")
     Integer updateQdNumber(@Param("mobile")String mobile, @Param("idcard")String idcard);
 
-    @Select("select qd_status from qd_qdtj where qd_id=#{qdSource} limit 1")
-    Integer findqdtjstatus(@Param("qdSource")Integer qdSource);
+    @Select("select * from qd_qdtj where qd_id=#{qdSource} limit 1")
+    QdTj findqdtjMessage(@Param("qdSource")String qdSource);
+    @Select("select * from qd_qdtj where qd_id=#{qdSource} limit 1")
+    Integer findqdtjstatus(@Param("qdSource")String qdSource);
     @Update("update qd_message_verify set qd_status=#{statusss} where qd_phone=#{mobile} and qd_card=#{idcard} limit 1")
     void updateMessageStatus(@Param("mobile")String mobile, @Param("idcard")String idcard,@Param("statusss")int statuss);
     @Delete("DELETE FROM qd_message_verify where qd_phone=#{basicmanager.qdPhone} and qd_card=#{basicmanager.qdCard}  limit 1")
     Integer deleteMessage(@Param("basicmanager")Basicmanager basicmanager);
     @Select("select lg_ztc_staus from qd_userss where lg_phone=#{lgPhone} limit 1")
     Integer findUserZtcStatus(@Param("lgPhone")String lgPhone);
+    @Select("select qd_jqd from qd_qdtj where qd_id=#{qdSource} limit 1")
+    Integer findQdTjJqdStatus(@Param("qdSource")String qdSource);
 }
