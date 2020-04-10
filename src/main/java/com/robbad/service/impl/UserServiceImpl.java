@@ -109,7 +109,7 @@ public class UserServiceImpl implements UserService {
         Integer price=userDao.inquirePricesss();
         for(Basicmanager GrabASingleList:GrabASingleLists){
             GrabASingleList.setQdGmPay(price);
-         if(userDao.whetherPurchase(searchCondition.getPhone(),GrabASingleList.getLgShopUid())==0 && userDao.findQdTjJqdStatus(GrabASingleList.getQdSource())==0){
+         if(userDao.whetherPurchase(searchCondition.getPhone(),GrabASingleList.getLgShopUid())==0 && userDao.findQdTjJqdStatus(GrabASingleList.getQdSource(),GrabASingleList.getLgShopUid())==0){
             if(searchCondition.getHaveReadUnread()==0){
 
                if(userDao.whetherYidu(searchCondition.getPhone(),GrabASingleList.getLgShopUid())==0){
@@ -342,7 +342,7 @@ public class UserServiceImpl implements UserService {
         userDao.deleteMessage(basicmanager);
         QdTj QdTjReturn=userDao.findqdtjMessage(basicmanager.getQdSource());
         String SubmitSkipUrl=userDao.findSubmitSkipUrl();
-       if(QdTjReturn.getQdStatus()==1) {
+       if(QdTjReturn.getQdStatus()==null && QdTjReturn.getQdStatus()==1) {
             return WebTools.returnData("温馨提示：渠道被冻结", 1);
         }
         try{
@@ -362,9 +362,11 @@ public class UserServiceImpl implements UserService {
 //        }
 //        userDao.updateBalancejiage(ztcgmpay);
         basicmanager.setQdSourceName(QdTjReturn.getQdQdname());
+
+            Basicmanager basicmanagersss=null;
         if(userDao.insertBasicmanagerImpl(basicmanager,submitIP)>0){
+            basicmanagersss=userDao.findQdBasicmanagerOneData(basicmanager,submitIP);
             if(QdTjReturn.getQdJzt()==0){
-                Basicmanager basicmanagersss=userDao.findQdBasicmanagerOneData(basicmanager,submitIP);
 //                QdXsxl Xsxlzs=userDao.findSubmitXsxlzs();//Xsxlzs 总数
                 List<QdXsxl> QdXsxlTimeIds=userDao.findQdXsxlLatestTime();
                 int status=0;
@@ -391,6 +393,9 @@ public class UserServiceImpl implements UserService {
                 }
             }
         }
+            if(QdTjReturn.getQdJqd()==1) {
+                userDao.addQdJztStatus(basicmanagersss.getLgShopUid(),QdTjReturn.getQdId());
+            }
         return WebTools.returnData(SubmitSkipUrl,0);
         }catch (Exception e){
             return WebTools.returnData(SubmitSkipUrl,2);
@@ -461,7 +466,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void qdMessageIp(String ipAddr,Integer sourceId) {
+    public void qdMessageIp(String ipAddr,String sourceId) {
        if(userDao.findQdTjId(sourceId)>0){
            if(userDao.findQdSqIp(ipAddr,sourceId)>0 && userDao.findQdPvUv(sourceId)>0){
 
@@ -570,11 +575,12 @@ public class UserServiceImpl implements UserService {
     public Object findqdtjstatus(String qdSource) {
         Integer sss=userDao.findqdtjstatus(qdSource);
         if(sss==0){
-          return WebTools.returnData("ss",0);
-        }if(sss==1) {
+          return WebTools.returnData("此渠道可用",0);
+        }
+        if(sss==1){
             return WebTools.returnData("此渠道已被冻结", 1);
         }
-        return WebTools.returnData("ss", 0);
+        return WebTools.returnData("此渠道可用", 0);
     }
 
     @Override

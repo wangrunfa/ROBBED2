@@ -38,7 +38,8 @@ window.onload=function(){
 
 function findqdtjstatus() {
     var sourceIdsss= getUrlParam('sourceId')
-if (sourceIdsss!=null && sourceIdsss!='' && sourceIdsss>0){
+
+if (sourceIdsss!=null && sourceIdsss!=''){
 
 
     $.ajax({

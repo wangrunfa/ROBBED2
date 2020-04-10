@@ -603,11 +603,10 @@ public class UserController {
         return  userService.messageVerification(name,mobile,idcard,sourceId,getIpAddr(request));
     }
     @RequestMapping("/addmessage")
-    public String addmessage(HttpServletRequest request,Integer sourceId) {
+    public String addmessage(HttpServletRequest request,String sourceId) {
         if(sourceId!=null){
             userService.qdMessageIp(getIpAddr(request),sourceId);
         }
-
         return "addmessage";
     }
     @ResponseBody

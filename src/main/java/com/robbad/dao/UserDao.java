@@ -96,7 +96,7 @@ Basicmanager particularsMessage(@Param("particularsId")Integer particularsId);
     @Select("select lg_balance from qd_userss where lg_phone=#{lgPhone}")
     Integer inquireBalance(@Param("lgPhone") String lgPhone);
     //查询是否购买
-    @Select("select count(*) from qd_lg_power where lg_phone=#{lgPhone} and lg_shop_uid=#{gmid} or lg_ztc_id=#{gmid}")
+    @Select("select count(*) from qd_lg_power where lg_phone=#{lgPhone} and (lg_shop_uid=#{gmid} or lg_ztc_id=#{gmid})")
     Integer whetherPurchase(@Param("lgPhone")String lgPhone,@Param("gmid") Integer gmid);
 
     //查询是否购买 的價格
@@ -197,20 +197,20 @@ Basicmanager particularsMessage(@Param("particularsId")Integer particularsId);
 
     List<FindQdMessageEverydayNumber>  findqdmessageNumberImpl(@Param("findQdMessageModel")FindQdMessageModel findQdMessageModel, @Param("qdId") String qdId);
     @Select("select count(*) from qd_sq_ip where sq_ip=#{ipAddr} and qd_id=#{sourceId}")
-    Integer findQdSqIp(@Param("ipAddr")String ipAddr,@Param("sourceId")Integer sourceId);
+    Integer findQdSqIp(@Param("ipAddr")String ipAddr,@Param("sourceId")String sourceId);
     @Select("select count(*) from qd_qdtj where qd_id=#{sourceId}")
-    Integer findQdTjId(@Param("sourceId")Integer sourceId);
+    Integer findQdTjId(@Param("sourceId")String sourceId);
     @Insert("INSERT INTO qd_sq_ip(sq_ip,qd_id,addtime) values(#{ipAddr},#{sourceId},NOW());")
-    void addQdSqIp(@Param("ipAddr")String ipAddr,@Param("sourceId") Integer sourceId);
+    void addQdSqIp(@Param("ipAddr")String ipAddr,@Param("sourceId") String sourceId);
     @Insert("INSERT INTO qd_pvuv(qd_user_id,addtime) values(#{sourceId},NOW());")
-    void addQdTjPvUv(@Param("sourceId")Integer sourceId);
+    void addQdTjPvUv(@Param("sourceId")String sourceId);
     @Select("select count(*) from qd_pvuv where qd_user_id=#{sourceId} and  TO_DAYS(addtime) = TO_DAYS(NOW())")
-    Integer findQdPvUv(Integer sourceId);
+    Integer findQdPvUv(@Param("sourceId")String sourceId);
 
     @Update("update qd_pvuv set qd_pv=qd_pv+1 where qd_user_id=#{sourceId}  and  TO_DAYS(addtime) = TO_DAYS(NOW()) order by addtime limit 1")
-    void addQdTjPvNumber(@Param("sourceId")Integer sourceId);
+    void addQdTjPvNumber(@Param("sourceId")String sourceId);
     @Update("update qd_pvuv set qd_pv=qd_pv+1,qd_uv=qd_uv+1 where qd_user_id=#{sourceId}  and  TO_DAYS(addtime) = TO_DAYS(NOW()) order by addtime limit 1")
-    void addQdTjPvUvNumber(@Param("sourceId")Integer sourceId);
+    void addQdTjPvUvNumber(@Param("sourceId")String sourceId);
     @Select("select qd_ip_number from qd_ip_astrict where qd_ip=#{ip} limit 1")
     Integer findIp(@Param("ip")String ip);
     @Insert("INSERT INTO qd_ip_astrict(qd_ip,addtime) values(#{ip},NOW());")
@@ -231,7 +231,7 @@ Basicmanager particularsMessage(@Param("particularsId")Integer particularsId);
 
     @Select("select * from qd_qdtj where qd_id=#{qdSource} limit 1")
     QdTj findqdtjMessage(@Param("qdSource")String qdSource);
-    @Select("select * from qd_qdtj where qd_id=#{qdSource} limit 1")
+    @Select("select qd_status from qd_qdtj where qd_id=#{qdSource} limit 1")
     Integer findqdtjstatus(@Param("qdSource")String qdSource);
     @Update("update qd_message_verify set qd_status=#{statusss} where qd_phone=#{mobile} and qd_card=#{idcard} limit 1")
     void updateMessageStatus(@Param("mobile")String mobile, @Param("idcard")String idcard,@Param("statusss")int statuss);
@@ -239,6 +239,8 @@ Basicmanager particularsMessage(@Param("particularsId")Integer particularsId);
     Integer deleteMessage(@Param("basicmanager")Basicmanager basicmanager);
     @Select("select lg_ztc_staus from qd_userss where lg_phone=#{lgPhone} limit 1")
     Integer findUserZtcStatus(@Param("lgPhone")String lgPhone);
-    @Select("select qd_jqd from qd_qdtj where qd_id=#{qdSource} limit 1")
-    Integer findQdTjJqdStatus(@Param("qdSource")String qdSource);
+    @Select("select count(*) from qd_jqd_status where lg_shop_uid=#{lgShopId} and qd_id=#{qdSource}")
+    Integer findQdTjJqdStatus(@Param("qdSource")String qdSource,@Param("lgShopId")Integer lgShopId);
+    @Insert("INSERT INTO qd_jqd_status(lg_shop_uid,qd_id,addtime) values(#{lgShopUid},#{qdId},NOW());")
+    void addQdJztStatus(@Param("lgShopUid")Integer lgShopUid,@Param("qdId") String qdId);
 }
