@@ -38,7 +38,7 @@ window.onload=function(){
 
 function findqdtjstatus() {
     var sourceIdsss= getUrlParam('sourceId')
-
+    console.warn(sourceIdsss);
 if (sourceIdsss!=null && sourceIdsss!=''){
 
 
@@ -57,12 +57,15 @@ if (sourceIdsss!=null && sourceIdsss!=''){
             if (result.code == 1) {
                 qsstatus=1
                 alert(result.message)
-                // $(location).prop('href',)
-
+            }
+            if (result.code == 2) {
+                qsstatus=1
+                alert(result.message)
+                $(location).prop('href','https://www.mayabox.cn/index.php/index/index/reg/aid/46')
             }
         },
         error: function (result) {
-            $(location).prop('href', "/login")
+            $(location).prop('href','https://www.mayabox.cn/index.php/index/index/reg/aid/46')
             console.warn("error----");
         }
     })
@@ -189,7 +192,7 @@ $(function () {
         if (qsstatus==0){
 
 
-        if (checkChinese(ymjusername)) {
+        // if (checkChinese(ymjusername)) {
             // storage.setItem("usernames",$("#ymjusername").val());
             // var firstName = ymjusername.substr(0, 1);
             // if (checkbjx(firstName)) {
@@ -197,7 +200,7 @@ $(function () {
             if (phonezz.test(ymjphone)) {
 
                 ymjCard = $("#ymjCard").val();
-                if (Cardzz.test(ymjCard)) {
+                // if (Cardzz.test(ymjCard)) {
                     var sourceIdsss= getUrlParam('sourceId')
                     $(".jiashiann").show()
                     $("#paydayMessage").val("点击选择发薪日")
@@ -273,9 +276,9 @@ $(function () {
                     console.warn("身份证:" + ymjCard)
                     console.warn("性别:" + ymjSex)
 
-                } else {
-                    alert("温馨提示：请正确填写身份证号")
-                }
+                // } else {
+                //     alert("温馨提示：请正确填写身份证号")
+                // }
 
             } else {
                 alert("温馨提示：请正确填写手机号")
@@ -284,9 +287,9 @@ $(function () {
             // } else {
             //     alert("请输入正确中文姓名！");
             // }
-        } else {
-            alert("温馨提示：请输入正确中文姓名，并且长度为2-4位");
-        }
+        // } else {
+        //     alert("温馨提示：请输入正确中文姓名，并且长度为2-4位");
+        // }
         }else{
             alert("温馨提示：渠道错误");
         }

@@ -1,0 +1,168 @@
+
+
+.validate-captcha-wrapper {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    -webkit-transition: 0.3s;
+    transition: 0.3s;
+
+}
+
+.validate-captcha-wrapper.slideLeft {
+        z-index: auto;
+        z-index: initial;
+        left: auto;
+        background: none;
+    }
+
+.validate-captcha-wrapper .validate-dialog {
+        text-align: center;
+        padding: 24px 27px 0px;
+        background: #fff;
+        border-radius: 8px;
+        position: relative;
+        z-index: 1000;
+        top: 164px;
+        width: 90%;
+        margin: 0 auto;
+        box-sizing: border-box;
+    }
+
+.validate-captcha-wrapper.slideLeft .validate-dialog {
+        position: relative;
+        top: 0;
+        padding: 40px 24px 0;
+        width: 100%;
+        height: 100%;
+    }
+
+.validate-captcha-wrapper.slideLeft .back-container {
+        width: 34px;
+        height: 32px;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
+.validate-captcha-wrapper.slideLeft .back-container .back {
+            width: 18px;
+            height: 15px;
+            position: absolute;
+            top: 16px;
+            left: 16px;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 18 15' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M2.7 8.272h14.512c.45 0 .788-.33.788-.769s-.337-.768-.788-.768H2.7l5.4-5.383c.338-.33.338-.768 0-1.098-.337-.33-.787-.33-1.125 0l-6.75 6.7a.829.829 0 0 0-.225.55c0 .22.113.439.225.549l6.75 6.7c.338.33.788.33 1.125 0 .338-.33.338-.769 0-1.099L2.7 8.272z' fill='%23666' fill-rule='nonzero'/%3E%3C/svg%3E");
+        }
+
+.validate-captcha-wrapper .close {
+        position: absolute;
+        top: 1px;
+        right: 10px;
+        color:  #D7D7D7;
+        font-size: 25px;
+        -webkit-transform: rotate(45deg);
+                transform: rotate(45deg);
+    }
+
+.validate-captcha-wrapper .title {
+        font-size: 16px;
+        color: #333;
+    }
+
+.validate-captcha-wrapper .sub-title {
+        font-size: 12px;
+        margin-top: 21px;
+        color: #999999;
+    }
+
+.validate-captcha-wrapper form {
+        padding: 24px 11px;
+    }
+
+.validate-captcha-wrapper.slideLeft form {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+.validate-captcha-wrapper .pic-validate, .validate-captcha-wrapper .sms-validate {
+        height: 43px;
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-box-align: end;
+        -webkit-align-items: flex-end;
+                align-items: flex-end;
+    }
+
+.validate-captcha-wrapper .sms-validate {
+        border-bottom:  1px solid #EAEAEA;
+        position: relative;
+    }
+
+.validate-captcha-wrapper input {
+        background-color: transparent;
+        border: none;
+        height: 100%;
+        padding: 0 1px;
+        outline: none;
+        font-size: 14px;
+        -webkit-box-flex: 1;
+        -webkit-flex-grow: 1;
+                flex-grow: 1;
+        color: #333;
+        border-bottom:  1px solid #EAEAEA;
+    }
+
+.validate-captcha-wrapper .sms-captcha {
+        border: none;
+    }
+
+.validate-captcha-wrapper .validate-img {
+        width: 74px;
+        height: 32px;
+        margin-left: 14px;
+        margin-right: 10px;
+    }
+
+.validate-captcha-wrapper .send-sms {
+        width: 94px;
+        font-size: 14px;
+        line-height: 43px;
+        color: #3B9AFF;
+        white-space: nowrap;
+        position: absolute;
+        right: 0px;
+    }
+
+.validate-captcha-wrapper .sms-msg-info {
+        text-align: left;
+        text-align: left;
+        margin-top: 4px;
+        font-size: 12px;
+        color: #FF4444;
+        height: 34px;
+    }
+
+.validate-captcha-wrapper .sms-btn-submit {
+        width: 97%;
+        outline: none;
+        border: none;
+        padding: 0;
+        height: 48px;
+        background-color: #3B9AFF;
+        color: #fff;
+        border-radius: 100px;
+        font-size: 18px;
+    }
+
+.validate-captcha-wrapper.slideLeft .sms-btn-submit {
+        position: absolute;
+        bottom: 24px;
+        -webkit-transform: translateX(-50%);
+                transform: translateX(-50%);
+        width: calc(100% - 24px - 24px);
+    }

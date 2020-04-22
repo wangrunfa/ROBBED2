@@ -12,6 +12,8 @@ public interface UserService {
 
     Map<String,Object> authcode(String phone);
 
+    Map<String,Object> authcodeBasic(String phone);
+
 
 
 
@@ -19,6 +21,8 @@ public interface UserService {
     Object changePassword(User user);
 
     Object GrabASingleList(SearchCondition searchCondition, PersonalSubscriptionsModel privatePersonalSubscriptionsModel);
+
+    Integer GrabASingleListzongshu(SearchCondition searchCondition, PersonalSubscriptionsModel privatePersonalSubscriptionsModel);
 
     Object particularsMessage(Integer particularsId, String lgPhone);
 
@@ -62,4 +66,8 @@ public interface UserService {
     Object messageVerification(String name, String mobile, String idcard,String sourceId,String ip);
 
     Object findqdtjstatus(String qdSource);
+
+    QdTj findqdmessagePage(String sourceId);
+
+    Object insertBasicmanagergg(Basicmanager basicmanager, String ipAddr);
 }

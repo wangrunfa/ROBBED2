@@ -98,7 +98,7 @@ public class UserController {
      */
     @ResponseBody
     @RequestMapping("/GrabASingleList")
-    public Object GrabASingleList(SearchCondition searchCondition, HttpServletRequest request) {
+    public Object GrabASingleList(SearchCondition searchCondition,Integer leix, HttpServletRequest request) {
         HttpSession session = request.getSession();
         try{
             String phone=(String)session.getAttribute("lgPhone");
@@ -106,6 +106,9 @@ public class UserController {
                 return WebTools.returnData("session未保持",1);
             }
             searchCondition.setPhone(phone);
+            if(leix==1){
+                return userService.GrabASingleListzongshu(searchCondition,privatePersonalSubscriptionsModel);
+            }
             return userService.GrabASingleList(searchCondition,privatePersonalSubscriptionsModel);
         }catch (Exception e){
             return WebTools.returnData("异常",1);
@@ -173,12 +176,13 @@ public class UserController {
     @RequestMapping("/register")
     public Object register(User user) {
         System.out.println(user.toString());
-        if (StringUtils.isEmpty(user.getLgUsername())) return WebTools.returnData("用户名不能为空", 1);
-        if (StringUtils.isEmpty(user.getLgSex())) return WebTools.returnData("性别不能为空", 1);
-        if (StringUtils.isEmpty(user.getLgPhone())) return WebTools.returnData("手机号不能为空", 1);
-        if (StringUtils.isEmpty(user.getLgPassword())) return WebTools.returnData("密码不能为空", 1);
-      if (!redisUtil.isCodeExist(user.getLgPhone(), user.getLgAuthcode())) return WebTools.returnData("验证码超时或错误", 1);
-        return userService.userRegister(user);
+        return WebTools.returnData("注册功能已关闭", 1);
+//        if (StringUtils.isEmpty(user.getLgUsername())) return WebTools.returnData("用户名不能为空", 1);
+//        if (StringUtils.isEmpty(user.getLgSex())) return WebTools.returnData("性别不能为空", 1);
+//        if (StringUtils.isEmpty(user.getLgPhone())) return WebTools.returnData("手机号不能为空", 1);
+//        if (StringUtils.isEmpty(user.getLgPassword())) return WebTools.returnData("密码不能为空", 1);
+//      if (!redisUtil.isCodeExist(user.getLgPhone(), user.getLgAuthcode())) return WebTools.returnData("验证码超时或错误", 1);
+//        return userService.userRegister(user);
     }
 
     /**
@@ -190,13 +194,31 @@ public class UserController {
     @ResponseBody
     @RequestMapping("/authcode")
     public Map<String, Object> authcode(String phone) {
+        return WebTools.returnData("注册功能已关闭", 1);
+//        if (phone.matches("^\\d{11}$") == false || phone == null) {
+//            return WebTools.returnData("手机号不对", 1);
+//        }
+//
+//
+//        return userService.authcode(phone);
+    }
+
+    /**
+     * authcode验证码
+     *
+     * @param
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/authcodeBasic")
+    public Map<String, Object> authcodeBasic(String phone) {
 
         if (phone.matches("^\\d{11}$") == false || phone == null) {
             return WebTools.returnData("手机号不对", 1);
         }
 
 
-        return userService.authcode(phone);
+        return userService.authcodeBasic(phone);
     }
 
     /**
@@ -429,7 +451,7 @@ public class UserController {
         String phoneRegular = "^(1[0-9])\\d{9}$";
         String qqRegular="[1-9][0-9]{4,14}";
         String wechatRegular="^[a-zA-Z0-9_-]{5,19}$";
-        String CardRegular= "^[1-9]\\d{5}[1-9]\\d{3}((0[1-9])|(1[0-2]))(([0|1|2][1-9])|3[0-1])((\\d{4})|\\d{3}X)$";
+//        String CardRegular= "^[1-9]\\d{5}[1-9]\\d{3}((0[1-9])|(1[0-2]))(([0|1|2][1-9])|3[0-1])((\\d{4})|\\d{3}X)$";
         if (StringUtils.isEmpty(basicmanager.getQdUsername())) return WebTools.returnData("用户名不能为空", 1);
         if (StringUtils.isEmpty(basicmanager.getQdPhone())) return WebTools.returnData("手机号不能为空", 1);
         if (StringUtils.isEmpty(basicmanager.getQdCard())) return WebTools.returnData("身份证号不能为空", 1);
@@ -457,9 +479,31 @@ public class UserController {
         if (!Pattern.matches(phoneRegular,basicmanager.getQdPhone()))return WebTools.returnData("用户手机号格式错误", 1);
         if (!Pattern.matches(qqRegular,basicmanager.getQdQq()))return WebTools.returnData("用户QQ格式错误", 1);
 //        if (!Pattern.matches(wechatRegular,basicmanager.getQdWechat()))return WebTools.returnData("用户微信格式错误", 1);
-        if (!Pattern.matches(CardRegular,basicmanager.getQdCard()))return WebTools.returnData("用户身份证号格式错误", 1);
+//        if (!Pattern.matches(CardRegular,basicmanager.getQdCard()))return WebTools.returnData("用户身份证号格式错误", 1);
          return userService.insertBasicmanager(basicmanager,getIpAddr(request));
     }
+
+
+    /**
+     * 已购信息数据
+     * @param
+     * @param
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/insertBasicmanagergg")
+    public Object insertBasicmanagergg(Basicmanager basicmanager,HttpServletRequest request) {
+        String phoneRegular = "^(1[0-9])\\d{9}$";
+        if (StringUtils.isEmpty(basicmanager.getQdUsername())) return WebTools.returnData("用户名不能为空", 1);
+        if (StringUtils.isEmpty(basicmanager.getQdPhone())) return WebTools.returnData("手机号不能为空", 1);
+        if (StringUtils.isEmpty(basicmanager.getQdAge())) return WebTools.returnData("用户年龄不能为空", 1);
+        if (StringUtils.isEmpty(basicmanager.getQdLoanpay())) return WebTools.returnData("额度不能为空", 1);
+        if (StringUtils.isEmpty(basicmanager.getQdSex())) return WebTools.returnData("用户性别不能为空", 1);
+        if (!Pattern.matches(phoneRegular,basicmanager.getQdPhone()))return WebTools.returnData("用户手机号格式错误", 1);
+        if (!redisUtil.isCodeExist(basicmanager.getQdPhone(), basicmanager.getLgAuthcode())) return WebTools.returnData("验证码超时或错误", 1);
+        return userService.insertBasicmanagergg(basicmanager,getIpAddr(request));
+    }
+
     public String getRemortIP(HttpServletRequest request) {
         if (request.getHeader("x-forwarded-for") == null) {
             return request.getRemoteAddr();
@@ -590,12 +634,24 @@ public class UserController {
         return "DirectDriveDatajiluTable";
     }
 
+    /**
+     * findqdmessage
+     * @param
+     * @return
+     */
+
+    @RequestMapping("/findqdmessage")
+    public String findqdmessage() {
+
+        return "findqdmessage";
+    }
     @ResponseBody
     @RequestMapping("/findqdmessagedataajaxs")
     public Object findqdmessagedataajaxs(FindQdMessageModel findQdMessageModel) {
 
         return userService.findqdmessagedataajaxs(findQdMessageModel);
     }
+
     @ResponseBody
     @RequestMapping("/judgeUserMessage")
     public Object judgeUserMessage(String name, String mobile, String idcard,String sourceId,HttpServletRequest request) {
@@ -604,8 +660,13 @@ public class UserController {
     }
     @RequestMapping("/addmessage")
     public String addmessage(HttpServletRequest request,String sourceId) {
+        userService.qdMessageIp(getIpAddr(request),sourceId);
         if(sourceId!=null){
-            userService.qdMessageIp(getIpAddr(request),sourceId);
+            QdTj QdTjreturn=userService.findqdmessagePage(sourceId);
+            System.out.println(QdTjreturn.getTemplate());
+            if(QdTjreturn.getTemplate() != null && QdTjreturn.getTemplate() != ""){
+                return QdTjreturn.getTemplate();
+            }
         }
         return "addmessage";
     }

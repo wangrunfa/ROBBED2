@@ -49,8 +49,5 @@ public class PageController {
     public String ztcsubscription() {
         return "ztcsubscription";
     }
-    @RequestMapping("/findqdmessage")
-    public String findqdmessage() {
-        return "findqdmessage";
-    }
+
 }

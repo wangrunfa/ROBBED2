@@ -75,35 +75,36 @@
               <div class="form d-flex align-items-center">
                 <div class="content">
                   <form class="text-left form-validate">
-                      <div class="form-group-material">
-                          <input id="register-username" type="text" name="username" minlength="2" required data-msg="请输入用户名" class="input-material">
-                          <label for="register-username" class="label-material">用户名</label>
-                      </div>
+                      <h3>注册功能已关闭</h3>
+                      <!--<div class="form-group-material">-->
+                          <!--<input id="register-username" type="text" name="username" minlength="2" required data-msg="请输入用户名" class="input-material">-->
+                          <!--<label for="register-username" class="label-material">用户名</label>-->
+                      <!--</div>-->
 
-                      <div class="form-group-material" style="height: 30px">
-                          <input type="radio" value="0" name="sex" class="input-radios" style="background: cornflowerblue">
-                          <div style="width: 30px;height: 25px;float: left">男</div>
-                          <input type="radio" value="1" name="sex"  class="input-radios" style="background: #ed4ac5">
-                          <div style="width: 30px;height: 25px;float: left">女</div>
-                      </div>
-                      <div class="form-group-material">
-                          <input id="register-phone" type="text" name="phone" minlength="11"  required data-msg="请输入手机号" class="input-material">
-                          <label for="register-phone" class="label-material">手机号</label>
-                      </div>
-                    <div class="form-group-material">
-                      <input id="register-password" type="password" name="password" minlength="6"  required data-msg="请输入密码" class="input-material">
-                      <label for="register-password" class="label-material">密码</label>
-                    </div>
+                      <!--<div class="form-group-material" style="height: 30px">-->
+                          <!--<input type="radio" value="0" name="sex" class="input-radios" style="background: cornflowerblue">-->
+                          <!--<div style="width: 30px;height: 25px;float: left">男</div>-->
+                          <!--<input type="radio" value="1" name="sex"  class="input-radios" style="background: #ed4ac5">-->
+                          <!--<div style="width: 30px;height: 25px;float: left">女</div>-->
+                      <!--</div>-->
+                      <!--<div class="form-group-material">-->
+                          <!--<input id="register-phone" type="text" name="phone" minlength="11"  required data-msg="请输入手机号" class="input-material">-->
+                          <!--<label for="register-phone" class="label-material">手机号</label>-->
+                      <!--</div>-->
+                    <!--<div class="form-group-material">-->
+                      <!--<input id="register-password" type="password" name="password" minlength="6"  required data-msg="请输入密码" class="input-material">-->
+                      <!--<label for="register-password" class="label-material">密码</label>-->
+                    <!--</div>-->
 
 
 
-                    <div class="form-group-material" >
-                      <input id="register-code"style="width: 70%" type="text" minlength="4"  name="authcode" required data-msg="请输入验证码" class="input-material">
-                      <label for="register-code"style="width: 70%" class="label-material" required >手机号验证</label>
+                    <!--<div class="form-group-material" >-->
+                      <!--<input id="register-code"style="width: 70%" type="text" minlength="4"  name="authcode" required data-msg="请输入验证码" class="input-material">-->
+                      <!--<label for="register-code"style="width: 70%" class="label-material" required >手机号验证</label>-->
 
-                      <input class="register-phone-yanzm"  id="btnSendCode" name="btnSendCode" type="button"   value="获取验证码" onclick="sendMessage();" />
+                      <!--<input class="register-phone-yanzm"  id="btnSendCode" name="btnSendCode" type="button"   value="获取验证码" onclick="sendMessage();" />-->
 
-                    </div>
+                    <!--</div>-->
 
 <!--                    <div class="form-group terms-conditions text-center">-->
 <!--                      <input id="register-agree" name="registerAgree" type="checkbox" required value="1" data-msg="Your agreement is required" class="checkbox-template">-->
@@ -111,42 +112,42 @@
 <!--                    </div>-->
 
   <script>
-function registerjq() {
-
-    $.ajax({
-        //请求方式
-        type : "post",
-        //请求的媒体类型
-        // contentType: "application/json;charset=UTF-8",
-        //请求地址
-        url : "/register",
-        //数据，json字符串
-        // data : {"username":$("#register-username").val(),"studentNumber":$("#register-studentNumber").val(),
-        //     "password":$("#register-password").val(),"sex":$('input[name="sex"]:checked').val(),"phone":$("#register-phone").val,"authcode":$("#register-code").val()},
-        data:{"lgPassword":$("#register-password").val(),
-            "lgPhone":$("#register-phone").val(),
-            "lgAuthcode":$("#register-code").val(),
-            "lgSex":$('input[name="sex"]:checked').val(),
-            "lgUsername":$("#register-username").val(),
-        },
-        //请求成功
-        success : function(result) {
-            console.log(result)
-            if(result.code==0){
-                $(location).prop('href', '/login')
-            }
-            if(result.code==1){
-                alert(result.message)
-            }
-
-        },
-        //请求失败，包含具体的错误信息
-        error : function(e){
-            console.log(e.status);
-            console.log(e.responseText);
-        }
-    });
-}
+// function registerjq() {
+//
+//     $.ajax({
+//         //请求方式
+//         type : "post",
+//         //请求的媒体类型
+//         // contentType: "application/json;charset=UTF-8",
+//         //请求地址
+//         url : "/register",
+//         //数据，json字符串
+//         // data : {"username":$("#register-username").val(),"studentNumber":$("#register-studentNumber").val(),
+//         //     "password":$("#register-password").val(),"sex":$('input[name="sex"]:checked').val(),"phone":$("#register-phone").val,"authcode":$("#register-code").val()},
+//         data:{"lgPassword":$("#register-password").val(),
+//             "lgPhone":$("#register-phone").val(),
+//             "lgAuthcode":$("#register-code").val(),
+//             "lgSex":$('input[name="sex"]:checked').val(),
+//             "lgUsername":$("#register-username").val(),
+//         },
+//         //请求成功
+//         success : function(result) {
+//             console.log(result)
+//             if(result.code==0){
+//                 $(location).prop('href', '/login')
+//             }
+//             if(result.code==1){
+//                 alert(result.message)
+//             }
+//
+//         },
+//         //请求失败，包含具体的错误信息
+//         error : function(e){
+//             console.log(e.status);
+//             console.log(e.responseText);
+//         }
+//     });
+// }
 
   var InterValObj; //timer变量，控制时间
   var count = 60; //间隔函数，1秒执行
@@ -256,9 +257,9 @@ function registerjq() {
                               codeLength: 5
                           });
                       </script>
-                    <div class="form-group text-center">
-                      <input id="register" type="button" value="注册账户" onclick="registerjq();" class="btn btn-primary">
-                    </div>
+                    <!--<div class="form-group text-center">-->
+                      <!--<input id="register" type="button" value="注册账户" onclick="registerjq();" class="btn btn-primary">-->
+                    <!--</div>-->
                   </form><small>已经有账户了?</small><a href="/loginym" class="signup">点击登录</a>
                 </div>
               </div>

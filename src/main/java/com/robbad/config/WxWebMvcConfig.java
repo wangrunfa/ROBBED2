@@ -76,24 +76,24 @@ public class WxWebMvcConfig implements WebMvcConfigurer {
 //
 //    }
 
-    /**
-     * 跨域配置
-     * @param
-     */
-    private CorsConfiguration buildConfig(){
-        CorsConfiguration corsConfiguration = new CorsConfiguration();
-        corsConfiguration.addAllowedHeader("*"); // 允许任何的head头部
-        corsConfiguration.addAllowedOrigin("*"); // 允许任何域名使用
-        corsConfiguration.addAllowedMethod("*"); // 允许任何的请求方法
-        corsConfiguration.setAllowCredentials(true);
-        return corsConfiguration;
-    }
-//
-//     添加CorsFilter拦截器，对任意的请求使用
-    @Bean
-    public CorsFilter corsFilter() {
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", buildConfig());
-        return new CorsFilter(source);
-    }
+//    /**
+//     * 跨域配置
+//     * @param
+//     */
+//    private CorsConfiguration buildConfig(){
+//        CorsConfiguration corsConfiguration = new CorsConfiguration();
+//        corsConfiguration.addAllowedHeader("*"); // 允许任何的head头部
+//        corsConfiguration.addAllowedOrigin("*"); // 允许任何域名使用
+//        corsConfiguration.addAllowedMethod("*"); // 允许任何的请求方法
+//        corsConfiguration.setAllowCredentials(true);
+//        return corsConfiguration;
+//    }
+////
+////     添加CorsFilter拦截器，对任意的请求使用
+//    @Bean
+//    public CorsFilter corsFilter() {
+//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//        source.registerCorsConfiguration("/**", buildConfig());
+//        return new CorsFilter(source);
+//    }
 }

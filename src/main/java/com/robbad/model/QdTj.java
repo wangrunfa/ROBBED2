@@ -26,4 +26,5 @@ public class QdTj {
     private Integer qdStatus;
     private Integer qdJzt;
     private Integer qdJqd;
+    private String template;
 }

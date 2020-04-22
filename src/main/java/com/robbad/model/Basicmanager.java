@@ -21,7 +21,7 @@ public class Basicmanager {
     private String qdPhone;//抢单列表中用户手机号
     private String qdUsername;//渠道用户名称
 
-    private Integer qdLoanpay;//渠道贷款金额
+    private String qdLoanpay;//渠道贷款金额
 
     private String qdTime;//渠道用户显示期限
     private String qdRegion;//渠道用户地区
@@ -48,4 +48,5 @@ public class Basicmanager {
     private Integer qdGshopStatus;//购买状态
     private Integer whetherContact;//是否联系
     private String qdUserAlias;//别名
+    private String LgAuthcode;//别名
 }
