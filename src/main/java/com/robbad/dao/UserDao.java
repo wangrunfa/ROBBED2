@@ -128,11 +128,11 @@ Basicmanager particularsMessage(@Param("particularsId")Integer particularsId);
     @Insert("INSERT INTO qd_basicmanager(" +
             "qd_fb_time,qd_phone,qd_username,qd_loanpay," +
             "qd_age,qd_professional,qd_assets," +
-            "qd_submit_ip,qd_source,qd_source_name,qd_sex) " +
+            "qd_submit_ip,qd_source,qd_source_name,qd_sex,qd_card) " +
             "values(" +
             "NOW(),#{Basicmanager.qdPhone},#{Basicmanager.qdUsername},#{Basicmanager.qdLoanpay}" +
             ",#{Basicmanager.qdAge},#{Basicmanager.qdProfessional},#{Basicmanager.qdAssets}" +
-            ",#{submitIP},#{Basicmanager.qdSource},#{Basicmanager.qdSourceName},#{Basicmanager.qdSex});")
+            ",#{submitIP},#{Basicmanager.qdSource},#{Basicmanager.qdSourceName},#{Basicmanager.qdSex},#{Basicmanager.qdCard});")
     Integer insertBasicmanagerggImpl(@Param("Basicmanager")Basicmanager basicmanager,@Param("submitIP")String submitIP);
 
     @Insert("INSERT INTO qd_basicmanager(" +

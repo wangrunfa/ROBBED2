@@ -177,11 +177,25 @@ $(function () {
     //theFinalStep  最后一步
 
     $(".theFinalStepSbmit").click(function () {
+        // var clicknumber=storage.getItem("clicknumber")
+        // var usernames=storage.getItem("usernames")
+        // console.warn("点击数："+clicknumber)
+        // if (clicknumber==null) {
+        //     storage.setItem("clicknumber",0);
+        // }
+        // if (clicknumber==3&&usernames==$("#ymjusername").val();) {
+        //   alert("！")
+        //
+        // }
 
         ymjusername = $("#ymjusername").val();
         if (qsstatus==0){
 
 
+        // if (checkChinese(ymjusername)) {
+            // storage.setItem("usernames",$("#ymjusername").val());
+            // var firstName = ymjusername.substr(0, 1);
+            // if (checkbjx(firstName)) {
             ymjphone = $("#ymjphone").val();
             if (phonezz.test(ymjphone)) {
 
@@ -253,9 +267,29 @@ $(function () {
                         }
                     })
                     $(".theFinalStepInput>.prompting").html("姓名:" + ymjusername);
+                    console.warn("姓名:" + ymjusername)
+                    console.warn("年龄:" + ymjage)
+                    console.warn("手机号:" + ymjphone)
+                    console.warn("QQ:" + ymjQQ)
+                    console.warn("微信:" + ymjwechat)
+                    console.warn("芝麻分:" + ymjSesame)
+                    console.warn("身份证:" + ymjCard)
+                    console.warn("性别:" + ymjSex)
+
+                // } else {
+                //     alert("温馨提示：请正确填写身份证号")
+                // }
+
             } else {
                 alert("温馨提示：请正确填写手机号")
             }
+
+            // } else {
+            //     alert("请输入正确中文姓名！");
+            // }
+        // } else {
+        //     alert("温馨提示：请输入正确中文姓名，并且长度为2-4位");
+        // }
         }else{
             alert("温馨提示：渠道错误");
         }
@@ -296,8 +330,26 @@ $(function () {
     }
 
 
-
-
+    $(".anywhereInput>.ButtonThe").click(function () {
+        $(".anywhere").css({"display": "block", "z-index": zIndex})
+    })
+    //anywhere  有无保单
+    $(".anywhereselect li").click(function () {
+        anywherevalue = $(this).attr("value")
+        $(".anywhereInput>.prompting").html("有无保单: " + anywherevalue);
+        console.warn("有无保单:" + anywherevalue)
+        $(".anywhereInput").fadeIn();
+        $(".anywhere").fadeOut();
+        if (inputmaxboxheight <= 350) {
+            inputmaxboxheight = inputmaxboxheight + 35
+            $(".inputmaxbox").css({"height": inputmaxboxheight + "px"})
+        }
+    })
+    $(".anywhereInput>.ButtonThe").click(function () {
+        zIndex = zIndex + 100
+        $(".anywhere").css({"z-index": zIndex})
+        $(".anywhere").fadeIn();
+    })
     //supplementarySbmit  补充信息
     $(".supplementarySbmit").click(function () {
         ymjQQ = $("#ymjQQ").val();

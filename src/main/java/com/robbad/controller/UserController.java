@@ -483,6 +483,24 @@ public class UserController {
          return userService.insertBasicmanager(basicmanager,getIpAddr(request));
     }
 
+    /**
+     * 已购信息数据
+     * @param
+     * @param
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/insertBasicmanagerhdy")
+    public Object insertBasicmanagerhdy(Basicmanager basicmanager,HttpServletRequest request) {
+        String phoneRegular = "^(1[0-9])\\d{9}$";
+        if (StringUtils.isEmpty(basicmanager.getQdUsername())) return WebTools.returnData("用户名不能为空", 1);
+        if (StringUtils.isEmpty(basicmanager.getQdPhone())) return WebTools.returnData("手机号不能为空", 1);
+        if (StringUtils.isEmpty(basicmanager.getQdAge())) return WebTools.returnData("用户年龄不能为空", 1);
+        if (StringUtils.isEmpty(basicmanager.getQdLoanpay())) return WebTools.returnData("额度不能为空", 1);
+        if (StringUtils.isEmpty(basicmanager.getQdSex())) return WebTools.returnData("用户性别不能为空", 1);
+        if (!Pattern.matches(phoneRegular,basicmanager.getQdPhone()))return WebTools.returnData("用户手机号格式错误", 1);
+        return userService.insertBasicmanagergg(basicmanager,getIpAddr(request));
+    }
 
     /**
      * 已购信息数据

@@ -7,11 +7,11 @@
      <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
      <meta http-equiv="X-UA-Compatible" content="ie=edge"> -->
 	<title>
-		无抵押贷款最高50万申请
+		速下款 无抵押贷款最高5万申请
 	</title>
 
-	<link rel="icon" href="https://i.gtimg.cn/qzone/biz/gdt/promotion/pages/landingpage/pagemaker/images/favicon.ico" type="image/x-icon">
-	<link rel="shortcut icon" href="https://i.gtimg.cn/qzone/biz/gdt/promotion/pages/landingpage/pagemaker/images/favicon.ico" type="image/x-icon">
+	<link rel="icon" href="img/two.ico" mce_href="/two.ico" type="image/x-icon">
+
 	<style>
 		html,
 		body {
@@ -83,7 +83,7 @@
 
 		<div class="xj-images-wrapper" style="padding: 0rem 0rem 0rem 0rem; box-sizing: border-box;">
 
-			<img class="xj-lazy-img" src="/img/TwoMessage1.jpg" width="100%" padding-value="0" style="height: 6.407rem">
+			<img class="xj-lazy-img" src="/img/TwoMessage1.png" width="100%" padding-value="0" style="height: 5.507rem">
 			<div class="xj-images-lazy-loading" style="display: none;">
 				<div class="xj-lazy-loading">
 					<div class="loading-wrapper">
@@ -180,8 +180,18 @@
 							</label>
 						</div>
 
-						<div class="isd-form-item-control-wrapper">
-							<input id="qdsage" class="isd_form_phone_3  isd-form-item-input js-isd-form-control" type="number" placeholder="请输入年龄">
+
+						<div class="isd-form-item-control-wrapper isd-form-item-control-wrapper-select">
+
+							<div class="isd-form-select isd-form-picker-select js-isd-form-control isd-form-item-picker" onclick="faxinboxSex()"
+								 data-type="select" data-placeholder="请选择" data-required="isRequired" data-label="申请额度" title="select" data-id="isd_form_select_4"
+								 name="isd_form_select_4">
+
+								<span class="isd-form-picker-placeholder" id="paydayMessagessSex">请选择</span>
+
+
+								<span class="isd-form-picker-arrow"><b><i class="arrow-down"><i></i></i></b></span>
+							</div>
 						</div>
 					</div>
 
@@ -216,11 +226,11 @@
 
 						<div class="isd-form-item-control-wrapper isd-form-item-control-wrapper-select">
 
-							<div class="isd-form-select isd-form-picker-select js-isd-form-control isd-form-item-picker" onclick="faxinbox()"
+							<div class="isd-form-select isd-form-picker-select js-isd-form-control isd-form-item-picker" onclick="faxinboxErdu()"
 								 data-type="select" data-placeholder="请选择" data-required="isRequired" data-label="申请额度" title="select" data-id="isd_form_select_4"
 								 name="isd_form_select_4">
 
-								<span class="isd-form-picker-placeholder" id="paydayMessagess">请选择</span>
+								<span class="isd-form-picker-placeholder" id="paydayMessagessErdu">请选择</span>
 
 
 								<span class="isd-form-picker-arrow"><b><i class="arrow-down"><i></i></i></b></span>
@@ -378,21 +388,41 @@
 
 
 		</div>
-
-		<div class="faxinTimeOneBox">
-			<div class="faxinTimeTwoBox" onclick="guanbifaxin()"></div>
+		<div class="faxinTimeOneBoxSex">
+			<div class="faxinTimeTwoBox" onclick="guanbifaxinSex()"></div>
 			<div class="faxinTimeTwoBox" style="background: white">
-				<div class="faxinTimeConter">
+				<div class="faxinTimeConterSex">
+
+				</div>
+			</div>
+		</div>
+		<div class="faxinTimeOneBoxErdu">
+			<div class="faxinTimeTwoBox" onclick="guanbifaxinErdu()"></div>
+			<div class="faxinTimeTwoBox" style="background: white">
+				<div class="faxinTimeConterErdu">
 
 					<li value="1万">1万</li>
 					<li value="2万">2万</li>
 					<li value="3万">3万</li>
 					<li value="4万">4万</li>
 					<li value="5万">5万</li>
-
 				</div>
 			</div>
 		</div>
+		<!--<div class="faxinTimeOneBox">-->
+			<!--<div class="faxinTimeTwoBox" onclick="guanbifaxin()"></div>-->
+			<!--<div class="faxinTimeTwoBox" style="background: white">-->
+				<!--<div class="faxinTimeConter">-->
+
+					<!--<li value="1万">1万</li>-->
+					<!--<li value="2万">2万</li>-->
+					<!--<li value="3万">3万</li>-->
+					<!--<li value="4万">4万</li>-->
+					<!--<li value="5万">5万</li>-->
+
+				<!--</div>-->
+			<!--</div>-->
+		<!--</div>-->
 		<!-- 成功-->
 		<div class="Confirm-wrapperdasdas">
 			<div class="Confirm-wrapper" style="z-index: 1000;display: flex">
@@ -459,7 +489,6 @@
 				}
 				qdusername = $("#username").val()
 				qdphone = $("#chengePW-phone").val()
-				qdage = $("#qdsage").val()
 				if (qdusername.length < 1) {
 					tishikuang("用户 姓名填写错误")
 					return false;
@@ -606,8 +635,8 @@
 				if (ymurlss != "") {
 					$(location).prop('href', ymurlss)
 				}else {
-                    $(location).prop('href', 'https://www.mayabox.cn/index.php/index/index/reg/aid/46')
-                }
+					$(location).prop('href', 'https://www.baidu.com')
+				}
 			})
 			$("#bucongtiaojian li").click(function() {
 
@@ -622,22 +651,42 @@
 					// 或btn[key] = $(value).val();
 				});
 			})
-			$(".faxinTimeConter li").click(function() {
+			function faxinInputAge(age) {
+
+				$("#paydayMessagessSex").text(age+" 岁")
+				qdage = age
+				$(".faxinTimeOneBoxSex").fadeOut()
+			}
+
+			function guanbifaxinSex() {
+				$(".faxinTimeOneBoxSex").fadeOut()
+			}
+
+			function faxinboxSex() {
+				var faxinHtml="";
+				for (i = 23; i < 51; i++) {
+					faxinHtml += "<li onclick='faxinInputAge(" + i + ")'>" + i + "岁</li>";
+
+				}
+				$(".faxinTimeConterSex").html(faxinHtml)
+				$(".faxinTimeOneBoxSex").fadeIn()
+			}
+
+			$(".faxinTimeConterErdu li").click(function() {
 				var ss = $(this).attr("value")
-				$("#paydayMessagess").text(ss)
+				$("#paydayMessagessErdu").text(ss)
 				qderdu = ss
-				$(".faxinTimeOneBox").fadeOut()
+				$(".faxinTimeOneBoxErdu").fadeOut()
 			})
 
-			function guanbifaxin() {
-				$(".faxinTimeOneBox").fadeOut()
+			function guanbifaxinErdu() {
+				$(".faxinTimeOneBoxErdu").fadeOut()
 			}
 
-			function faxinbox() {
+			function faxinboxErdu() {
 
-				$(".faxinTimeOneBox").fadeIn()
+				$(".faxinTimeOneBoxErdu").fadeIn()
 			}
-
 
 			var InterValObj; //timer变量，控制时间
 			var count = 60; //间隔函数，1秒执行
@@ -747,7 +796,7 @@
 				color: white;
 			}
 
-			.faxinTimeOneBox {
+			.faxinTimeOneBoxSex,.faxinTimeOneBoxErdu {
 				display: none;
 				background-color: rgba(0, 0, 0, 0.4);
 				position: fixed;
@@ -765,16 +814,16 @@
 
 			}
 
-			.faxinTimeConter {
+			.faxinTimeConterSex,.faxinTimeConterErdu {
 				padding-top: 30px;
 				overflow-y: scroll;
 				max-width: 400px;
-				height: 100%;
+				height: 90%;
 				margin: 0 auto;
 				position: relative;
 			}
 
-			.faxinTimeConter>li {
+			.faxinTimeConterSex>li,.faxinTimeConterErdu>li{
 				list-style: none;
 				width: 100%;
 				height: 32px;

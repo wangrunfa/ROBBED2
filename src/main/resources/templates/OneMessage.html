@@ -7,14 +7,11 @@
     <!--
 <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge"> -->
-    <link rel="icon" href="img/favicon.ico" mce_href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="img/one.ico" mce_href="/one.ico" type="image/x-icon">
     <title>
-        无抵押贷款最高50万申请
+        急融资 无抵押贷款最高5万申请
     </title>
-    <link rel="icon" href="https://i.gtimg.cn/qzone/biz/gdt/promotion/pages/landingpage/pagemaker/images/favicon.ico"
-          type="image/x-icon">
-    <link rel="shortcut icon" href="https://i.gtimg.cn/qzone/biz/gdt/promotion/pages/landingpage/pagemaker/images/favicon.ico"
-          type="image/x-icon">
+
     <style>
         html,
         body {
@@ -119,11 +116,6 @@
             <form class="isd-web-form-global-wrapper web-form-font-size-14 type-line-feed-and-border" data-id="114151"
                   data-formtype="type-line-feed-and-border" style="background-color: rgb(255, 255, 255); padding: 0px;">
 
-                <h3 class="isd-form-title" style="color: rgb(255, 0, 0); font-size: 16px;">马上提交申请，测试您能贷多少？</h3>
-
-
-
-
 
                 <div class="isd-form-item isd-form-name-item">
 
@@ -185,8 +177,16 @@
                             </label>
                         </div>
 
-                        <div class="isd-form-item-control-wrapper">
-                            <input id="qdsage" class="isd_form_phone_3  isd-form-item-input js-isd-form-control" type="number" placeholder="请输入年龄">
+
+                        <div class="isd-form-item-control-wrapper isd-form-item-control-wrapper-select">
+
+                            <div class="isd-form-select isd-form-picker-select js-isd-form-control isd-form-item-picker" onclick="faxinboxSex()" data-placeholder="请选择">
+
+                                <span class="isd-form-picker-placeholder" id="paydayMessagessSex">请选择</span>
+
+
+                                <span class="isd-form-picker-arrow"><b><i class="arrow-down"><i></i></i></b></span>
+                            </div>
                         </div>
                     </div>
 
@@ -211,27 +211,27 @@
 
 
 
-                    <div class="isd-form-item isd-form-select-item">
+                    <div class="isd-form-item isd-form-phone-item">
 
-                        <div class="isd-form-item-label isd-form-item-label-select">
-                            <label for="isd_form_select_4" class="isd-form-item-required">
+                        <div class="isd-form-item-label isd-form-item-label-phone">
+                            <label for="isd_form_phone_3" class="isd-form-item-required">
                                 申请额度
                             </label>
                         </div>
 
+
                         <div class="isd-form-item-control-wrapper isd-form-item-control-wrapper-select">
 
-                            <div class="isd-form-select isd-form-picker-select js-isd-form-control isd-form-item-picker" onclick="faxinbox()"
-                                 data-type="select" data-placeholder="请选择" data-required="isRequired" data-label="申请额度" title="select" data-id="isd_form_select_4"
-                                 name="isd_form_select_4">
+                            <div class="isd-form-select isd-form-picker-select js-isd-form-control isd-form-item-picker" onclick="faxinboxErdu()" data-placeholder="请选择">
 
-                                <span class="isd-form-picker-placeholder" id="paydayMessagess">请选择</span>
+                                <span class="isd-form-picker-placeholder" id="paydayMessagessErdu">请选择</span>
 
 
                                 <span class="isd-form-picker-arrow"><b><i class="arrow-down"><i></i></i></b></span>
                             </div>
                         </div>
                     </div>
+
                     <div class="isd-form-item isd-form-checkbox-item">
 
                         <div class="isd-form-item-label isd-form-item-label-checkbox">
@@ -400,10 +400,18 @@
             </div>
         </div>
     </div>
-    <div class="faxinTimeOneBox">
-        <div class="faxinTimeTwoBox" onclick="guanbifaxin()"></div>
+    <div class="faxinTimeOneBoxSex">
+        <div class="faxinTimeTwoBox" onclick="guanbifaxinSex()"></div>
         <div class="faxinTimeTwoBox" style="background: white">
-            <div class="faxinTimeConter">
+            <div class="faxinTimeConterSex">
+
+            </div>
+        </div>
+    </div>
+    <div class="faxinTimeOneBoxErdu">
+        <div class="faxinTimeTwoBox" onclick="guanbifaxinErdu()"></div>
+        <div class="faxinTimeTwoBox" style="background: white">
+            <div class="faxinTimeConterErdu">
 
                 <li value="1万">1万</li>
                 <li value="2万">2万</li>
@@ -479,7 +487,6 @@
             }
             qdusername = $("#username").val()
             qdphone = $("#chengePW-phone").val()
-            qdage = $("#qdsage").val()
             if (qdusername.length < 1) {
                 tishikuang("用户 姓名填写错误")
                 return false;
@@ -628,7 +635,7 @@
             if (ymurlss != "") {
                 $(location).prop('href', ymurlss)
             }else {
-                $(location).prop('href', 'https://www.mayabox.cn/index.php/index/index/reg/aid/46')
+                $(location).prop('href', 'https://www.baidu.com')
             }
         })
         $("#bucongtiaojian li").click(function() {
@@ -644,23 +651,42 @@
                 // 或btn[key] = $(value).val();
             });
         })
-        $(".faxinTimeConter li").click(function() {
+       function faxinInputAge(age) {
+
+            $("#paydayMessagessSex").text(age+" 岁")
+            qdage = age
+            $(".faxinTimeOneBoxSex").fadeOut()
+        }
+
+        function guanbifaxinSex() {
+            $(".faxinTimeOneBoxSex").fadeOut()
+        }
+
+        function faxinboxSex() {
+            var faxinHtml="";
+            for (i = 23; i < 51; i++) {
+                faxinHtml += "<li onclick='faxinInputAge(" + i + ")'>" + i + "岁</li>";
+
+            }
+            $(".faxinTimeConterSex").html(faxinHtml)
+            $(".faxinTimeOneBoxSex").fadeIn()
+        }
+
+        $(".faxinTimeConterErdu li").click(function() {
             var ss = $(this).attr("value")
-            $("#paydayMessagess").text(ss)
+            $("#paydayMessagessErdu").text(ss)
             qderdu = ss
-            $(".faxinTimeOneBox").fadeOut()
+            $(".faxinTimeOneBoxErdu").fadeOut()
         })
 
-        function guanbifaxin() {
-            $(".faxinTimeOneBox").fadeOut()
+        function guanbifaxinErdu() {
+            $(".faxinTimeOneBoxErdu").fadeOut()
         }
 
-        function faxinbox() {
+        function faxinboxErdu() {
 
-            $(".faxinTimeOneBox").fadeIn()
+            $(".faxinTimeOneBoxErdu").fadeIn()
         }
-
-
         var InterValObj; //timer变量，控制时间
         var count = 60; //间隔函数，1秒执行
         var curCount; //当前剩余秒数
@@ -769,7 +795,7 @@
             color: white;
         }
 
-        .faxinTimeOneBox {
+        .faxinTimeOneBoxSex,.faxinTimeOneBoxErdu {
             display: none;
             background-color: rgba(0, 0, 0, 0.4);
             position: fixed;
@@ -780,6 +806,7 @@
             top: 0;
         }
 
+
         .faxinTimeTwoBox {
             width: 100%;
             height: 50%;
@@ -787,16 +814,16 @@
 
         }
 
-        .faxinTimeConter {
+        .faxinTimeConterSex,.faxinTimeConterErdu {
             padding-top: 30px;
             overflow-y: scroll;
             max-width: 400px;
-            height: 100%;
+            height: 90%;
             margin: 0 auto;
             position: relative;
         }
 
-        .faxinTimeConter>li {
+        .faxinTimeConterSex>li,.faxinTimeConterErdu>li {
             list-style: none;
             width: 100%;
             height: 32px;
@@ -805,7 +832,8 @@
             line-height: 32px;
             font-weight: bold;
             color: #333333;
-            margin: 10px auto;
+            margin: 0 auto;
+            padding: 10px 0;
             position: relative;
         }
 

@@ -70,4 +70,6 @@ public interface UserService {
     QdTj findqdmessagePage(String sourceId);
 
     Object insertBasicmanagergg(Basicmanager basicmanager, String ipAddr);
+
+
 }
