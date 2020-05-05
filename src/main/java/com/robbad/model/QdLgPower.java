@@ -15,5 +15,6 @@ public class QdLgPower {
     private Integer lgRead;
     private Integer lgLx;
     private Integer lgShopUid;
+    private Integer lgZtcId;
     private Date lgAddtime;
 }

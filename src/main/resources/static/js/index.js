@@ -4,7 +4,7 @@ var minSesame=550;//最小芝麻分
 var maxSesame=950;//最大芝麻分
 
 var minAge=23;//最小年龄
-var maxAge=45;//最大年龄
+var maxAge=50;//最大年龄
 
 var minLimit=1000 ;//最小额度
 var maxLimit=50000 ;//最大额度
@@ -69,9 +69,9 @@ $('.subscriptionSubmit').on('click', function () {
 //月供滑动
 $(".range_2").ionRangeSlider({
     min: 23, //最小值
-    max: 45, //最大值 
+    max: 50, //最大值
     from: 23, //默认从哪个值开始选
-    to: 45, //默认选到哪个值
+    to: 50, //默认选到哪个值
     type: 'double', //设置类型
     step: 1,
     prefix: "", //设置数值前缀

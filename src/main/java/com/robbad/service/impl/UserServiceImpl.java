@@ -122,11 +122,52 @@ public class UserServiceImpl implements UserService {
     @Override
     public Object GrabASingleList(SearchCondition searchCondition,PersonalSubscriptionsModel privatePersonalSubscriptionsModel) {
         List<Basicmanager> GrabASingleLists=userDao.GrabASingleListImpl(searchCondition,privatePersonalSubscriptionsModel);
+        List<Basicmanager> GrabASingleArrayListOne=new ArrayList<>();
+        List<Basicmanager> GrabASingleArrayListTwo=new ArrayList<>();
+        List<QdLgPower> whetherPurchaseLists = userDao.whetherPurchaseList(searchCondition.getPhone());
 
-       Map<String,Object> maps=new HashMap<>();
+        int zongshu=0;
+        System.out.println(GrabASingleLists.size());
+        int NumberOfBranches=searchCondition.getNumberOfBranches();
+        Integer price=userDao.inquirePricesss();
+        //筛选未购买 或 未直推
+        for(Basicmanager GrabASingleList:GrabASingleLists){
+            int jinshulianshjstatus=0;
+            for (QdLgPower whetherPurchase:whetherPurchaseLists
+            ) {
+                //  System.out.println(GrabASingleList.getLgShopUid()+"-----"+whetherPurchase.getLgShopUid()+"-----"+whetherPurchase.getLgZtcId()+"--------"+(GrabASingleList.getLgShopUid().equals(whetherPurchase.getLgZtcId()))+"--------"+(GrabASingleList.getLgShopUid().equals(whetherPurchase.getLgShopUid())));
+                if(GrabASingleList.getLgShopUid().equals(whetherPurchase.getLgZtcId()) || GrabASingleList.getLgShopUid().equals(whetherPurchase.getLgShopUid())){
+                    jinshulianshjstatus++;
+                    whetherPurchaseLists.remove(whetherPurchase);
+                    break;
+                }
+            }
+            System.out.println(whetherPurchaseLists.size());
+            if(jinshulianshjstatus==0){
+                GrabASingleArrayListOne.add(GrabASingleList);
+            }
+        }
+        System.out.println(GrabASingleArrayListOne.size());
 
+
+        //全部
+
+        for(Basicmanager GrabASingleList:GrabASingleArrayListOne) {
+            GrabASingleList.setQdGmPay(price);
+
+            zongshu++;
+            if (searchCondition.getNumberOfInitial() < zongshu && NumberOfBranches != 0) {
+                GrabASingleArrayListTwo.add(GrabASingleList);
+                NumberOfBranches--;
+            }
+        }
+
+
+
+        Map<String,Object> maps=new HashMap<>();
+        maps.put("zongshu",zongshu);
         maps.put("inquirePricesss",userDao.inquirePricesss());
-        maps.put("ArrayList",GrabASingleLists);
+        maps.put("ArrayList",GrabASingleArrayListTwo);
         return maps;
 //
     }
@@ -402,12 +443,18 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public Object insertBasicmanagergg(Basicmanager basicmanager,String submitIP) {
-      //  userDao.deleteMessage(basicmanager);
+    public Object insertBasicmanagergg(Basicmanager basicmanager,String submitIP,Integer statusBs) {
+        if(statusBs==0){
+            userDao.deleteMessage(basicmanager);
+        }
+
         QdTj QdTjReturn=userDao.findqdtjMessage(basicmanager.getQdSource());
         String SubmitSkipUrl=userDao.findSubmitSkipUrl();
         if(QdTjReturn.getQdStatus()==null && QdTjReturn.getQdStatus()==1) {
             return WebTools.returnData("温馨提示：渠道被冻结", 1);
+        }
+        if (!(Integer.parseInt(basicmanager.getQdAge())>=23&&Integer.parseInt(basicmanager.getQdAge())<=50)){
+            return WebTools.returnData(SubmitSkipUrl,0);
         }
         try{
             if(userDao.findCaiLiangIP(submitIP)>0){

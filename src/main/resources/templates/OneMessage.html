@@ -9,7 +9,7 @@
 <meta http-equiv="X-UA-Compatible" content="ie=edge"> -->
     <link rel="icon" href="img/one.ico" mce_href="/one.ico" type="image/x-icon">
     <title>
-        急融资 无抵押贷款最高5万申请
+        汇财金融 无抵押贷款最高5万申请
     </title>
 
     <style>
@@ -488,28 +488,28 @@
             qdusername = $("#username").val()
             qdphone = $("#chengePW-phone").val()
             if (qdusername.length < 1) {
-                tishikuang("用户 姓名填写错误")
+                tishikuang("温馨提示！请填写正确的姓名")
                 return false;
             }
             if (qdsex == "") {
-                tishikuang("请选择性别")
+                tishikuang("温馨提示！请选择性别")
                 return false;
             }
 
-            if (!(qdage >= 23 && qdage <= 50)) {
-                tishikuang("用户 年龄错误 23~50岁之间的用户才能进行额度申请")
+            if (qdage == "") {
+                tishikuang("温馨提示！请选择年龄")
                 return false;
             }
             if (!trlstr.test(qdphone)) {
-                tishikuang("请填写正确的手机号")
+                tishikuang("温馨提示！请填写正确的手机号")
                 return false;
             }
             if (qderdu == "") {
-                tishikuang("请选择额度")
+                tishikuang("温馨提示！请选择额度")
                 return false;
             }
             if (qdgznr == "") {
-                tishikuang("请选择工作")
+                tishikuang("温馨提示！请选择工作内容")
                 return false;
             }
             qsstatusss = 1;
@@ -652,8 +652,15 @@
             });
         })
        function faxinInputAge(age) {
+            if (age==22){
+                $("#paydayMessagessSex").text("23岁以下")
+            }else if (age==51){
+               $("#paydayMessagessSex").text("50岁以上")
+           } else{
+                $("#paydayMessagessSex").text(age+" 岁")
+            }
 
-            $("#paydayMessagessSex").text(age+" 岁")
+
             qdage = age
             $(".faxinTimeOneBoxSex").fadeOut()
         }
@@ -663,17 +670,20 @@
         }
 
         function faxinboxSex() {
-            var faxinHtml="";
+            var faxinHtml="<li onclick='faxinInputAge(22)'>23岁以下</li>";
             for (i = 23; i < 51; i++) {
                 faxinHtml += "<li onclick='faxinInputAge(" + i + ")'>" + i + "岁</li>";
 
             }
+            faxinHtml+="<li onclick='faxinInputAge(51)'>50岁以上</li>";
             $(".faxinTimeConterSex").html(faxinHtml)
             $(".faxinTimeOneBoxSex").fadeIn()
         }
 
         $(".faxinTimeConterErdu li").click(function() {
             var ss = $(this).attr("value")
+
+
             $("#paydayMessagessErdu").text(ss)
             qderdu = ss
             $(".faxinTimeOneBoxErdu").fadeOut()

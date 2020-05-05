@@ -499,7 +499,7 @@ public class UserController {
         if (StringUtils.isEmpty(basicmanager.getQdLoanpay())) return WebTools.returnData("额度不能为空", 1);
         if (StringUtils.isEmpty(basicmanager.getQdSex())) return WebTools.returnData("用户性别不能为空", 1);
         if (!Pattern.matches(phoneRegular,basicmanager.getQdPhone()))return WebTools.returnData("用户手机号格式错误", 1);
-        return userService.insertBasicmanagergg(basicmanager,getIpAddr(request));
+        return userService.insertBasicmanagergg(basicmanager,getIpAddr(request),0);
     }
 
     /**
@@ -515,11 +515,12 @@ public class UserController {
         if (StringUtils.isEmpty(basicmanager.getQdUsername())) return WebTools.returnData("用户名不能为空", 1);
         if (StringUtils.isEmpty(basicmanager.getQdPhone())) return WebTools.returnData("手机号不能为空", 1);
         if (StringUtils.isEmpty(basicmanager.getQdAge())) return WebTools.returnData("用户年龄不能为空", 1);
+
         if (StringUtils.isEmpty(basicmanager.getQdLoanpay())) return WebTools.returnData("额度不能为空", 1);
         if (StringUtils.isEmpty(basicmanager.getQdSex())) return WebTools.returnData("用户性别不能为空", 1);
         if (!Pattern.matches(phoneRegular,basicmanager.getQdPhone()))return WebTools.returnData("用户手机号格式错误", 1);
         if (!redisUtil.isCodeExist(basicmanager.getQdPhone(), basicmanager.getLgAuthcode())) return WebTools.returnData("验证码超时或错误", 1);
-        return userService.insertBasicmanagergg(basicmanager,getIpAddr(request));
+        return userService.insertBasicmanagergg(basicmanager,getIpAddr(request),1);
     }
 
     public String getRemortIP(HttpServletRequest request) {

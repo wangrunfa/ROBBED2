@@ -104,6 +104,10 @@ Basicmanager particularsMessage(@Param("particularsId")Integer particularsId);
     //查询是否购买 的價格
     @Select("select lg_gm_pays from qd_lg_power where lg_phone=#{lgPhone} and lg_shop_uid=#{gmid}")
     Integer whetherPurchasesss(@Param("lgPhone")String lgPhone,@Param("gmid") Integer gmid);
+    //查询是否购买
+    @Select("select lg_shop_uid,lg_ztc_id from qd_lg_power where lg_phone=#{lgPhone} and (lg_shop_uid is not null or lg_ztc_id is not null) order by id desc")
+    List<QdLgPower> whetherPurchaseList(@Param("lgPhone")String lgPhone);
+
 
     //查询是否购买 的價格
     @Select("select lg_gm_pays from qd_lg_power where lg_phone=#{lgPhone} and lg_shop_uid=#{gmid}")

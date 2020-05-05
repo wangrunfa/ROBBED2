@@ -334,7 +334,8 @@
 					type: "get",
 					dataType: "json",
 					success: function (result) {
-
+						numberOfInitialasdsadasd=result.zongshu;
+						numberOfPages= Math.ceil(result.zongshu/numberOfBranches)
 
 							for (i = 0; i < result.ArrayList.length; i++) {
 								var qbtime=result.ArrayList[i].qdFbTime.split("T");//以空格分割为数组
@@ -386,91 +387,9 @@
 										"\t\t\t\t\t\t\t<!---->\n" +
 										"\t\t\t\t\t\t</div>"
 							}
-					// 	thmladd += "<div class=\"w100 user-list\">\n" +
-					// 			"\t\t\t\t\t\t\t<!---->\n" +
-					// 			"\t\t\t\t\t\t\t<div class=\"user-item\">\n" +
-					// 			"\t\t\t\t\t\t\t\t<div class=\"d-relative pull-left user-avatar\"><a href=\"/grondstoffenlijstParticularsRequest?particularsId="+result.ArrayList[i].lgShopUid+"\" "+
-					// 			"\t\t\t\t\t\t\t\t\t class=\"full-cover-link\"></a> <img src=\"img/usr_ico_default.png\" alt=\"\"></div>\n" +
-					// 			"\t\t\t\t\t\t\t\t<div class=\"d-relative pull-left user-data user-data1\"\n" +
-					// 			"\t\t\t\t\t\t\t\t\t class=\"full-cover-link\"></a>\n" +
-					// 			"\t\t\t\t\t\t\t\t\t<div class=\"user-name-wrapper\">\n" +
-					// 			"\t\t\t\t\t\t\t\t\t\t<div class=\"pull-left username\">"+shortName+"</div>\n" +
-					// 			"\t\t\t\t\t\t\t\t\t\t<div class=\"pull-left tag man\">"+result.ArrayList[i].qdAge+"</div>\n" +
-					// 			"\t\t\t\t\t\t\t\t\t\t<div class=\"pull-left tag tag3\">"+result.ArrayList[i].qdProfessional+"</div>\n" +
-					// 			"\t\t\t\t\t\t\t\t\t</div>\n" +
-					// 			"\t\t\t\t\t\t\t\t\t<div class=\"user-salary-wrapper\">\n" +
-					// 			"\t\t\t\t\t\t\t\t\t\t<div class=\"pull-left salary\"><strong>￥"+result.ArrayList[i].qdLoanpay+"</strong><span>"+result.ArrayList[i].qdTime+"</span></div>\n" +
-					// 			"\t\t\t\t\t\t\t\t\t\t<div class=\"pull-right location\"><img src=\"data:image/jpeg;base64,/9j/4QAYRXhpZgAASUkqAAgAAAAAAAAAAAAAAP/sABFEdWNreQABAAQAAABQAAD/4QMsaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLwA8P3hwYWNrZXQgYmVnaW49Iu+7vyIgaWQ9Ilc1TTBNcENlaGlIenJlU3pOVGN6a2M5ZCI/PiA8eDp4bXBtZXRhIHhtbG5zOng9ImFkb2JlOm5zOm1ldGEvIiB4OnhtcHRrPSJBZG9iZSBYTVAgQ29yZSA1LjYtYzE0MCA3OS4xNjA0NTEsIDIwMTcvMDUvMDYtMDE6MDg6MjEgICAgICAgICI+IDxyZGY6UkRGIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyI+IDxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PSIiIHhtbG5zOnhtcD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLyIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bXA6Q3JlYXRvclRvb2w9IkFkb2JlIFBob3Rvc2hvcCBDQyAoTWFjaW50b3NoKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDpBNkU0RDlGRjNFNUExMUU4QjQ2NkIwNTlGQ0ZCNUYwRSIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDpBNkU0REEwMDNFNUExMUU4QjQ2NkIwNTlGQ0ZCNUYwRSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkE2REU3RkZBM0U1QTExRThCNDY2QjA1OUZDRkI1RjBFIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOkE2RTREOUZFM0U1QTExRThCNDY2QjA1OUZDRkI1RjBFIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+/+4ADkFkb2JlAGTAAAAAAf/bAIQAAgICAgICAgICAgMCAgIDBAMCAgMEBQQEBAQEBQYFBQUFBQUGBgcHCAcHBgkJCgoJCQwMDAwMDAwMDAwMDAwMDAEDAwMFBAUJBgYJDQsJCw0PDg4ODg8PDAwMDAwPDwwMDAwMDA8MDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwM/8AAEQgAEgAPAwERAAIRAQMRAf/EAGUAAQADAAAAAAAAAAAAAAAAAAQFBwkBAQAAAAAAAAAAAAAAAAAAAAAQAAEEAAMGBAcAAAAAAAAAAAIBAwQFABE0ITFBEjIGUWETNYFCUmIzFTYRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/ANq7i4kzZNiRWUuspKuWlcDdeOcyXMVEVQAuCDgBtXMiCwBjZWdlSWavV7jbwp+zhzBBcgEtmZrwz44BV3Wx62wkhY+qPbt7KCUM5kuRyDPzy9Tm+VDz3rsTADiVkC1VxuM+9H7VpCekyLgzydlTSBeaQLq70bTbzJgLC7i9ittPpj1XRuXq8/DzwEfF/jD0Xtjv4tJ0Fv8At+r44D//2Q==\"\n" +
-					// 			"\t\t\t\t\t\t\t\t\t\t\t alt=\"\">\n" +
-					// 			"\t\t\t\t\t\t\t\t\t\t\t<p>"+result.ArrayList[i].qdRegion+"</p>\n" +
-					// 			"\t\t\t\t\t\t\t\t\t\t</div>\n" +
-					// 			"\t\t\t\t\t\t\t\t\t</div>\n" +
-					// 			"\t\t\t\t\t\t\t\t</div>\n" +
-					// 			"\t\t\t\t\t\t\t\t<div class=\"pull-left d-relative user-data user-data2\"><a href=\"\"\n" +
-					// 			"\t\t\t\t\t\t\t\t\t class=\"full-cover-link\"></a>\n" +
-					// 			"\t\t\t\t\t\t\t\t\t<ul class=\"fore1\">\n" +
-					// 			"\t\t\t\t\t\t\t\t\t\t<li>工作单位：<span>"+result.ArrayList[i].qdUnits+"</span></li>\n" +
-					// 			"\t\t\t\t\t\t\t\t\t\t<li>月收入：<span>"+result.ArrayList[i].qdIncome+"以上</span></li>\n" +
-					// 			"\t\t\t\t\t\t\t\t\t\t<li>资产情况：<span>"+result.ArrayList[i].qdAssets+"</span></li>\n" +
-					// 			"\t\t\t\t\t\t\t\t\t</ul>\n" +
-					// 			"\t\t\t\t\t\t\t\t\t<ul class=\"fore2 last\">\n" +
-					// 			"\t\t\t\t\t\t\t\t\t\t<li>学历状况：<span>"+result.ArrayList[i].qdOften+"</span></li>\n" +
-					// 			"\t\t\t\t\t\t\t\t\t\t<li>社保：<span>"+result.ArrayList[i].qdSocial+"</span></li>\n" +
-					// 			"\t\t\t\t\t\t\t\t\t\t<li>公积金：<span>"+result.ArrayList[i].qdFund+"</span></li>\n" +
-					// 			"\t\t\t\t\t\t\t\t\t</ul>\n" +
-					// 			"\t\t\t\t\t\t\t\t</div>\n" +
-					// 			"\t\t\t\t\t\t\t\t<div class=\"pull-left d-relative user-data user-data3 last\"><a href=\"\"\n" +
-					// 			"\t\t\t\t\t\t\t\t\t class=\"full-cover-link\"></a>\n" +
-					// 			"\t\t\t\t\t\t\t\t\t<ul class=\"fore1 last\">\n" +
-					// 			"\t\t\t\t\t\t\t\t\t\t<li>电话：\n" +
-					// 			"\n" +
-					// 			"\t\t\t\t\t\t\t\t\t\t\t<span>购买后显示</span></li>\n" +
-					// 			"\t\t\t\t\t\t\t\t\t\t<li>微信：\n" +
-					// 			"\n" +
-					// 			"\t\t\t\t\t\t\t\t\t\t\t<span>购买后显示</span></li>\n" +
-					// 			"\t\t\t\t\t\t\t\t\t\t<li>QQ：\n" +
-					// 			"\n" +
-					// 			"\t\t\t\t\t\t\t\t\t\t\t<span>购买后显示</span></li>\n" +
-					// 			"\t\t\t\t\t\t\t\t\t</ul>\n" +
-					// 			"\t\t\t\t\t\t\t\t</div>\n" +
-					// 			"\t\t\t\t\t\t\t\t<div class=\"pull-right buy-wrapper\">\n" +
-					// 			"\t\t\t\t\t\t\t\t\t<div class=\"time\">"+qbtime[0]+"</div>\n" +
-					// 			"\t\t\t\t\t\t\t\t\t<a onclick=\"purchasess("+result.ArrayList[i].lgShopUid+","+result.ArrayList[i].qdGmPay+")\"><div class=\"buy\">"+result.ArrayList[i].qdGmPay+"币购买</div></a>\n" +
-					// 			"\t\t\t\t\t\t\t\t\t<!---->\n" +
-					// 			"\t\t\t\t\t\t\t\t</div>\n" +
-					// 			"\t\t\t\t\t\t\t</div>\n" +
-					// 			"\t\t\t\t\t\t\t\n" +
-					// 			"\t\t\t\t\t\t\t<!---->\n" +
-					// 			"\t\t\t\t\t\t\t<!---->\n" +
-					// 			"\t\t\t\t\t\t</div>"
-					// }
+
 						$("#refreshthml").html(thmladd);
 						$("#refreshthml").css({"background-color":"#dddddd"});
-						refreshssas(fenyenumber)
-
-					},
-					error: function (result) {
-						console.log("error----");
-					}
-				})
-			}
-			function refreshssas(fenyenumber) {
-
-
-				$.ajax({
-					url: "/GrabASingleList",
-					data:{"haveReadUnread":orderColumn,"number":number,"city":region,
-						"rank":selectItemSort,"numberOfInitial":numberOfBranches*(fenyenumber-1),
-						"numberOfBranches":numberOfBranches,
-					     "leix":1},
-					type: "get",
-					dataType: "json",
-					success: function (result) {
-						numberOfInitialasdsadasd=result;
-						numberOfPages= Math.ceil(result/numberOfBranches)
-
-
-
 						new myPagination({
 							id: 'pagination',
 							curPage:fenyenumber, //初始页码
@@ -485,12 +404,50 @@
 								console.log(page);
 							}
 						})
+
 					},
 					error: function (result) {
 						console.log("error----");
 					}
 				})
 			}
+			// function refreshssas(fenyenumber) {
+			//
+			//
+			// 	$.ajax({
+			// 		url: "/GrabASingleList",
+			// 		data:{"haveReadUnread":orderColumn,"number":number,"city":region,
+			// 			"rank":selectItemSort,"numberOfInitial":numberOfBranches*(fenyenumber-1),
+			// 			"numberOfBranches":numberOfBranches,
+			// 		     "leix":1},
+			// 		type: "get",
+			// 		dataType: "json",
+			// 		success: function (result) {
+			// 			numberOfInitialasdsadasd=result;
+			// 			numberOfPages= Math.ceil(result/numberOfBranches)
+			//
+			//
+			//
+			// 			new myPagination({
+			// 				id: 'pagination',
+			// 				curPage:fenyenumber, //初始页码
+			// 				pageTotal: numberOfPages, //总页数
+			// 				pageAmount: numberOfBranches,  //每页多少条
+			// 				dataTotal: numberOfInitialasdsadasd, //总共多少条数据
+			// 				pageSize: 3, //可选,分页个数
+			// 				showPageTotalFlag:true, //是否显示数据统计
+			// 				showSkipInputFlag:true, //是否支持跳转
+			// 				getPage: function (page) {
+			// 					//获取当前页数
+			// 					console.log(page);
+			// 				}
+			// 			})
+			// 		},
+			// 		error: function (result) {
+			// 			console.log("error----");
+			// 		}
+			// 	})
+			// }
 		</script>
 		<style>
 			.citymaxbox{

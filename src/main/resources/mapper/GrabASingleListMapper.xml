@@ -6,18 +6,10 @@
         qb.qd_often,qb.qd_social,qb.qd_plicy,qb.qd_assets,qb.qd_income,qb.qd_units,qb.qd_fund,qb.qd_time,qb.qd_sex,qb.qd_source
         from
         qd_basicmanager as qb
-        WHERE (qb.lg_shop_uid not IN (
-        SELECT qlp1.lg_shop_uid
-        FROM  qd_lg_power qlp1
-        where  qlp1.lg_phone=#{searchConditions.phone}
-        and (qb.lg_shop_uid=qlp1.lg_shop_uid or qb.lg_shop_uid=qlp1.lg_ztc_id)
-        ) or qb.lg_shop_uid not IN (
-        SELECT qlp1.lg_ztc_id
-        FROM  qd_lg_power qlp1
-        where  qlp1.lg_phone=#{searchConditions.phone}
-        and (qb.lg_shop_uid=qlp1.lg_shop_uid or qb.lg_shop_uid=qlp1.lg_ztc_id)
-        ))
-
+        WHERE
+        qb.lg_shop_uid not IN (SELECT qjs.lg_shop_uid
+        FROM  qd_jqd_status qjs
+        )
         <if test="searchConditions.haveReadUnread == 0">
         and  qb.lg_shop_uid not IN (SELECT qlp1.lg_read
         FROM  qd_lg_power qlp1
@@ -30,9 +22,6 @@
             where  qlp1.lg_phone=#{searchConditions.phone} AND  qlp1.lg_read IS NOT NULL
             )
         </if>
-        and  qb.lg_shop_uid not IN (SELECT qjs.lg_shop_uid
-        FROM  qd_jqd_status qjs
-        )
         and 3>qb.qd_gshop_status and TIMESTAMPDIFF(MINUTE,qb.qd_fb_time, now())>=1 and
         qb.qd_age>=#{privatePersonalSubscriptionsModel.minAge} and
         #{privatePersonalSubscriptionsModel.maxAge}>=qb.qd_age
@@ -79,7 +68,6 @@
             qb.qd_assets like "%有车%" and qb.qd_assets like "%公积金%"
         </if>
         order by qb.qd_fb_time desc
-        LIMIT #{searchConditions.numberOfInitial},#{searchConditions.numberOfBranches}
 
     </select>
 

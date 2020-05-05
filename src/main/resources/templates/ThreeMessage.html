@@ -9,7 +9,7 @@
 <meta http-equiv="X-UA-Compatible" content="ie=edge"> -->
 	<link rel="icon" href="img/three.ico" mce_href="/three.ico" type="image/x-icon">
 	<title>
-		好快贷 无抵押贷款最高5万申请
+		信用贷 无抵押贷款最高5万申请
 	</title>
 
 	<style>
@@ -663,8 +663,14 @@
 			});
 		})
 		function faxinInputAge(age) {
+			if (age==22){
+				$("#paydayMessagessSex").text("23岁以下")
+			}else if (age==51){
+				$("#paydayMessagessSex").text("50岁以上")
+			} else{
+				$("#paydayMessagessSex").text(age+" 岁")
+			}
 
-			$("#paydayMessagessSex").text(age+" 岁")
 			qdage = age
 			$(".faxinTimeOneBoxSex").fadeOut()
 		}
@@ -674,11 +680,13 @@
 		}
 
 		function faxinboxSex() {
-			var faxinHtml="";
+
+			var faxinHtml="<li onclick='faxinInputAge(22)'>23岁以下</li>";
 			for (i = 23; i < 51; i++) {
 				faxinHtml += "<li onclick='faxinInputAge(" + i + ")'>" + i + "岁</li>";
 
 			}
+			faxinHtml+="<li onclick='faxinInputAge(51)'>50岁以上</li>";
 			$(".faxinTimeConterSex").html(faxinHtml)
 			$(".faxinTimeOneBoxSex").fadeIn()
 		}
