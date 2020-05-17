@@ -80,6 +80,9 @@ Basicmanager particularsMessage(@Param("particularsId")Integer particularsId);
     //查询是否联系
     @Select(" select count(*) from qd_lg_power where lg_phone=#{lgPhone} and lg_ztc_id = #{lgShopUid} LIMIT 1")
     Integer  whetherqdLgPowerWeiss(@Param("lgPhone")String lgPhone,@Param("lgShopUid") Integer lgShopUid);
+    //查询是否联系
+    @Select(" select lg_lx from qd_lg_power where lg_phone=#{lgPhone} and lg_lx is not null")
+    List<QdLgPower>  whetherqdLgPowerWeissList(@Param("lgPhone")String lgPhone);
     //修改余额
     @Update("update qd_userss set lg_balance=lg_balance-#{price} where lg_phone=#{lgPhone} limit 1")
     Integer updateBalance(@Param("lgPhone")String lgPhone, @Param("price")Integer price);
@@ -105,9 +108,12 @@ Basicmanager particularsMessage(@Param("particularsId")Integer particularsId);
     @Select("select lg_gm_pays from qd_lg_power where lg_phone=#{lgPhone} and lg_shop_uid=#{gmid}")
     Integer whetherPurchasesss(@Param("lgPhone")String lgPhone,@Param("gmid") Integer gmid);
     //查询是否购买
-    @Select("select lg_shop_uid,lg_ztc_id from qd_lg_power where lg_phone=#{lgPhone} and (lg_shop_uid is not null or lg_ztc_id is not null) order by id desc")
+    @Select("select lg_shop_uid,lg_ztc_id from qd_lg_power where lg_phone=#{lgPhone} and (lg_shop_uid is not null or lg_ztc_id is not null) order by lg_shop_uid,lg_ztc_id desc ")
     List<QdLgPower> whetherPurchaseList(@Param("lgPhone")String lgPhone);
 
+    //查询findPowerLgZtcId
+    @Select("select lg_ztc_id from qd_lg_power where lg_phone=#{lgPhone} and lg_ztc_id > 0 order by lg_ztc_id desc ")
+    List<QdLgPower> findPowerLgZtcId(@Param("lgPhone")String lgPhone);
 
     //查询是否购买 的價格
     @Select("select lg_gm_pays from qd_lg_power where lg_phone=#{lgPhone} and lg_shop_uid=#{gmid}")
@@ -200,7 +206,9 @@ Basicmanager particularsMessage(@Param("particularsId")Integer particularsId);
 
     @Select("select submit_skip_url from qd_submit_skip_url limit 1")
     String  findztctongji();
-    @Select("SELECT count(*) as zongshu,SUM(lg_gm_pays) as zongjia,lg_addtime as time,DATE_FORMAT(lg_addtime, '%m%d') as day FROM qd_lg_power  where lg_phone=#{lgPhone} and lg_ztc_id is not null GROUP BY day")
+    @Select("SELECT count(*) as zongshu,SUM(lg_gm_pays) as zongjia,lg_addtime as time,DATE_FORMAT(lg_addtime, '%m%d') as day FROM qd_basicmanager as qb\n" +
+            " left JOIN qd_lg_power as lps on lps.lg_ztc_id=qb.lg_shop_uid\n" +
+            " where lps.lg_phone=#{lgPhone} and lps.lg_ztc_id is not null GROUP BY day")
     List<ztctongjiModel> ztctongjiimpl(@Param("lgPhone") String lgPhone);
 
     @Select("select lg_balance from qd_userss where lg_phone=#{lgPhone}")

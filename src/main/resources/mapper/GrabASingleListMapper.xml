@@ -280,14 +280,9 @@
         select qb.lg_shop_uid,qb.qd_gm_pay,qb.qd_fb_time,qb.qd_sesame,qb.qd_loanpay,qb.qd_username,qb.qd_region,qb.qd_age,qb.qd_professional,
       qb.qd_often,qb.qd_social,qb.qd_plicy,qb.qd_assets,qb.qd_income,qb.qd_units,qb.qd_fund,qb.qd_time,qb.qd_qq,qb.qd_wechat,qb.qd_phone,qb.qd_sex
       from
-      qd_basicmanager as qb
-      WHERE
-      (qb.lg_shop_uid  IN (
-      SELECT qlp1.lg_shop_uid
-      FROM  qd_lg_power as qlp1
-      where  qlp1.lg_phone=#{searchConditions.phone}
-      and  qb.lg_shop_uid=qlp1.lg_shop_uid
-      ))
+      qd_basicmanager as qb left JOIN qd_lg_power as lps on lps.lg_shop_uid=qb.lg_shop_uid
+       where
+      lps.lg_phone=#{searchConditions.phone}
 
       <if test="searchConditions.searchBox !='' and searchConditions.searchBox !=null">
          and ( qb.qd_username like concat(concat("%",#{searchConditions.searchBox}),"%")
@@ -297,8 +292,6 @@
          and date(qb.qd_fb_time) between #{searchConditions.startTime} and #{searchConditions.stopTime}
       </if>
       order by qb.lg_shop_uid desc
-
-      LIMIT #{searchConditions.numberOfInitial},#{searchConditions.numberOfBranches}
 
         </select>
   <select id="purchaseListszongshu"  resultType="integer">
@@ -330,27 +323,13 @@
 
       select qb.lg_shop_uid,qb.qd_gm_pay,qb.qd_fb_time,qb.qd_sesame,qb.qd_loanpay,qb.qd_username,qb.qd_region,qb.qd_age,qb.qd_professional,
       qb.qd_often,qb.qd_social,qb.qd_plicy,qb.qd_assets,qb.qd_income,qb.qd_units,qb.qd_fund,qb.qd_time,qb.qd_sex,qb.qd_source,qb.qd_phone,
-      qb.qd_wechat,qb.qd_qq,
-      (SELECT count(*) as count
-      FROM  qd_lg_power as qlp1s
-      where  qlp1s.lg_phone=#{searchConditions.phone} and qb.lg_shop_uid=qlp1s.lg_lx
-      ) as whetherContact
+      qb.qd_wechat,qb.qd_qq
       from
-      qd_basicmanager as qb
-      WHERE
-      (qb.lg_shop_uid  IN (
-      SELECT qlp1.lg_ztc_id
-      FROM  qd_lg_power as qlp1
-      where  qlp1.lg_phone=#{searchConditions.phone}
-      and  qb.lg_shop_uid=qlp1.lg_ztc_id
-      ))
-      <if test="searchConditions.haveReadUnread == 1">
-          and   (0 IN (SELECT count(*) as count
-          FROM  qd_lg_power as qlp1s
-          where  qlp1s.lg_phone=#{searchConditions.phone} and qb.lg_shop_uid=qlp1s.lg_lx
+      qd_basicmanager as qb left JOIN qd_lg_power as lps on lps.lg_ztc_id=qb.lg_shop_uid
 
-          ))
-      </if>
+     where lps.lg_phone=#{searchConditions.phone}
+
+
       <if test="searchConditions.searchBox !='' and searchConditions.searchBox !=null">
           and  (qb.qd_username like concat(concat("%",#{searchConditions.searchBox}),"%")
           or qb.qd_phone like concat(concat("%",#{searchConditions.searchBox}),"%"))
@@ -408,20 +387,15 @@
       <if test="searchConditions.startTime != '' and searchConditions.stopTime != ''">
          and date(qb.qd_fb_time) between #{searchConditions.startTime} and #{searchConditions.stopTime}
       </if>
+
       order by qb.lg_shop_uid desc
-      LIMIT #{searchConditions.numberOfInitial},#{searchConditions.numberOfBranches}
+
         </select>
   <select id="dicectDriveListzongshu"  resultType="integer">
 
       select count(*) from
       qd_basicmanager as qb
-      WHERE
-      (qb.lg_shop_uid  IN (
-      SELECT qlp1.lg_ztc_id
-      FROM  qd_lg_power as qlp1
-      where  qlp1.lg_phone=#{searchConditions.phone}
-      and  qb.lg_shop_uid=qlp1.lg_ztc_id
-      ))
+
       <if test="searchConditions.haveReadUnread == 1">
           and   (0 IN (SELECT count(*) as count
           FROM  qd_lg_power as qlp1s

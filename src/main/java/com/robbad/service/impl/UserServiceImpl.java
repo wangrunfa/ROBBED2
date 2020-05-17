@@ -127,7 +127,7 @@ public class UserServiceImpl implements UserService {
         List<QdLgPower> whetherPurchaseLists = userDao.whetherPurchaseList(searchCondition.getPhone());
 
         int zongshu=0;
-        System.out.println(GrabASingleLists.size());
+
         int NumberOfBranches=searchCondition.getNumberOfBranches();
         Integer price=userDao.inquirePricesss();
         //筛选未购买 或 未直推
@@ -142,12 +142,12 @@ public class UserServiceImpl implements UserService {
                     break;
                 }
             }
-            System.out.println(whetherPurchaseLists.size());
+
             if(jinshulianshjstatus==0){
                 GrabASingleArrayListOne.add(GrabASingleList);
             }
         }
-        System.out.println(GrabASingleArrayListOne.size());
+
 
 
         //全部
@@ -238,28 +238,20 @@ public class UserServiceImpl implements UserService {
     @Override
     public Object purchaseList(SearchCondition searchCondition) {
         List<Basicmanager> purchaseLists= userDao.purchaseList(searchCondition);
-        Integer purchaseListszongshus= userDao.purchaseListszongshu(searchCondition);
-//        int NumberOfBranches=searchCondition.getNumberOfBranches();
-//        int zongshu=0;
-//        List<Basicmanager> searchConditionLists=new ArrayList<>();
-//        for (Basicmanager purchaseList:purchaseLists) {
-//            Integer getLggmpay = userDao.whetherPurchasesssssss(searchCondition.getPhone(),purchaseList.getLgShopUid());
-//            if(getLggmpay!=null&&getLggmpay!=0){
-//                zongshu++;
-//                if(searchCondition.getNumberOfInitial()<zongshu&&NumberOfBranches!=0){
-//                    purchaseList.setQdGmPay(getLggmpay);
-//                    searchConditionLists.add(purchaseList);
-//                    NumberOfBranches--;
-//                }
-//
-//            }
-//
-//        }
+        int NumberOfBranches=searchCondition.getNumberOfBranches();
+        int zongshu=0;
+        List<Basicmanager> basicmanagerList=new ArrayList<>();
+        for (Basicmanager basicmanager:purchaseLists) {
+            zongshu++;
+            if (searchCondition.getNumberOfInitial() < zongshu && NumberOfBranches != 0) {
 
-
+                basicmanagerList.add(basicmanager);
+                NumberOfBranches--;
+            }
+        }
         Map<String,Object> maps=new HashMap<>();
-        maps.put("zongshu",purchaseListszongshus);
-        maps.put("ArrayLists",purchaseLists);
+        maps.put("zongshu",zongshu);
+        maps.put("ArrayLists",basicmanagerList);
         return maps;
 //        return userDao.purchaseList(searchCondition);
     }
@@ -267,50 +259,89 @@ public class UserServiceImpl implements UserService {
     @Override
     public Object DicectDriveList(SearchCondition searchCondition,PersonalSubscriptionsModel privatePersonalZTCSubscriptionsModel) {
 
-//        if(searchCondition.getHaveReadUnread()==1){
-//            List<Basicmanager> BasicmanagerList=userDao.BasicmanagerList();
-//            List<Basicmanager> searchConditionLists=new ArrayList<>();
-//            for (Basicmanager basicmanager:BasicmanagerList) {
-//                QdLgPower qdLgPower = userDao.qdLgPowerWeiLianXi(searchCondition,basicmanager.getLgShopUid());
-//                if(qdLgPower!=null){
-//                    basicmanager.setWhetherContact(0);
-//                    searchConditionLists.add(basicmanager);
-//                }
-//            }
-//            System.out.println(searchConditionLists);
-//            return searchConditionLists;
-//        }
-        List<Basicmanager> basicmanagers = userDao.dicectDriveList(searchCondition,privatePersonalZTCSubscriptionsModel);
-        Integer basicmanagerszongshu = userDao.dicectDriveListzongshu(searchCondition,privatePersonalZTCSubscriptionsModel);
+        List<Basicmanager> GrabASingleLists = userDao.dicectDriveList(searchCondition,privatePersonalZTCSubscriptionsModel);
+        //Integer basicmanagerszongshu = userDao.dicectDriveListzongshu(searchCondition,privatePersonalZTCSubscriptionsModel);
 
-//        int NumberOfBranches=searchCondition.getNumberOfBranches();
-//        int zongshu=0;
-//        List<Basicmanager> basicmanagerList=new ArrayList<>();
-//        for (Basicmanager basicmanager:basicmanagers){
-//           if(userDao.whetherqdLgPowerWei(searchCondition.getPhone(),basicmanager.getLgShopUid())>0){
-//               if(searchCondition.getHaveReadUnread()==0){
-//                   zongshu++;
-//                   if(searchCondition.getNumberOfInitial()<zongshu && NumberOfBranches!=0) {
-//                       basicmanager.setWhetherContact(1);
-//                       basicmanagerList.add(basicmanager);
-//                       NumberOfBranches--;
-//                   }
-//               }
+        //List<Basicmanager> GrabASingleLists=userDao.GrabASingleListImpl(searchCondition,privatePersonalSubscriptionsModel);
+
+
+
+
+        int NumberOfBranches=searchCondition.getNumberOfBranches();
+        int zongshu=0;
+        List<QdLgPower> QdLgPowerLxList=userDao.whetherqdLgPowerWeissList(searchCondition.getPhone());
+        List<Basicmanager> basicmanagerList=new ArrayList<>();
+        if(searchCondition.getHaveReadUnread()==0) {
+            for (Basicmanager basicmanager : GrabASingleLists) {
+                Integer statesCode=0;
+                for (QdLgPower QdLgPowerLx : QdLgPowerLxList) {
+                    if(basicmanager.getLgShopUid().equals(QdLgPowerLx.getLgLx())){
+                        statesCode=1;
+                        break;
+                    }
+                }
+                if(statesCode==1){
+                    basicmanager.setWhetherContact(1);
+                }else{
+                    basicmanager.setWhetherContact(0);
+                }
+
+                zongshu++;
+                if (searchCondition.getNumberOfInitial() < zongshu && NumberOfBranches != 0) {
+                    basicmanagerList.add(basicmanager);
+                    NumberOfBranches--;
+                }
+            }
+        }else{
+            for (Basicmanager basicmanager : GrabASingleLists) {
+                Integer statesCode=0;
+                for (QdLgPower QdLgPowerLx : QdLgPowerLxList) {
+                    if(basicmanager.getLgShopUid().equals(QdLgPowerLx.getLgLx())){
+                        statesCode=1;
+                        break;
+                    }
+                }
+                if(statesCode==0){
+                zongshu++;
+                if (searchCondition.getNumberOfInitial() < zongshu && NumberOfBranches != 0) {
+
+                        basicmanager.setWhetherContact(0);
+                        basicmanagerList.add(basicmanager);
+                        NumberOfBranches--;
+
+
+
+                }
+                }
+            }
+        }
+//            if(userDao.whetherqdLgPowerWei(searchCondition.getPhone(),basicmanager.getLgShopUid())>0){
+//                if(searchCondition.getHaveReadUnread()==0){
+//                    zongshu++;
+//                    if(searchCondition.getNumberOfInitial()<zongshu&&NumberOfBranches!=0) {
+//                        basicmanager.setWhetherContact(1);
+//                        basicmanagerList.add(basicmanager);
+//                        NumberOfBranches--;
+//                    }
 //
-//           }else if(userDao.whetherqdLgPowerWeiss(searchCondition.getPhone(),basicmanager.getLgShopUid())>0){
-//               zongshu++;
-//               if(searchCondition.getNumberOfInitial()<zongshu&&NumberOfBranches!=0) {
-//                   basicmanager.setWhetherContact(0);
-//                   basicmanagerList.add(basicmanager);
-//                   NumberOfBranches--;
-//               }
+//                }
 //
-//           }
+//            }else if(userDao.whetherqdLgPowerWeiss(searchCondition.getPhone(),basicmanager.getLgShopUid())>0){
+//                zongshu++;
+//                if(searchCondition.getNumberOfInitial()<zongshu&&NumberOfBranches!=0) {
+//                    basicmanager.setWhetherContact(0);
+//                    basicmanagerList.add(basicmanager);
+//                    NumberOfBranches--;
+//                }
+//
+//            }
 //        }
+
+
         Map<String,Object> maps=new HashMap<>();
-        maps.put("zongshu",basicmanagerszongshu);
+        maps.put("zongshu",zongshu);
 //        maps.put("ArrayList",basicmanagerList);
-        maps.put("ArrayList",basicmanagers);
+        maps.put("ArrayList",basicmanagerList);
 
         return maps;
     }
