@@ -138,11 +138,11 @@ Basicmanager particularsMessage(@Param("particularsId")Integer particularsId);
     @Insert("INSERT INTO qd_basicmanager(" +
             "qd_fb_time,qd_phone,qd_username,qd_loanpay," +
             "qd_age,qd_professional,qd_assets," +
-            "qd_submit_ip,qd_source,qd_source_name,qd_sex,qd_card) " +
+            "qd_submit_ip,qd_source,qd_source_name,qd_sex,qd_card,system_name) " +
             "values(" +
             "NOW(),#{Basicmanager.qdPhone},#{Basicmanager.qdUsername},#{Basicmanager.qdLoanpay}" +
             ",#{Basicmanager.qdAge},#{Basicmanager.qdProfessional},#{Basicmanager.qdAssets}" +
-            ",#{submitIP},#{Basicmanager.qdSource},#{Basicmanager.qdSourceName},#{Basicmanager.qdSex},#{Basicmanager.qdCard});")
+            ",#{submitIP},#{Basicmanager.qdSource},#{Basicmanager.qdSourceName},#{Basicmanager.qdSex},#{Basicmanager.qdCard},#{Basicmanager.systemName});")
     Integer insertBasicmanagerggImpl(@Param("Basicmanager")Basicmanager basicmanager,@Param("submitIP")String submitIP);
 
     @Insert("INSERT INTO qd_basicmanager(" +
@@ -194,6 +194,8 @@ Basicmanager particularsMessage(@Param("particularsId")Integer particularsId);
 
     @Update("update qd_basicmanager set qd_gshop_status=qd_gshop_status+1 where lg_shop_uid=#{LgShopUid}")
     int ztcUpdateBasicmanager(@Param("LgShopUid")Integer LgShopUid);
+    @Update("update qd_basicmanager set qd_zx_states=1 where lg_shop_uid=#{LgShopUid}")
+    int ztcUpdateBasicmanagerQdZxStates(@Param("LgShopUid")Integer LgShopUid);
 
 //    @Update("update qd_basicmanager set qd_gm_pay=#{pays}")
 //    void updateBalancejiage(@Param("pays")Integer pays);
@@ -284,4 +286,6 @@ Basicmanager particularsMessage(@Param("particularsId")Integer particularsId);
     Integer GrabASingleListImplzongshu(@Param("searchConditions") SearchCondition searchCondition,@Param("privatePersonalSubscriptionsModel") PersonalSubscriptionsModel privatePersonalSubscriptionsModel);
     @Select("select * from qd_qdtj where qd_id=#{sourceId} LIMIT 1")
     QdTj findqdmessagePagempl(@Param("sourceId")String sourceId);
+    @Insert("INSERT INTO qd_leida_message(qd_id,basic_id,json,create_time) values(#{sourceId},#{lgShopUid},#{ldJson},NOW());")
+    Integer insertQdLeidsMessage(@Param("sourceId")String qdSource, @Param("lgShopUid")Integer lgShopUid, @Param("ldJson")String ldJson);
 }

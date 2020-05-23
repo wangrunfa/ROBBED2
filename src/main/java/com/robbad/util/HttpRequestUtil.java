@@ -21,6 +21,12 @@ import static com.robbad.util.SmsSampleUtil.md5;
 
 public class HttpRequestUtil {
 
+//    public static void main(String[] args) {
+//     //   System.out.println(postParams("杨李睿","13547019943","510681199705030333"));
+//      //  System.out.println(postParams("郑思林","16602906959","610629199512113210"));
+//        System.out.println(postParams("颜志刚","13507393036","430523198411117237"));
+//    }
+
     public static String postParams(String name,String mobile,String uid) {
         // 获取连接客户端工具
         CloseableHttpClient httpClient = HttpClients.createDefault();

@@ -433,6 +433,8 @@ public class UserServiceImpl implements UserService {
             Basicmanager basicmanagersss=null;
         if(userDao.insertBasicmanagerImpl(basicmanager,submitIP)>0){
             basicmanagersss=userDao.findQdBasicmanagerOneData(basicmanager,submitIP);
+
+
             int status=0;
             if(QdTjReturn.getQdJzt()==0){
 //                QdXsxl Xsxlzs=userDao.findSubmitXsxlzs();//Xsxlzs 总数
@@ -495,6 +497,7 @@ public class UserServiceImpl implements UserService {
             basicmanager.setQdSourceName(QdTjReturn.getQdQdname());
 
             Basicmanager basicmanagersss=null;
+
             if(userDao.insertBasicmanagerggImpl(basicmanager,submitIP)>0){
                 basicmanagersss=userDao.findQdBasicmanagerOneData(basicmanager,submitIP);
                 int status=0;

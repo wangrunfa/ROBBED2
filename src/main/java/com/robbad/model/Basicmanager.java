@@ -49,4 +49,5 @@ public class Basicmanager {
     private Integer whetherContact;//是否联系
     private String qdUserAlias;//别名
     private String LgAuthcode;//别名
+    private String systemName;//别名
 }

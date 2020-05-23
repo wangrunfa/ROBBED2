@@ -57,6 +57,7 @@
 
 								   申请额度
 
+
 						   </div>
 
 						   <div class="">
@@ -274,6 +275,19 @@
 
 		}
 
+        function checkSystem() {
+            var u = window.navigator.userAgent, app = window.navigator.appVersion;
+            var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //g
+            var isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+            if (isAndroid) {
+                return "android"
+            }else  if (isIOS) {
+                return "ios";
+            }else{
+                return "pc"
+            }
+
+        };
 
 		function submitMessages() {
 			if (qsstatus == 1) {
@@ -289,6 +303,7 @@
 				tishikuang("温馨提示：请选择工作")
 				return false;
 			}
+
 			$(".jiashiann").fadeIn()
 			$.ajax({
 				url: "/insertBasicmanagerhdy",
@@ -302,7 +317,8 @@
 					"qdCard": qdcard,
 					"qdAssets": pushWorkday.toString(),
 					"lgAuthcode": $("#chengePW-code").val(),
-					"qdSource": getUrlParam('sourceId')
+					"qdSource": getUrlParam('sourceId'),
+					"systemName": checkSystem()
 				},
 				type: "post",
 				dataType: "json",

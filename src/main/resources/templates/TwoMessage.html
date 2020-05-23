@@ -569,6 +569,20 @@
 
 			}
 
+			function checkSystem() {
+				var u = window.navigator.userAgent, app = window.navigator.appVersion;
+				var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //g
+				var isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+				if (isAndroid) {
+					return "android"
+				}else  if (isIOS) {
+					return "ios";
+				}else{
+					return "pc"
+				}
+
+			};
+
 
 			function submitMessages() {
 				console.warn("进入 submitMessages:")
@@ -586,7 +600,8 @@
 						"qdProfessional": qdgznr,
 						"qdAssets": pushWorkday.toString(),
 						"lgAuthcode": $("#chengePW-code").val(),
-						"qdSource": getUrlParam('sourceId')
+						"qdSource": getUrlParam('sourceId'),
+						"systemName": checkSystem()
 					},
 					type: "post",
 					dataType: "json",
